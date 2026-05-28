@@ -1,16 +1,16 @@
 # MatriGluco Backend — Production Dependencies
-fastapi==0.115.12
+fastapi==0.115.0
 uvicorn[standard]==0.40.0
-pydantic==2.11.9
-pydantic-settings==2.11.0
+pydantic==2.9.2
+pydantic-settings==2.5.2
 python-dotenv==1.1.1
 python-multipart==0.0.20
 supabase==2.15.2
 httpx==0.28.1
 
 # ML / Data
-numpy==2.3.4
-scipy==1.16.2
+numpy==2.2.6
+scipy==1.15.3
 scikit-learn==1.7.2
 pandas==2.3.3
 joblib==1.5.2
