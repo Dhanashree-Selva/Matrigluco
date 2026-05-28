@@ -73,8 +73,8 @@ export default function PersonalDetails() {
     const pregWeek = getWeek(dueDate);
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen pb-24 max-w-md mx-auto">
-            <div className="flex items-center gap-4 mb-8">
+        <div className="p-6 bg-gray-50 min-h-screen pb-24 w-full">
+            <div className="flex items-center justify-between mb-8">
                 <button
                     onClick={() => navigate(-1)}
                     className="p-2 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors"

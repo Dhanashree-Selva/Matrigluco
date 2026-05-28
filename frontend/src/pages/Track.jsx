@@ -108,7 +108,7 @@ export default function Track() {
                     <Activity className="w-10 h-10 text-blue-500" />
                 </div>
                 <h2 className="text-xl font-semibold text-slate-800 mb-2">No Tracking Data</h2>
-                <p className="text-slate-500 mb-8 max-w-[280px]">
+                <p className="text-slate-500 mb-8 max-w-lg mx-auto">
                     Complete a risk assessment to start tracking your health journey.
                 </p>
                 <button

@@ -89,7 +89,7 @@ export default function History() {
                         <Clock className="w-8 h-8 text-gray-400" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-800 mb-1">No prediction history yet</h3>
-                    <p className="text-sm text-gray-500 max-w-[250px] mx-auto">
+                    <p className="text-sm text-gray-500 max-w-lg mx-auto">
                         Take an AI risk assessment to see your history logged here. Ensure you are signed in.
                     </p>
                     <button

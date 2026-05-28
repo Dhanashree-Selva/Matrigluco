@@ -153,12 +153,10 @@ export default function BookAppointment() {
             </div>
 
             {/* Fixed Continue Button - Fine-tuned position */}
-            <div
-                className="fixed bottom-[72px] left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[360px] z-30"
-            >
+            <div className="mt-8 flex justify-center sticky bottom-24 pb-8">
                 <button
                     onClick={() => navigate('/doctor/confirmation')}
-                    className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-[0_15px_35px_rgba(240,85,120,0.3)] hover:bg-[#E94D71] active:scale-[0.98] transition-all tracking-tight"
+                    className="w-full max-w-2xl bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-[0_15px_35px_rgba(240,85,120,0.3)] hover:bg-[#E94D71] active:scale-[0.98] transition-all tracking-tight"
                 >
                     CONTINUE
                 </button>

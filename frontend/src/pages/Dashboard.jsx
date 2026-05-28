@@ -171,7 +171,7 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#fafafa] to-[#f0e8e8]">
-            <div className="w-full max-w-md bg-white shadow-sm rounded-xl overflow-hidden flex flex-col" style={{ background: C.bg }}>
+            <div className="w-full bg-white shadow-sm rounded-xl overflow-hidden flex flex-col" style={{ background: C.bg }}>
                 {/* ---- Scrollable content ---- */}
                 <div style={{ flex: 1, overflowY: "auto", paddingBottom: 20 }}>
                     {/* ── HEADER ─────────────────────────────────────────── */}

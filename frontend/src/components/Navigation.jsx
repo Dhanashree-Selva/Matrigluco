@@ -13,7 +13,7 @@ export default function Navigation() {
     ];
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#F2E9E9] z-50 md:sticky md:bottom-auto md:w-full md:max-w-md md:mx-auto pb-4 pt-1 shadow-[0_-4px_20px_rgba(42,35,64,0.03)]">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#F2E9E9] z-50 md:sticky md:bottom-auto md:w-full pb-4 pt-1 shadow-[0_-4px_20px_rgba(42,35,64,0.03)]">
             <div className="flex justify-around items-center h-16 relative">
                 {navItems.map((item) => {
                     const Icon = item.icon;

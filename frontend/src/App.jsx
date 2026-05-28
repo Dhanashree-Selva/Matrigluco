@@ -81,7 +81,7 @@ function AppInner() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-[#fafafa] to-[#f0e8e8] font-sans text-gray-800">
-      <div className="flex-grow max-w-md mx-auto w-full bg-white shadow-sm relative overflow-hidden">
+      <div className="flex-grow w-full max-w-screen-2xl mx-auto px-6 bg-white relative overflow-hidden">
         <Routes>
           {/* Public: /auth — redirects to dashboard if already signed in */}
           <Route

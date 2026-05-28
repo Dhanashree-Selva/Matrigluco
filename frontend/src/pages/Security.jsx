@@ -91,7 +91,7 @@ export default function Security() {
     }
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen pb-24 max-w-md mx-auto">
+        <div className="p-6 bg-gray-50 min-h-screen pb-24 w-full">
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
                 <button

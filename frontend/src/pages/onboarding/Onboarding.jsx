@@ -57,7 +57,7 @@ export default function Onboarding({ onComplete }) {
                 </button>
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center w-full max-w-[320px]">
+            <div className="flex-1 flex flex-col items-center justify-center w-full px-4 max-w-lg mx-auto">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={step}
@@ -83,7 +83,7 @@ export default function Onboarding({ onComplete }) {
                 </AnimatePresence>
             </div>
 
-            <div className="w-full max-w-[320px] flex flex-col items-center gap-10">
+            <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-10">
                 {/* Dots */}
                 <div className="flex gap-2.5">
                     {ONBOARDING_STEPS.map((_, i) => (

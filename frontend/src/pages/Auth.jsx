@@ -394,7 +394,7 @@ export default function Auth() {
             <div
                 style={{
                     width: "100%",
-                    maxWidth: "390px",
+                    maxWidth: "100%",
                     minHeight: "844px",
                     background: "#FEF9F9",
                     borderRadius: "40px",
