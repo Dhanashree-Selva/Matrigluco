@@ -1,0 +1,26 @@
+# MatriGluco Backend — Production Dependencies
+fastapi==0.115.12
+uvicorn[standard]==0.40.0
+pydantic==2.11.9
+pydantic-settings==2.11.0
+python-dotenv==1.1.1
+python-multipart==0.0.20
+supabase==2.15.2
+httpx==0.28.1
+
+# ML / Data
+scikit-learn==1.7.0
+numpy==1.26.4
+pandas==2.3.0
+joblib==1.5.1
+
+# OCR / Document parsing
+Pillow==11.3.0
+pytesseract==0.3.13
+pdfplumber==0.11.9
+pdf2image==1.17.0
+PyMuPDF==1.26.4
+
+# Auth / Security
+python-jose[cryptography]==3.4.0
+passlib[bcrypt]==1.7.4
