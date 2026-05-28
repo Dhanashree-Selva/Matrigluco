@@ -9,9 +9,10 @@ supabase==2.15.2
 httpx==0.28.1
 
 # ML / Data
-scikit-learn==1.7.0
+scikit-learn==1.5.2
+scipy==1.13.1
 numpy==1.26.4
-pandas==2.3.0
+pandas==2.2.2
 joblib==1.5.1
 
 # OCR / Document parsing
