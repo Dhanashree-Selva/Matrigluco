@@ -75,7 +75,7 @@ export default function Profile() {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-[#FDF8F8]">
+            <div className="flex items-center justify-center h-full min-h-[60vh] bg-[#FDF8F8]">
                 <div className="w-10 h-10 border-4 border-[#F05578]/20 border-t-[#F05578] rounded-full animate-spin" />
             </div>
         );
@@ -85,7 +85,7 @@ export default function Profile() {
     const riskLevel = prediction?.risk_level || "No Checks";
 
     return (
-        <div className="min-h-screen bg-[#FDF8F8] flex flex-col pb-24">
+        <div className="h-full bg-[#FDF8F8] flex flex-col pb-24">
             {/* Header */}
             <div className="p-6 flex justify-between items-center bg-white border-b border-[#F4EAEA]">
                 <h1 className="text-xl font-extrabold text-[#2A2340] tracking-tight">Profile</h1>

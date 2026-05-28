@@ -159,7 +159,7 @@ export default function RiskDetails() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#FDF8F8] flex items-center justify-center p-6">
+            <div className="h-full bg-[#FDF8F8] flex flex-col pb-24">
                 <div className="w-12 h-12 border-4 border-[#F05578]/20 border-t-[#F05578] rounded-full animate-spin" />
             </div>
         );
@@ -167,7 +167,7 @@ export default function RiskDetails() {
 
     if (!prediction) {
         return (
-            <div className="min-h-screen bg-[#FDF8F8] flex flex-col items-center justify-center p-6 text-center space-y-6">
+            <div className="h-full bg-[#FDF8F8] flex flex-col items-center justify-center p-6 text-center space-y-6">
                 <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm text-[#9E8A8C]">
                     <Activity size={40} />
                 </div>
@@ -200,7 +200,7 @@ export default function RiskDetails() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#FDF8F8] flex flex-col pb-24">
+        <div className="h-full bg-[#FDF8F8] flex flex-col pb-24">
             {/* Header */}
             <div className="p-6 bg-white border-b border-[#F2E9E9] flex items-center justify-between sticky top-0 z-20">
                 <div className="flex items-center gap-4">
@@ -248,8 +248,8 @@ export default function RiskDetails() {
 
                     <div className="space-y-4">
                         <div className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest inline-flex items-center gap-2 ${isHigh ? "bg-[#FDE8EC] text-[#E25B76]" :
-                                isModerate ? "bg-[#FFF4DD] text-[#D79B2E]" :
-                                    "bg-[#EAF6EE] text-[#5C9B73]"
+                            isModerate ? "bg-[#FFF4DD] text-[#D79B2E]" :
+                                "bg-[#EAF6EE] text-[#5C9B73]"
                             }`}>
                             <div className={`w-2 h-2 rounded-full ${isHigh ? "bg-[#E25B76]" : isModerate ? "bg-[#D79B2E]" : "bg-[#5C9B73]"}`} />
                             {level}

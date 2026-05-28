@@ -91,7 +91,7 @@ export default function Track() {
 
     if (loading) {
         return (
-            <div className="bg-slate-50 min-h-screen p-6 pb-24">
+            <div className="bg-slate-50 h-full p-6 pb-24">
                 <div className="animate-pulse space-y-6">
                     <div className="h-40 bg-white rounded-3xl shadow-sm"></div>
                     <div className="h-64 bg-white rounded-3xl shadow-sm"></div>
@@ -103,7 +103,7 @@ export default function Track() {
 
     if (data.length === 0) {
         return (
-            <div className="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-6 text-center">
+            <div className="bg-slate-50 h-full min-h-[70vh] flex flex-col items-center justify-center p-6 text-center">
                 <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6">
                     <Activity className="w-10 h-10 text-blue-500" />
                 </div>
@@ -139,7 +139,7 @@ export default function Track() {
     ].filter(item => item.value > 0);
 
     return (
-        <div className="bg-[#f0f4f8] min-h-screen pb-24 font-sans text-slate-800 selection:bg-blue-100">
+        <div className="bg-[#f0f4f8] h-full pb-24 font-sans text-slate-800 selection:bg-blue-100">
             {/* Header */}
             <div className="pt-12 pb-6 px-6 sticky top-0 bg-[#f0f4f8]/80 backdrop-blur-xl z-10">
                 <div className="flex items-center gap-4">

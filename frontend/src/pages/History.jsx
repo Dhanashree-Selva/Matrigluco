@@ -61,7 +61,7 @@ export default function History() {
     };
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen relative pb-24">
+        <div className="p-6 bg-gray-50 h-full min-h-[80vh] relative pb-24">
             <div className="flex items-center gap-4 mb-6">
                 <button
                     onClick={() => navigate(-1)}

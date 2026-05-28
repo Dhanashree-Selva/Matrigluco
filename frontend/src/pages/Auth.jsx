@@ -108,17 +108,7 @@ function BackArrow({ onClick }) {
     );
 }
 
-function StatusBar() {
-    return (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 24px 0", fontSize: "12px", fontWeight: 600, color: "#1A1A2E" }}>
-            <span>9:41</span>
-            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                <span>●●</span>
-                <span>□</span>
-            </div>
-        </div>
-    );
-}
+// ─── Shared primitives ───────────────────────────────────────────────────────
 
 // ─── Sign In Screen ───────────────────────────────────────────────────────────
 function SignInScreen({ onGoSignUp, onGoForgot, onSuccess }) {
@@ -394,20 +384,17 @@ export default function Auth() {
             <div
                 style={{
                     width: "100%",
-                    maxWidth: "100%",
-                    minHeight: "844px",
+                    maxWidth: "480px",
                     background: "#FEF9F9",
-                    borderRadius: "40px",
-                    boxShadow: "0 32px 80px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06)",
+                    borderRadius: "24px",
+                    boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
                     display: "flex",
                     flexDirection: "column",
                     overflow: "hidden",
                     position: "relative",
                 }}
-                // On small screens, full height no rounding
-                className="auth-phone-container"
+                className="auth-web-container"
             >
-                <StatusBar />
 
                 {/* Content area */}
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "20px 28px 36px", overflow: "hidden" }}>
@@ -443,18 +430,19 @@ export default function Auth() {
                     </AnimatePresence>
                 </div>
 
-                {/* Home indicator */}
-                <div style={{ display: "flex", justifyContent: "center", paddingBottom: "12px" }}>
-                    <div style={{ width: "120px", height: "4px", background: "#1A1A2E", borderRadius: "10px", opacity: 0.15 }} />
-                </div>
+                {/* Content area ends */}
             </div>
 
-            {/* Responsive: full-screen on very small screens */}
             <style>{`
-                @media (max-width: 430px) {
-                    .auth-phone-container {
+                .auth-web-container {
+                    min-height: 600px;
+                    margin: 40px 0;
+                }
+                @media (max-width: 500px) {
+                    .auth-web-container {
                         border-radius: 0 !important;
                         min-height: 100vh !important;
+                        margin: 0 !important;
                         box-shadow: none !important;
                     }
                 }
