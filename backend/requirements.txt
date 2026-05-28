@@ -1,5 +1,6 @@
 # MatriGluco Backend — Production Dependencies
-# Python 3.11.9 (pinned via runtime.txt)
+# Python version pinned in runtime.txt (3.11.9)
+# Use flexible ranges for compiled packages — pip picks binary wheels automatically
 
 # ── Core API ───────────────────────────────────────────────────────────────────
 fastapi==0.115.0
@@ -12,11 +13,11 @@ supabase==2.4.6
 httpx==0.27.0
 
 # ── ML / Data ─────────────────────────────────────────────────────────────────
-numpy==1.26.4
-scipy==1.13.1
+# Do NOT pin numpy/scipy here — they are transitive deps of scikit-learn.
+# Letting pip resolve them picks binary wheels automatically (no compilation needed).
 scikit-learn==1.5.2
-pandas==2.2.3
 joblib==1.4.2
+pandas==2.2.3
 
 # ── OCR / Document parsing ────────────────────────────────────────────────────
 Pillow==10.4.0
