@@ -239,7 +239,7 @@ export default function DiabetesPrediction() {
             setFlowStep(2); // Show loading during prediction too
             setExtractionProgress(30);
 
-            const response = await fetch("http://127.0.0.1:8000/api/prediction/", {
+            const response = await fetch("https://matrigluco.onrender.com/api/prediction/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -267,7 +267,7 @@ export default function DiabetesPrediction() {
             const { data: authData } = await supabase.auth.getUser();
             const user = authData?.user;
 
-            await fetch("http://127.0.0.1:8000/api/tracking/", {
+            await fetch("https://matrigluco.onrender.com/api/tracking/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
