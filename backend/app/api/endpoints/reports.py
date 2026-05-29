@@ -13,19 +13,35 @@ OCR_API_KEY = os.getenv("OCR_API_KEY")
 
 def extract_text_from_image(image_path):
     try:
-        with open(image_path, 'rb') as f:
+        with open(image_path, "rb") as f:
             response = requests.post(
                 "https://api.ocr.space/parse/image",
-                data={"apikey": OCR_API_KEY, "language": "eng"},
-                files={"file": f}
+                files={"file": f},
+                data={
+                    "apikey": OCR_API_KEY,
+                    "language": "eng",
+                    "isOverlayRequired": False
+                },
+                timeout=60
             )
-            result = response.json()
-            if result.get("ParsedResults"):
-                text = ""
-                for res in result["ParsedResults"]:
-                    text += res.get("ParsedText", "") + " "
-                return text
+
+        print("OCR STATUS:", response.status_code)
+        print("OCR RESPONSE:", response.text)
+
+        result = response.json()
+
+        if result.get("IsErroredOnProcessing"):
+            print("OCR API ERROR:", result)
             return ""
+
+        if result.get("ParsedResults"):
+            text = ""
+            for res in result["ParsedResults"]:
+                text += res.get("ParsedText", "") + " "
+            return text.strip()
+
+        return ""
+
     except Exception as e:
         print(f"OCR Error: {e}")
         return ""
