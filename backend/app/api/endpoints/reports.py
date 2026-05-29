@@ -5,7 +5,7 @@ import re
 import os
 import requests
 import numpy as np
-from .prediction import model, scaler
+import app.api.endpoints.prediction as pred
 
 router = APIRouter()
 
@@ -20,7 +20,7 @@ def extract_text_from_image(image_path):
                 data={
                     "apikey": OCR_API_KEY,
                     "language": "eng",
-                    "isOverlayRequired": False
+                    "isOverlayRequired": "false"
                 },
                 timeout=60
             )
@@ -200,16 +200,26 @@ async def scan_report(
     ]])
 
     # Scale input
-    input_scaled = scaler.transform(
+    pred.load_model()
+    if pred.model is None or pred.scaler is None:
+        return {
+            "message": "Model not ready yet",
+            "health_data": extracted_data,
+            "prediction_result": "Unknown",
+            "risk_level": "Unknown",
+            "probability_score": 0
+        }
+
+    input_scaled = pred.scaler.transform(
         input_features
     )
 
     # Prediction
-    prediction = model.predict(
+    prediction = pred.model.predict(
         input_scaled
     )[0]
 
-    probability = model.predict_proba(
+    probability = pred.model.predict_proba(
         input_scaled
     )[0][1]
 

@@ -14,11 +14,12 @@ import {
     X,
     Zap
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
 export default function DiabetesPrediction() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     // Flow Steps: 0: Home, 1: Choose File, 2: OCR Loading, 3: Form, 4: Result, 5: Scanner, 6: Preview
     const [flowStep, setFlowStep] = useState(0);
@@ -51,6 +52,16 @@ export default function DiabetesPrediction() {
     const [recentReports, setRecentReports] = useState([]);
 
     useEffect(() => {
+        // If navigated from ManualEntry with a prediction result, show it directly
+        const incoming = location.state?.manualResult;
+        if (incoming) {
+            setResult({
+                score: incoming.probability_score,
+                level: incoming.risk_level,
+                message: incoming.prediction_result,
+            });
+            setFlowStep(4);
+        }
         fetchReports();
         return () => stopCamera();
     }, []);
@@ -153,7 +164,8 @@ export default function DiabetesPrediction() {
                 setExtractionProgress(prev => (prev < 90 ? prev + 10 : prev));
             }, 400);
 
-            const response = await fetch("http://127.0.0.1:8000/api/reports/", {
+            const response = await fetch(
+                "https://matrigluco.onrender.com/api/reports/", {
                 method: "POST",
                 body: dataForm,
             });
@@ -445,9 +457,19 @@ export default function DiabetesPrediction() {
                             animate={{ opacity: 1 }}
                             className="absolute inset-0 z-[100] bg-[#FDF8F8] flex flex-col"
                         >
-                            <div className="flex-grow relative flex items-center justify-center p-8">
-                                <div className="relative w-full aspect-[3/4] bg-white rounded-[40px] overflow-hidden shadow-2xl border border-[#F2E9E9]">
-                                    <img src={capturedImage} className="w-full h-full object-cover" alt="Captured" />
+                            {/* Preview area — full-screen on mobile, centered card on desktop */}
+                            <div className="flex-grow flex items-center justify-center p-4 md:p-8 overflow-hidden">
+                                <div className="
+                                    relative w-full bg-white border border-[#F2E9E9] overflow-hidden
+                                    rounded-[40px] shadow-2xl
+                                    aspect-[3/4]
+                                    md:aspect-auto md:max-w-3xl md:max-h-[500px] md:w-full md:rounded-3xl md:shadow-sm
+                                ">
+                                    <img
+                                        src={capturedImage}
+                                        className="w-full h-full object-cover md:object-contain"
+                                        alt="Captured"
+                                    />
 
                                     {/* Crop adjustment guides */}
                                     <div className="absolute inset-6 border border-dashed border-white/40 pointer-events-none rounded-[32px]">
@@ -459,16 +481,17 @@ export default function DiabetesPrediction() {
                                 </div>
                             </div>
 
-                            <div className="p-10 space-y-4 bg-white rounded-t-[48px] shadow-sm border-t border-[#F2E9E9]">
+                            {/* Action buttons — always visible at bottom */}
+                            <div className="p-6 md:p-8 space-y-4 bg-white rounded-t-[48px] md:rounded-t-3xl shadow-sm border-t border-[#F2E9E9] md:max-w-3xl md:mx-auto md:w-full">
                                 <button
                                     onClick={() => { setCapturedImage(null); startCamera(); }}
-                                    className="w-full bg-[#FDF8F8] text-[#2A2340] font-extrabold py-5 rounded-[24px] border border-[#F2E9E9]"
+                                    className="w-full bg-[#FDF8F8] text-[#2A2340] font-extrabold py-5 rounded-[24px] border border-[#F2E9E9] hover:border-[#F05578] transition-all"
                                 >
                                     RETAKE PHOTO
                                 </button>
                                 <button
                                     onClick={() => processOCR(capturedImage)}
-                                    className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100"
+                                    className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
                                 >
                                     USE PHOTO
                                 </button>
