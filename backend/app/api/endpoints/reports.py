@@ -1,17 +1,34 @@
 from fastapi import APIRouter, UploadFile, File
-from PIL import Image
-import easyocr
-import cv2
-import numpy as np
 import fitz
 import tempfile
 import re
+import os
+import requests
+import numpy as np
 from .prediction import model, scaler
 
 router = APIRouter()
 
-# OCR Reader
-#reader = easyocr.Reader(['en'], gpu=False)
+OCR_API_KEY = os.getenv("OCR_API_KEY")
+
+def extract_text_from_image(image_path):
+    try:
+        with open(image_path, 'rb') as f:
+            response = requests.post(
+                "https://api.ocr.space/parse/image",
+                data={"apikey": OCR_API_KEY, "language": "eng"},
+                files={"file": f}
+            )
+            result = response.json()
+            if result.get("ParsedResults"):
+                text = ""
+                for res in result["ParsedResults"]:
+                    text += res.get("ParsedText", "") + " "
+                return text
+            return ""
+    except Exception as e:
+        print(f"OCR Error: {e}")
+        return ""
 
 
 def extract_health_values(text):
@@ -77,11 +94,10 @@ def extract_health_values(text):
 async def scan_report(
     file: UploadFile = File(...)
 ):
-    reader = easyocr.Reader(['en'])
     text = ""
 
     # PDF Upload
-    if file.filename.endswith(".pdf"):
+    if file.filename.lower().endswith(".pdf"):
         pdf_bytes = await file.read()
 
         with tempfile.NamedTemporaryFile(
@@ -98,39 +114,33 @@ async def scan_report(
 
         for page in pdf_document:
             pix = page.get_pixmap()
-
-            img = np.frombuffer(
-                pix.samples,
-                dtype=np.uint8
-            ).reshape(
-                pix.height,
-                pix.width,
-                pix.n
-            )
-
-            results = reader.readtext(img)
-
-            for result in results:
-                text += result[1] + " "
+            
+            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
+                pix.save(temp_img.name)
+                temp_img_path = temp_img.name
+                
+            page_text = extract_text_from_image(temp_img_path)
+            if page_text:
+                text += page_text + " "
+                
+            os.remove(temp_img_path)
+            
+        pdf_document.close()
+        os.remove(temp_pdf_path)
 
     # Image Upload
     else:
         image_bytes = await file.read()
-
-        np_arr = np.frombuffer(
-            image_bytes,
-            np.uint8
-        )
-
-        img = cv2.imdecode(
-            np_arr,
-            cv2.IMREAD_COLOR
-        )
-
-        results = reader.readtext(img)
-
-        for result in results:
-            text += result[1] + " "
+        
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
+            temp_img.write(image_bytes)
+            temp_img_path = temp_img.name
+            
+        page_text = extract_text_from_image(temp_img_path)
+        if page_text:
+            text += page_text + " "
+            
+        os.remove(temp_img_path)
 
     # Extract OCR health values
     extracted_data = extract_health_values(text)
