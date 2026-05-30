@@ -55,7 +55,7 @@ export default function RiskDetails() {
                 .from("reports")
                 .select("*")
                 .eq("user_id", user.id)
-                .order("created_at", { ascending: false })
+                .order("uploaded_at", { ascending: false })
                 .limit(1);
 
             if (reportData?.length > 0) {
@@ -115,8 +115,8 @@ export default function RiskDetails() {
                     ['AI Score', `${(prediction.prediction_score || prediction.probability_score || 0).toFixed(2)}%`],
                     ['Blood Glucose', `${prediction.glucose || 'N/A'} mg/dL`],
                     ['BMI', `${prediction.bmi || 'N/A'} kg/m²`],
-                    ['HbA1c', `${latestReport?.clinical_data?.hba1c || 'N/A'} %`],
-                    ['Blood Pressure', `${latestReport?.clinical_data?.blood_pressure || '120/80'} mmHg`],
+                    ['HbA1c', `${latestReport?.extracted_values?.hba1c || 'N/A'} %`],
+                    ['Blood Pressure', `${latestReport?.extracted_values?.blood_pressure || '120/80'} mmHg`],
                 ],
                 headStyles: { fillColor: primaryColor },
                 styles: { fontSize: 10 }
@@ -190,7 +190,7 @@ export default function RiskDetails() {
     const isHigh = level === "High Risk";
     const isModerate = level === "Moderate Risk";
 
-    const clinical = latestReport?.clinical_data || {};
+    const clinical = latestReport?.extracted_values || {};
 
     const stats = [
         { label: "Glucose", value: prediction.glucose || clinical.glucose_fasting || "—", unit: "mg/dL", icon: Droplets, color: "text-[#F05578]", bg: "bg-[#FEE7EC]" },

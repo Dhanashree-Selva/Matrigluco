@@ -118,7 +118,7 @@ export default function DiabetesPrediction() {
                 .from('reports')
                 .select('*')
                 .eq('user_id', user.id)
-                .order('created_at', { ascending: false });
+                .order('uploaded_at', { ascending: false });
 
             if (!error) {
                 setRecentReports(data || []);
@@ -192,10 +192,9 @@ export default function DiabetesPrediction() {
 
                         await supabase.from('reports').insert({
                             user_id: user.id,
-                            file_name: fileToUpload.name,
                             file_url: publicUrl,
-                            file_type: fileToUpload.type,
-                            clinical_data: data.health_data
+                            extracted_values: data.health_data,
+                            uploaded_at: new Date().toISOString()
                         });
                         fetchReports();
                     }
@@ -359,8 +358,8 @@ export default function DiabetesPrediction() {
                                         {recentReports.map((report) => (
                                             <RecentFile
                                                 key={report.id}
-                                                name={report.file_name}
-                                                date={new Date(report.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                name={report.file_url ? report.file_url.split('/').pop() : 'Medical Report'}
+                                                date={new Date(report.uploaded_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                 onClick={() => window.open(report.file_url, '_blank')}
                                             />
                                         ))}
