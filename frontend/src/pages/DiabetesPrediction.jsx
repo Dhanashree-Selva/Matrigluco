@@ -167,13 +167,11 @@ export default function DiabetesPrediction() {
             }, 400);
 
             const response = await fetch(
-                `${API_BASE_URL}/api/reports/`, {
+                "https://matrigluco.onrender.com/api/reports/", {
                 method: "POST",
                 body: dataForm,
             });
             const data = await response.json();
-            console.log("OCR API Response:", data);
-            console.log("Extracted Values Payload:", data.health_data);
 
             clearInterval(progressInterval);
             setExtractionProgress(100);
@@ -235,14 +233,12 @@ export default function DiabetesPrediction() {
 
                 setExtractedFields(found);
 
-                const updatedFormData = {
-                    ...formData,
-                    glucose: glucoseExtracted || formData.glucose,
-                    bmi: data.health_data.bmi || formData.bmi,
-                    hba1c: data.health_data.hba1c || formData.hba1c,
-                };
-                setFormData(updatedFormData);
-                console.log("Form State After Mapping:", updatedFormData);
+                setFormData((prev) => ({
+                    ...prev,
+                    glucose: glucoseExtracted || prev.glucose,
+                    bmi: data.health_data.bmi || prev.bmi,
+                    hba1c: data.health_data.hba1c || prev.hba1c,
+                }));
 
                 setTimeout(() => setFlowStep(3), 1500);
             } else {
@@ -263,7 +259,7 @@ export default function DiabetesPrediction() {
             setFlowStep(2); // Show loading during prediction too
             setExtractionProgress(30);
 
-            const response = await fetch(`${API_BASE_URL}/api/prediction/`, {
+            const response = await fetch("https://matrigluco.onrender.com/api/prediction/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -291,7 +287,7 @@ export default function DiabetesPrediction() {
             const { data: authData } = await supabase.auth.getUser();
             const user = authData?.user;
 
-            await fetch(`${API_BASE_URL}/api/tracking/`, {
+            await fetch("https://matrigluco.onrender.com/api/tracking/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
