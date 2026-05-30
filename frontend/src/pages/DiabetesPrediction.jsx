@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import Cropper from "react-easy-crop";
 const API_BASE_URL =
     import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -52,6 +53,13 @@ export default function DiabetesPrediction() {
     const [extractionProgress, setExtractionProgress] = useState(0);
     const [extractedFields, setExtractedFields] = useState([]);
     const [recentReports, setRecentReports] = useState([]);
+
+    // Cropper States
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
+    const [imageToCrop, setImageToCrop] = useState(null);
 
     useEffect(() => {
         // If navigated from ManualEntry with a prediction result, show it directly
@@ -105,8 +113,8 @@ export default function DiabetesPrediction() {
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/jpeg');
-            setCapturedImage(imageData);
-            setFlowStep(6);
+            setImageToCrop(imageData);
+            setIsCropping(true);
             stopCamera();
         }
     };
@@ -134,13 +142,77 @@ export default function DiabetesPrediction() {
         const file = event.target.files[0];
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            setCapturedImage(e.target.result);
-            setFlowStep(6);
-            stopCamera();
-        };
-        reader.readAsDataURL(file);
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImageToCrop(e.target.result);
+                setIsCropping(true);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // PDF or other - direct upload
+            processOCR(file);
+        }
+    };
+
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
+
+    const createImage = (url) =>
+        new Promise((resolve, reject) => {
+            const image = new Image();
+            image.addEventListener("load", () => resolve(image));
+            image.addEventListener("error", (error) => reject(error));
+            image.setAttribute("crossOrigin", "anonymous");
+            image.src = url;
+        });
+
+    const getCroppedImg = async (imageSrc, pixelCrop) => {
+        const image = await createImage(imageSrc);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        if (!ctx) return null;
+
+        canvas.width = pixelCrop.width;
+        canvas.height = pixelCrop.height;
+
+        ctx.drawImage(
+            image,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            pixelCrop.width,
+            pixelCrop.height
+        );
+
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                resolve(blob);
+            }, "image/jpeg", 0.95);
+        });
+    };
+
+    const handleCropSave = async () => {
+        try {
+            const croppedBlob = await getCroppedImg(imageToCrop, croppedAreaPixels);
+            const croppedFile = new File([croppedBlob], "cropped_report.jpg", { type: "image/jpeg" });
+
+            console.log("Original Image Loaded");
+            console.log(`Cropped Image Dimensions: ${croppedAreaPixels.width}x${croppedAreaPixels.height}`);
+            console.log(`Cropped File Size: ${(croppedFile.size / 1024).toFixed(2)} KB`);
+            console.log("Upload started");
+
+            setIsCropping(false);
+            processOCR(croppedFile);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     const processOCR = async (fileOrDataUrl) => {
@@ -679,6 +751,55 @@ export default function DiabetesPrediction() {
             <input type="file" accept=".pdf,image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelection} />
             <input type="file" accept="image/*" capture="environment" className="hidden" ref={scanInputRef} onChange={handleFileSelection} />
             <canvas ref={canvasRef} className="hidden" />
+
+            {/* Image Cropper Modal */}
+            {isCropping && (
+                <div className="fixed inset-0 z-[200] bg-black flex flex-col">
+                    <div className="relative flex-1 bg-black">
+                        <Cropper
+                            image={imageToCrop}
+                            crop={crop}
+                            zoom={zoom}
+                            aspect={null}
+                            onCropChange={setCrop}
+                            onCropComplete={onCropComplete}
+                            onZoomChange={setZoom}
+                        />
+                    </div>
+                    <div className="bg-white p-6 space-y-6 rounded-t-[40px] shadow-2xl">
+                        <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                                <span className="text-xs font-black text-[#9E8A8C] uppercase tracking-widest">Zoom Level</span>
+                                <span className="text-xs font-bold text-[#F05578]">{zoom.toFixed(1)}x</span>
+                            </div>
+                            <input
+                                type="range"
+                                value={zoom}
+                                min={1}
+                                max={3}
+                                step={0.1}
+                                aria-labelledby="Zoom"
+                                onChange={(e) => setZoom(Number(e.target.value))}
+                                className="w-full h-2 bg-[#FDF8F8] rounded-lg appearance-none cursor-pointer accent-[#F05578] border border-[#F2E9E9]"
+                            />
+                        </div>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => { setIsCropping(false); setImageToCrop(null); }}
+                                className="flex-1 py-5 rounded-[24px] border border-[#F2E9E9] text-[#2A2340] font-extrabold hover:bg-gray-50 transition-all"
+                            >
+                                CANCEL
+                            </button>
+                            <button
+                                onClick={handleCropSave}
+                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
+                            >
+                                CROP & UPLOAD
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

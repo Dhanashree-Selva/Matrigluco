@@ -66,7 +66,7 @@ def extract_text_from_image(image_bytes, filename="report.png", content_type="im
 
 
 def extract_health_values(text):
-    print("\n--- [DEBUG] extract_health_values CALLED ---")
+    print("\n--- [DEBUG] extract_health_values (LINE-AWARE) CALLED ---")
     
     extracted = {
         "glucose_fasting": None,
@@ -76,49 +76,47 @@ def extract_health_values(text):
         "bmi": None
     }
 
-    # Regex patterns for tabular support
-    # HbA1c: skips up to 30 non-digit characters between label and value
-    hba1c_pattern = r"(hba1c|hbaic|a1c|hb\s*a1c|hb\s*a1\s*c|glycosylated)[^\d]{0,30}(\d+\.?\d*)"
-    
-    # Glucose PP: specialized patterns for post-meal
-    pp_patterns = [
-        r"(glucose\s*\(pp\)|post\s*meal|pp\s*plasma\s*glucose|after\s*meal|postprandial)(?:\s*glucose)?[^\d]{0,30}(\d+\.?\d*)"
-    ]
-    
-    # Glucose General/Fasting: broader patterns for tabular reports
-    glucose_patterns = [
-        r"(glucose\s*fasting|fasting\s*glucose|glucose,\s*fasting|fasting\s*blood\s*sugar|fbs)[^\d]{0,30}(\d+\.?\d*)",
-        r"(glucose|estimated\s*average\s*glucose|blood\s*glucose|plasma\s*glucose)[^\d]{0,30}(\d+\.?\d*)"
-    ]
+    # Line-aware regex patterns
+    hba1c_pattern = r"(hba1c|hbaic|a1c)[^\n\r\d]{0,20}(\d+\.?\d*)"
+    glucose_pattern = r"(estimated\s*average\s*glucose|blood\s*glucose|plasma\s*glucose|glucose|fbs)[^\n\r\d]{0,20}(\d+\.?\d*)"
+    bmi_pattern = r"(bmi|body\s*mass\s*index)[^\n\r\d]{0,20}(\d+\.?\d*)"
 
-    bmi_patterns = [
-        r"(bmi|body\s*mass\s*index)[^\d]{0,30}(\d+\.?\d*)"
-    ]
+    lines = text.splitlines()
+    print(f"Checking {len(lines)} lines for medical values...")
 
-    def find_match(patterns, text, label):
-        if isinstance(patterns, str):
-            patterns = [patterns]
+    for i, line in enumerate(lines):
+        clean_line = line.strip()
+        if not clean_line:
+            continue
             
-        for pattern in patterns:
-            match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
+        # Match HbA1c
+        if extracted["hba1c"] is None:
+            match = re.search(hba1c_pattern, clean_line, re.IGNORECASE)
             if match:
-                value = float(match.group(2))
-                start, end = match.span()
-                snippet = text[max(0, start-20):min(len(text), end+20)].replace("\n", " ")
-                
-                print(f"[MATCH FOUND] {label}")
-                print(f"  Pattern: {pattern}")
-                print(f"  Snippet: ...{snippet}...")
-                print(f"  Groups: {match.groups()}")
-                print(f"  Value: {value}")
-                return value
-        return None
+                extracted["hba1c"] = float(match.group(2))
+                print(f"[MATCH HbA1c] Line {i+1}: \"{clean_line}\" -> Value: {extracted['hba1c']}")
 
-    # Extraction with priority
-    extracted["hba1c"] = find_match(hba1c_pattern, text, "HbA1c")
-    extracted["glucose_pp"] = find_match(pp_patterns, text, "Glucose PP")
-    extracted["glucose_fasting"] = find_match(glucose_patterns, text, "Glucose Fasting/General")
-    extracted["bmi"] = find_match(bmi_patterns, text, "BMI")
+        # Match Glucose
+        if extracted["glucose_fasting"] is None:
+            match = re.search(glucose_pattern, clean_line, re.IGNORECASE)
+            if match:
+                # Check if it's specifically PP or Fasting based on keywords in the SAME line
+                val = float(match.group(2))
+                keyword = match.group(1).lower()
+                
+                if any(k in clean_line.lower() for k in ["post\s*meal", "pp", "after\s*meal"]):
+                    extracted["glucose_pp"] = val
+                    print(f"[MATCH Glucose PP] Line {i+1}: \"{clean_line}\" -> Value: {val}")
+                else:
+                    extracted["glucose_fasting"] = val
+                    print(f"[MATCH Glucose Fasting] Line {i+1}: \"{clean_line}\" -> Value: {val}")
+
+        # Match BMI
+        if extracted["bmi"] is None:
+            match = re.search(bmi_pattern, clean_line, re.IGNORECASE)
+            if match:
+                extracted["bmi"] = float(match.group(2))
+                print(f"[MATCH BMI] Line {i+1}: \"{clean_line}\" -> Value: {extracted['bmi']}")
 
     # Fallback Logic
     if extracted["glucose_fasting"] is not None:
