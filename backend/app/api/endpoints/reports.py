@@ -48,60 +48,97 @@ def extract_text_from_image(image_path):
 
 
 def extract_health_values(text):
+    print("--- RAW OCR TEXT START ---")
+    print(text)
+    print("--- RAW OCR TEXT END ---")
+
     extracted = {
         "glucose_fasting": None,
         "glucose_pp": None,
+        "glucose": None,
         "hba1c": None,
         "bmi": None
     }
 
-    # Glucose Fasting
-    fasting_match = re.search(
-        r"(glucose fasting|fasting glucose|glucose, fasting).*?(\d+\.?\d*)",
-        text,
-        re.IGNORECASE
-    )
+    # Regex patterns for variations
+    # HbA1c Variations (tolerant to HbAIC/HBAIC)
+    hba1c_patterns = [
+        r"(hba1c|a1c|hbaic|hb\s*a1c|hb\s*a1\s*c)\s*[:\-]?\s*(\d+\.?\d*)\s*(%)?"
+    ]
 
-    # Glucose PP / Post Meal
-    pp_match = re.search(
-        r"(glucose\s*\(pp\)|post meal|pp plasma glucose).*?(\d+\.?\d*)",
-        text,
-        re.IGNORECASE
-    )
+    # Glucose PP Variations
+    pp_patterns = [
+        r"(glucose\s*\(pp\)|post\s*meal|pp\s*plasma\s*glucose|after\s*meal|postprandial)(?:\s*glucose)?\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl|mmol/l)?"
+    ]
 
-    # HbA1c
-    hba1c_match = re.search(
-        r"(hba1c|a1c).*?(\d+\.?\d*)",
-        text,
-        re.IGNORECASE
-    )
+    # Glucose Fasting Variations
+    fasting_patterns = [
+        r"(glucose\s*fasting|fasting\s*glucose|glucose,\s*fasting|fasting\s*blood\s*sugar|fbs)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl|mmol/l)?",
+        r"(blood\s*glucose|plasma\s*glucose|glucose)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl|mmol/l)",
+        r"(blood\s*glucose|plasma\s*glucose|glucose)\s*[:\-]\s*(\d+\.?\d*)"
+    ]
 
-    # BMI
-    bmi_match = re.search(
-        r"(bmi).*?(\d+\.?\d*)",
-        text,
-        re.IGNORECASE
-    )
+    # BMI Variations
+    bmi_patterns = [
+        r"(bmi|body\s*mass\s*index)\s*[:\-]?\s*(\d+\.?\d*)"
+    ]
 
-    if fasting_match:
-        extracted["glucose_fasting"] = float(
-            fasting_match.group(2)
-        )
+    # Extracting HbA1c
+    for pattern in hba1c_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            extracted["hba1c"] = float(match.group(2))
+            print(f"Matched hba1c using pattern: \"{pattern}\"")
+            print(f"Matched value: {extracted['hba1c']}")
+            break
 
-    if pp_match:
-        extracted["glucose_pp"] = float(
-            pp_match.group(2)
-        )
+    # Extracting Glucose PP (Check PP first to avoid generic glucose matching)
+    for pattern in pp_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            extracted["glucose_pp"] = float(match.group(2))
+            print(f"Matched glucose_pp using pattern: \"{pattern}\"")
+            print(f"Matched value: {extracted['glucose_pp']}")
+            break
 
-    if hba1c_match:
-        extracted["hba1c"] = float(
-            hba1c_match.group(2)
-        )
+    # Extracting Glucose Fasting / General
+    # Only match if didn't already match as PP or if specifically a Fasting keyword
+    for pattern in fasting_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            # If we already have a PP value and this match is just "glucose", maybe skip?
+            # But the user might have both. For now, let's just avoid double-counting if possible.
+            # Actually, most reports have these as distinct lines.
+            
+            # Simple check: if this match overlaps with the PP match, we might have a problem.
+            # But re.search just gives the first one.
+            
+            val = float(match.group(2))
+            if extracted["glucose_pp"] == val:
+                # Likely the same field matched by a broader pattern
+                continue
+                
+            extracted["glucose_fasting"] = val
+            print(f"Matched glucose_fasting using pattern: \"{pattern}\"")
+            print(f"Matched value: {extracted['glucose_fasting']}")
+            break
 
-    if bmi_match:
-        extracted["bmi"] = float(
-            bmi_match.group(2)
-        )
+    # Extracting BMI
+    for pattern in bmi_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            extracted["bmi"] = float(match.group(2))
+            print(f"Matched bmi using pattern: \"{pattern}\"")
+            print(f"Matched value: {extracted['bmi']}")
+            break
+
+    # Fallback Logic
+    if extracted["glucose_fasting"] is not None:
+        extracted["glucose"] = extracted["glucose_fasting"]
+        print(f"Mapped glucose from glucose_fasting: {extracted['glucose']}")
+    elif extracted["glucose_pp"] is not None:
+        extracted["glucose"] = extracted["glucose_pp"]
+        print(f"Mapped glucose from glucose_pp: {extracted['glucose']}")
 
     return extracted
 

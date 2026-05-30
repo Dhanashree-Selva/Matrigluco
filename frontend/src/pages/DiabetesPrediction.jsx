@@ -179,23 +179,42 @@ export default function DiabetesPrediction() {
                 const { data: { user } } = await supabase.auth.getUser();
                 if (user) {
                     const fileExt = fileToUpload.name.split('.').pop();
-                    const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+                    const uniqueId = crypto.randomUUID ? crypto.randomUUID() : Date.now();
+                    const fileName = `${user.id}/${uniqueId}.${fileExt}`;
 
-                    const { data: storageData } = await supabase.storage
+                    const { data: storageData, error: storageError } = await supabase.storage
                         .from('medical_reports')
-                        .upload(fileName, fileToUpload);
+                        .upload(fileName, fileToUpload, { upsert: true });
+
+                    if (storageError) {
+                        console.log("Supabase Storage Error:", storageError);
+                    }
 
                     if (storageData) {
                         const { data: { publicUrl } } = supabase.storage
                             .from('medical_reports')
                             .getPublicUrl(fileName);
 
-                        await supabase.from('reports').insert({
-                            user_id: user.id,
-                            file_url: publicUrl,
-                            extracted_values: data.health_data,
-                            uploaded_at: new Date().toISOString()
-                        });
+                        const { data: insertData, error: insertError } = await supabase
+                            .from('reports')
+                            .insert({
+                                user_id: user.id,
+                                file_url: publicUrl,
+                                extracted_values: data.health_data,
+                                uploaded_at: new Date().toISOString()
+                            })
+                            .select();
+
+                        if (insertError) {
+                            console.log("Supabase Insert Error:", JSON.stringify(insertError, null, 2));
+                            console.log("Insert payload was:", {
+                                user_id: user.id,
+                                file_url: publicUrl,
+                                extracted_values: data.health_data
+                            });
+                        } else {
+                            console.log("Report inserted successfully:", insertData);
+                        }
                         fetchReports();
                     }
                 }
