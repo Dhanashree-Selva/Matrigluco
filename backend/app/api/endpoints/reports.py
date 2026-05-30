@@ -11,27 +11,45 @@ router = APIRouter()
 
 OCR_API_KEY = os.getenv("OCR_API_KEY")
 
-def extract_text_from_image(image_path):
+def extract_text_from_image(image_bytes, filename="report.png", content_type="image/png"):
     try:
-        with open(image_path, "rb") as f:
-            response = requests.post(
-                "https://api.ocr.space/parse/image",
-                files={"file": f},
-                data={
-                    "apikey": OCR_API_KEY,
-                    "language": "eng",
-                    "isOverlayRequired": "false"
-                },
-                timeout=60
-            )
+        print(f"\n--- [OCR DEBUG] UPLOADING FILE: {filename} ---")
+        print(f"Content-Type: {content_type}")
+        print(f"Byte Size: {len(image_bytes)}")
 
-        print("OCR STATUS:", response.status_code)
-        print("OCR RESPONSE:", response.text)
+        if len(image_bytes) == 0:
+            print("ERROR: Image bytes are empty.")
+            return ""
+
+        files = {
+            "file": (
+                filename,
+                image_bytes,
+                content_type
+            )
+        }
+
+        payload = {
+            "apikey": OCR_API_KEY,
+            "language": "eng",
+            "isOverlayRequired": "false",
+            "OCREngine": 2
+        }
+
+        response = requests.post(
+            "https://api.ocr.space/parse/image",
+            files=files,
+            data=payload,
+            timeout=60
+        )
+
+        print(f"OCR HTTP STATUS: {response.status_code}")
+        # print("OCR RAW RESPONSE:", response.text)
 
         result = response.json()
 
         if result.get("IsErroredOnProcessing"):
-            print("OCR API ERROR:", result)
+            print("OCR API ERROR:", result.get("ErrorMessage") or result)
             return ""
 
         if result.get("ParsedResults"):
@@ -43,7 +61,7 @@ def extract_text_from_image(image_path):
         return ""
 
     except Exception as e:
-        print(f"OCR Error: {e}")
+        print(f"OCR Exception: {e}")
         return ""
 
 
@@ -146,54 +164,65 @@ def extract_health_values(text):
 async def scan_report(
     file: UploadFile = File(...)
 ):
+    print(f"\n--- [SCAN REPORT] New Upload: {file.filename} ---")
+    print(f"Content Type: {file.content_type}")
+    
+    file_bytes = await file.read()
+    print(f"Total Bytes Read: {len(file_bytes)}")
+    
+    if len(file_bytes) == 0:
+        return {
+            "message": "Empty file uploaded",
+            "health_data": {},
+            "prediction_result": "Unknown",
+            "risk_level": "Unknown",
+            "probability_score": 0
+        }
+
     text = ""
 
     # PDF Upload
     if file.filename.lower().endswith(".pdf"):
-        pdf_bytes = await file.read()
-
         with tempfile.NamedTemporaryFile(
             suffix=".pdf",
             delete=False
         ) as temp_pdf:
-
-            temp_pdf.write(pdf_bytes)
+            temp_pdf.write(file_bytes)
             temp_pdf_path = temp_pdf.name
 
-        pdf_document = fitz.open(
-            temp_pdf_path
-        )
+        pdf_document = fitz.open(temp_pdf_path)
 
-        for page in pdf_document:
+        for i, page in enumerate(pdf_document):
             pix = page.get_pixmap()
             
             with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
                 pix.save(temp_img.name)
-                temp_img_path = temp_img.name
+                with open(temp_img.name, "rb") as f:
+                    page_bytes = f.read()
                 
-            page_text = extract_text_from_image(temp_img_path)
-            print(f"PAGE TEXT: {page_text}")
-            if page_text:
-                text += page_text + " "
+                page_text = extract_text_from_image(
+                    page_bytes, 
+                    filename=f"page_{i+1}.png", 
+                    content_type="image/png"
+                )
+                print(f"PAGE {i+1} TEXT EXTRACTED.")
+                if page_text:
+                    text += page_text + " "
                 
-            os.remove(temp_img_path)
+                os.remove(temp_img.name)
             
         pdf_document.close()
         os.remove(temp_pdf_path)
 
     # Image Upload
     else:
-        image_bytes = await file.read()
-        
-        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
-            temp_img.write(image_bytes)
-            temp_img_path = temp_img.name
-            
-        page_text = extract_text_from_image(temp_img_path)
+        page_text = extract_text_from_image(
+            file_bytes, 
+            filename=file.filename, 
+            content_type=file.content_type or "image/png"
+        )
         if page_text:
             text += page_text + " "
-            
-        os.remove(temp_img_path)
 
     # Extract OCR health values
     print(f"\n--- [DEBUG] TOTAL OCR TEXT COLLECTED ---\n{text}\n--------------------------------------")
