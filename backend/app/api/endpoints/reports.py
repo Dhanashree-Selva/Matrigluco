@@ -48,9 +48,8 @@ def extract_text_from_image(image_path):
 
 
 def extract_health_values(text):
-    print("--- RAW OCR TEXT START ---")
-    print(text)
-    print("--- RAW OCR TEXT END ---")
+    print("\n--- [DEBUG] extract_health_values CALLED ---")
+    print(f"OCR TEXT: {text}")
 
     extracted = {
         "glucose_fasting": None,
@@ -173,6 +172,7 @@ async def scan_report(
                 temp_img_path = temp_img.name
                 
             page_text = extract_text_from_image(temp_img_path)
+            print(f"PAGE TEXT: {page_text}")
             if page_text:
                 text += page_text + " "
                 
@@ -196,7 +196,9 @@ async def scan_report(
         os.remove(temp_img_path)
 
     # Extract OCR health values
+    print(f"\n--- [DEBUG] TOTAL OCR TEXT COLLECTED ---\n{text}\n--------------------------------------")
     extracted_data = extract_health_values(text)
+    print(f"\n[DEBUG] FINAL EXTRACTED JSON: {extracted_data}")
 
     # Auto prediction using OCR values
     glucose_fasting = (
