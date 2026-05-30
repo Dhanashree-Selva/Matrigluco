@@ -14,6 +14,8 @@ import {
     Info
 } from 'lucide-react';
 import { supabase } from '../supabaseClient';
+const API_BASE_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const C = {
     bg: "#FDF8F8",
@@ -67,7 +69,7 @@ export default function ManualEntry() {
         setStep(8); // Loading/Predicting state
         try {
             // 1. Get Prediction
-            const response = await fetch("https://matrigluco.onrender.com/api/prediction/", {
+            const response = await fetch(`${API_BASE_URL}/api/prediction/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -87,7 +89,7 @@ export default function ManualEntry() {
             // 2. Save Tracking Data to Supabase via API
             const { data: { user } } = await supabase.auth.getUser();
 
-            await fetch("https://matrigluco.onrender.com/api/tracking/", {
+            await fetch(`${API_BASE_URL}/api/tracking/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+const API_BASE_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function DiabetesPrediction() {
     const navigate = useNavigate();
@@ -165,11 +167,13 @@ export default function DiabetesPrediction() {
             }, 400);
 
             const response = await fetch(
-                "https://matrigluco.onrender.com/api/reports/", {
+                `${API_BASE_URL}/api/reports/`, {
                 method: "POST",
                 body: dataForm,
             });
             const data = await response.json();
+            console.log("OCR API Response:", data);
+            console.log("Extracted Values Payload:", data.health_data);
 
             clearInterval(progressInterval);
             setExtractionProgress(100);
@@ -231,12 +235,14 @@ export default function DiabetesPrediction() {
 
                 setExtractedFields(found);
 
-                setFormData((prev) => ({
-                    ...prev,
-                    glucose: glucoseExtracted || prev.glucose,
-                    bmi: data.health_data.bmi || prev.bmi,
-                    hba1c: data.health_data.hba1c || prev.hba1c,
-                }));
+                const updatedFormData = {
+                    ...formData,
+                    glucose: glucoseExtracted || formData.glucose,
+                    bmi: data.health_data.bmi || formData.bmi,
+                    hba1c: data.health_data.hba1c || formData.hba1c,
+                };
+                setFormData(updatedFormData);
+                console.log("Form State After Mapping:", updatedFormData);
 
                 setTimeout(() => setFlowStep(3), 1500);
             } else {
@@ -257,7 +263,7 @@ export default function DiabetesPrediction() {
             setFlowStep(2); // Show loading during prediction too
             setExtractionProgress(30);
 
-            const response = await fetch("https://matrigluco.onrender.com/api/prediction/", {
+            const response = await fetch(`${API_BASE_URL}/api/prediction/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -285,7 +291,7 @@ export default function DiabetesPrediction() {
             const { data: authData } = await supabase.auth.getUser();
             const user = authData?.user;
 
-            await fetch("https://matrigluco.onrender.com/api/tracking/", {
+            await fetch(`${API_BASE_URL}/api/tracking/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
