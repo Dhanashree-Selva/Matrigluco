@@ -156,6 +156,7 @@ export default function DiabetesPrediction() {
     };
 
     const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        console.log("Crop complete:", croppedAreaPixels);
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
@@ -198,20 +199,38 @@ export default function DiabetesPrediction() {
         });
     };
 
-    const handleCropSave = async () => {
+    const handleCropUpload = async () => {
+        console.log("Crop button clicked");
+        console.log("croppedAreaPixels:", croppedAreaPixels);
+
+        if (!croppedAreaPixels) {
+            console.error("No crop area selected");
+            alert("Please adjust the crop area first.");
+            return;
+        }
+
         try {
+            console.log("Starting crop upload...");
             const croppedBlob = await getCroppedImg(imageToCrop, croppedAreaPixels);
+
+            console.log("Cropped blob:", croppedBlob);
+            console.log("Blob size:", croppedBlob?.size);
+
+            if (!croppedBlob) {
+                alert("Image crop failed. Please try again.");
+                return;
+            }
+
             const croppedFile = new File([croppedBlob], "cropped_report.jpg", { type: "image/jpeg" });
 
-            console.log("Original Image Loaded");
             console.log(`Cropped Image Dimensions: ${croppedAreaPixels.width}x${croppedAreaPixels.height}`);
             console.log(`Cropped File Size: ${(croppedFile.size / 1024).toFixed(2)} KB`);
-            console.log("Upload started");
 
             setIsCropping(false);
-            processOCR(croppedFile);
-        } catch (e) {
-            console.error(e);
+            await processOCR(croppedFile);
+        } catch (error) {
+            console.error("Crop upload failed:", error);
+            alert("Crop upload failed.");
         }
     };
 
@@ -791,8 +810,8 @@ export default function DiabetesPrediction() {
                                 CANCEL
                             </button>
                             <button
-                                onClick={handleCropSave}
-                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
+                                onClick={handleCropUpload}
+                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all relative z-[210] pointer-events-auto"
                             >
                                 CROP & UPLOAD
                             </button>
