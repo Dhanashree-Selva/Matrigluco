@@ -357,7 +357,7 @@ export default function DiabetesPrediction() {
                     }
                 }
 
-                const glucoseExtracted = Math.max(
+                const glucoseExtracted = data.health_data.glucose || Math.max(
                     data.health_data.glucose_fasting || 0,
                     data.health_data.glucose_pp || 0
                 );
@@ -366,6 +366,8 @@ export default function DiabetesPrediction() {
                 if (glucoseExtracted) found.push('Glucose');
                 if (data.health_data.hba1c) found.push('HbA1c');
                 if (data.health_data.bmi) found.push('BMI');
+                if (data.health_data.age) found.push('Age');
+                if (data.health_data.blood_pressure) found.push('Blood Pressure');
 
                 setExtractedFields(found);
 
@@ -374,6 +376,8 @@ export default function DiabetesPrediction() {
                     glucose: glucoseExtracted || prev.glucose,
                     bmi: data.health_data.bmi || prev.bmi,
                     hba1c: data.health_data.hba1c || prev.hba1c,
+                    age: data.health_data.age || prev.age,
+                    bloodPressure: data.health_data.blood_pressure || prev.bloodPressure,
                 }));
 
                 setTimeout(() => setFlowStep(3), 1500);
