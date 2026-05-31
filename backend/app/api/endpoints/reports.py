@@ -71,7 +71,7 @@ def extract_text_from_image(image_bytes, filename="report.png", content_type="im
 
 
 def extract_health_values(text):
-    print("\n--- [DEBUG] extract_health_values (LINE-AWARE) CALLED ---")
+    print("\n--- [DEBUG] extract_health_values (ROBUST WINDOW) CALLED ---")
     
     extracted = {
         "glucose_fasting": None,
@@ -83,76 +83,77 @@ def extract_health_values(text):
         "blood_pressure": None
     }
 
-    # Line-aware regex patterns (Enhanced)
-    hba1c_pattern = r"(?:hba1c|hbaic|hba 1c|hb1ac|a1c|glycated\s*h[eo]moglobin|glycohemoglobin)[^\n\r\d]{0,20}(\d+\.?\d*)"
-    glucose_pattern = r"(?:estimated\s*average\s*glucose|blood\s*glucose|plasma\s*glucose|glucose|fbs|f\.b\.s|rbs|r\.b\.s|ppbs|p\.p\.b\.s|sugar|fasting|post\s*prandial)[^\n\r\d]{0,20}(\d+\.?\d*)"
-    bmi_pattern = r"(?:bmi|body\s*mass\s*index)[^\n\r\d]{0,20}(\d+\.?\d*)"
-    age_pattern = r"(?:age|yrs|years)[^\n\r\d]{0,20}(\d+)"
-    bp_pattern = r"(?:bp|blood\s*pressure|b\.p\.)[^\n\r\d]{0,20}(\d+[\s/]*\d*)"
+    # Better Triggers
+    triggers = {
+        "hba1c": [r"hba1c", r"hbaic", r"hba 1c", r"hb1ac", r"a1c", r"glycated\s*hemoglobin", r"glycohemoglobin"],
+        "glucose": [r"estimated\s*average\s*glucose", r"blood\s*glucose", r"plasma\s*glucose", r"fbs", r"f\.b\.s", r"rbs", r"r\.b\.s", r"ppbs", r"p\.p\.b\.s", r"sugar", r"fasting", r"post\s*prandial", r"glucose"],
+        "bmi": [r"bmi", r"body\s*mass\s*index"],
+        "age": [r"age", r"yrs", r"years"],
+        "blood_pressure": [r"bp", r"blood\s*pressure", r"b\.p\."]
+    }
 
-    lines = text.splitlines()
-    print(f"Checking {len(lines)} lines for medical values...")
+    # Medical Ranges for Validation
+    ranges = {
+        "hba1c": (2.0, 25.0),
+        "glucose": (30.0, 600.0),
+        "age": (1.0, 120.0),
+        "bmi": (10.0, 60.0),
+        "blood_pressure": (30.0, 250.0)
+    }
 
-    for i, line in enumerate(lines):
-        clean_line = line.strip()
-        if not clean_line:
-            continue
+    # Flatten text for consistent window search
+    clean_text = " ".join(text.splitlines())
+    print(f"Analyzing {len(clean_text)} chars using window search...")
+
+    for key, patterns in triggers.items():
+        trigger_regex = r"\b(?:" + "|".join(patterns) + r")\b"
+        
+        # Find all occurrences of the trigger
+        for trigger_match in re.finditer(trigger_regex, clean_text, re.IGNORECASE):
+            start_pos = trigger_match.end()
+            # Look ahead up to 200 chars for valid numbers
+            lookahead = clean_text[start_pos : start_pos + 200]
             
-        # Match HbA1c
-        if extracted["hba1c"] is None:
-            match = re.search(hba1c_pattern, clean_line, re.IGNORECASE)
-            if match:
-                extracted["hba1c"] = float(match.group(1))
-                print(f"[MATCH HbA1c] Line {i+1}: \"{clean_line}\" -> Value: {extracted['hba1c']}")
-
-        # Match Glucose
-        match_gl = re.search(glucose_pattern, clean_line, re.IGNORECASE)
-        if match_gl:
-            val = float(match_gl.group(1))
-            line_l = clean_line.lower()
+            # Find all numbers in the lookahead
+            numbers = re.finditer(r"\b(\d+\.?\d*)\b", lookahead)
             
-            # Check context
-            if any(k in line_l for k in ["post", "pp", "after", "meal", "p.p."]):
-                if extracted["glucose_pp"] is None:
-                    extracted["glucose_pp"] = val
-                    print(f"[MATCH Glucose PP] Line {i+1}: \"{clean_line}\" -> Value: {val}")
-            elif any(k in line_l for k in ["fasting", "fbs", "f.b.s."]):
-                if extracted["glucose_fasting"] is None:
-                    extracted["glucose_fasting"] = val
-                    print(f"[MATCH Glucose Fasting] Line {i+1}: \"{clean_line}\" -> Value: {val}")
-            else:
-                if extracted["glucose"] is None:
-                    extracted["glucose"] = val
-                    print(f"[MATCH Glucose Generic] Line {i+1}: \"{clean_line}\" -> Value: {val}")
+            for num_match in numbers:
+                val_str = num_match.group(1)
+                try:
+                    val = float(val_str)
+                    
+                    # Validate Range
+                    min_v, max_v = ranges[key]
+                    if min_v <= val <= max_v:
+                        print(f"[MATCH {key.upper()}] Found {val} near context: ...{trigger_match.group(0)}...")
+                        
+                        # Special handling for blood pressure (check for diastolic pair)
+                        if key == "blood_pressure":
+                            pair_match = re.search(r"(\d+)\s*[/]\s*(\d+)", lookahead[max(0, num_match.start()-10) : num_match.end()+10])
+                            if pair_match:
+                                extracted[key] = float(pair_match.group(2))
+                            else:
+                                extracted[key] = val
+                        elif key == "glucose":
+                            context = (trigger_match.group(0) + " " + lookahead).lower()
+                            if any(k in context for k in ["post", "pp", "after", "meal", "p.p."]):
+                                if extracted["glucose_pp"] is None: extracted["glucose_pp"] = val
+                            elif any(k in context for k in ["fasting", "fbs", "f.b.s."]):
+                                if extracted["glucose_fasting"] is None: extracted["glucose_fasting"] = val
+                            else:
+                                if extracted["glucose"] is None: extracted["glucose"] = val
+                        else:
+                            if extracted[key] is None:
+                                extracted[key] = int(val) if key == "age" else val
+                        
+                        break # Found valid number for this trigger instance
+                except:
+                    continue
+            
+            if key != "glucose" and extracted[key] is not None:
+                break # Found valid result for this field
 
-        # Match BMI
-        if extracted["bmi"] is None:
-            match = re.search(bmi_pattern, clean_line, re.IGNORECASE)
-            if match:
-                extracted["bmi"] = float(match.group(1))
-                print(f"[MATCH BMI] Line {i+1}: \"{clean_line}\" -> Value: {extracted['bmi']}")
-
-        # Match Age
-        if extracted["age"] is None:
-            match = re.search(age_pattern, clean_line, re.IGNORECASE)
-            if match:
-                extracted["age"] = int(match.group(1))
-                print(f"[MATCH Age] Line {i+1}: \"{clean_line}\" -> Value: {extracted['age']}")
-
-        # Match Blood Pressure (Diastolic)
-        if extracted["blood_pressure"] is None:
-            match = re.search(bp_pattern, clean_line, re.IGNORECASE)
-            if match:
-                bp_str = match.group(1)
-                bp_parts = re.findall(r"\d+", bp_str)
-                if len(bp_parts) >= 2:
-                    extracted["blood_pressure"] = float(bp_parts[1]) # Diastolic
-                    print(f"[MATCH BP] Line {i+1}: \"{clean_line}\" -> Extracted Diastolic: {extracted['blood_pressure']}")
-                elif len(bp_parts) == 1:
-                    extracted["blood_pressure"] = float(bp_parts[0])
-                    print(f"[MATCH BP] Line {i+1}: \"{clean_line}\" -> Single Value: {extracted['blood_pressure']}")
-
-    # Fallback Logic
+    # Final logic for overall glucose
     if extracted["glucose_fasting"] is not None:
         extracted["glucose"] = extracted["glucose_fasting"]
     elif extracted["glucose_pp"] is not None and extracted["glucose"] is None:
