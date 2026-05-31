@@ -36,10 +36,15 @@ def extract_text_from_image(image_bytes, filename="report.png", content_type="im
             "OCREngine": 2
         }
 
+        headers = {
+            "apikey": OCR_API_KEY
+        }
+
         response = requests.post(
             "https://api.ocr.space/parse/image",
             files=files,
             data=payload,
+            headers=headers,
             timeout=60
         )
 

@@ -16,7 +16,8 @@ import {
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../supabaseClient";
-import Cropper from "react-easy-crop";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 const API_BASE_URL =
     import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -54,12 +55,19 @@ export default function DiabetesPrediction() {
     const [extractedFields, setExtractedFields] = useState([]);
     const [recentReports, setRecentReports] = useState([]);
 
-    // Cropper States
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const [isCropping, setIsCropping] = useState(false);
+    // Cropper States (react-image-crop)
+    const [crop, setCrop] = useState({
+        unit: "%",
+        width: 85,
+        height: 75,
+        x: 7,
+        y: 10
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const imgRef = useRef(null);
+    const [showCropModal, setShowCropModal] = useState(false);
     const [imageToCrop, setImageToCrop] = useState(null);
+    const [originalFile, setOriginalFile] = useState(null);
 
     useEffect(() => {
         // If navigated from ManualEntry with a prediction result, show it directly
@@ -113,8 +121,11 @@ export default function DiabetesPrediction() {
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/jpeg');
+
+            console.log("Photo captured");
             setImageToCrop(imageData);
-            setIsCropping(true);
+            setShowCropModal(true);
+            console.log("Crop modal opened (Camera)");
             stopCamera();
         }
     };
@@ -142,53 +153,66 @@ export default function DiabetesPrediction() {
         const file = event.target.files[0];
         if (!file) return;
 
+        console.log("Image selected:", file.name);
+
         if (file.type.startsWith('image/')) {
+            setOriginalFile(file);
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImageToCrop(e.target.result);
-                setIsCropping(true);
+                setShowCropModal(true);
+                console.log("Crop modal opened (Upload)");
             };
             reader.readAsDataURL(file);
         } else {
             // PDF or other - direct upload
+            console.log("PDF selected, direct upload");
             processOCR(file);
         }
     };
 
-    const onCropComplete = (croppedArea, croppedAreaPixels) => {
-        console.log("Crop complete:", croppedAreaPixels);
-        setCroppedAreaPixels(croppedAreaPixels);
+    const onImageLoad = (e) => {
+        const { width, height } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                {
+                    unit: "%",
+                    width: 85,
+                    height: 75,
+                },
+                null,
+                width,
+                height
+            ),
+            width,
+            height
+        );
+        setCrop(initialCrop);
     };
 
-    const createImage = (url) =>
-        new Promise((resolve, reject) => {
-            const image = new Image();
-            image.addEventListener("load", () => resolve(image));
-            image.addEventListener("error", (error) => reject(error));
-            image.setAttribute("crossOrigin", "anonymous");
-            image.src = url;
-        });
+    const generateCroppedImage = async (image, crop) => {
+        if (!image || !crop) return null;
 
-    const getCroppedImg = async (imageSrc, pixelCrop) => {
-        const image = await createImage(imageSrc);
         const canvas = document.createElement("canvas");
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+
+        canvas.width = crop.width * scaleX;
+        canvas.height = crop.height * scaleY;
+
         const ctx = canvas.getContext("2d");
-
         if (!ctx) return null;
-
-        canvas.width = pixelCrop.width;
-        canvas.height = pixelCrop.height;
 
         ctx.drawImage(
             image,
-            pixelCrop.x,
-            pixelCrop.y,
-            pixelCrop.width,
-            pixelCrop.height,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
             0,
             0,
-            pixelCrop.width,
-            pixelCrop.height
+            crop.width * scaleX,
+            crop.height * scaleY
         );
 
         return new Promise((resolve) => {
@@ -200,37 +224,59 @@ export default function DiabetesPrediction() {
     };
 
     const handleCropUpload = async () => {
-        console.log("Crop button clicked");
-        console.log("croppedAreaPixels:", croppedAreaPixels);
+        console.log("Crop upload clicked");
+        console.log("Crop selected:", completedCrop);
 
-        if (!croppedAreaPixels) {
-            console.error("No crop area selected");
-            alert("Please adjust the crop area first.");
+        if (!completedCrop || completedCrop.width <= 0 || completedCrop.height <= 0) {
+            console.warn("Invalid crop or no crop selected. Falling back to original image.");
+            setShowCropModal(false);
+            if (originalFile) await processOCR(originalFile);
             return;
         }
 
         try {
-            console.log("Starting crop upload...");
-            const croppedBlob = await getCroppedImg(imageToCrop, croppedAreaPixels);
+            console.log("Generating cropped image...");
+
+            // Timeout protection
+            const cropPromise = generateCroppedImage(imgRef.current, completedCrop);
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("CROP_TIMEOUT")), 10000)
+            );
+
+            let croppedBlob;
+            try {
+                croppedBlob = await Promise.race([cropPromise, timeoutPromise]);
+            } catch (err) {
+                if (err.message === "CROP_TIMEOUT") {
+                    console.error("Crop generation timed out (>10s)");
+                    alert("Crop taking too long. Uploading original image instead.");
+                    setShowCropModal(false);
+                    if (originalFile) await processOCR(originalFile);
+                    return;
+                }
+                throw err;
+            }
 
             console.log("Cropped blob:", croppedBlob);
-            console.log("Blob size:", croppedBlob?.size);
 
             if (!croppedBlob) {
-                alert("Image crop failed. Please try again.");
+                console.error("Blob generation failed");
+                alert("Image crop failed. Uploading original image.");
+                setShowCropModal(false);
+                if (originalFile) await processOCR(originalFile);
                 return;
             }
 
+            setShowCropModal(false);
+            console.log("OCR upload started");
+
             const croppedFile = new File([croppedBlob], "cropped_report.jpg", { type: "image/jpeg" });
-
-            console.log(`Cropped Image Dimensions: ${croppedAreaPixels.width}x${croppedAreaPixels.height}`);
-            console.log(`Cropped File Size: ${(croppedFile.size / 1024).toFixed(2)} KB`);
-
-            setIsCropping(false);
             await processOCR(croppedFile);
         } catch (error) {
             console.error("Crop upload failed:", error);
-            alert("Crop upload failed.");
+            console.warn("Attempting original file upload fallback...");
+            setShowCropModal(false);
+            if (originalFile) await processOCR(originalFile);
         }
     };
 
@@ -772,46 +818,39 @@ export default function DiabetesPrediction() {
             <canvas ref={canvasRef} className="hidden" />
 
             {/* Image Cropper Modal */}
-            {isCropping && (
-                <div className="fixed inset-0 z-[200] bg-black flex flex-col">
-                    <div className="relative flex-1 bg-black">
-                        <Cropper
-                            image={imageToCrop}
+            {showCropModal && (
+                <div className="fixed inset-0 z-[1000] bg-black/95 flex flex-col backdrop-blur-md">
+                    <div className="relative flex-1 flex items-center justify-center p-4 overflow-hidden">
+                        <ReactCrop
                             crop={crop}
-                            zoom={zoom}
-                            aspect={null}
-                            onCropChange={setCrop}
-                            onCropComplete={onCropComplete}
-                            onZoomChange={setZoom}
-                        />
-                    </div>
-                    <div className="bg-white p-6 space-y-6 rounded-t-[40px] shadow-2xl">
-                        <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                                <span className="text-xs font-black text-[#9E8A8C] uppercase tracking-widest">Zoom Level</span>
-                                <span className="text-xs font-bold text-[#F05578]">{zoom.toFixed(1)}x</span>
-                            </div>
-                            <input
-                                type="range"
-                                value={zoom}
-                                min={1}
-                                max={3}
-                                step={0.1}
-                                aria-labelledby="Zoom"
-                                onChange={(e) => setZoom(Number(e.target.value))}
-                                className="w-full h-2 bg-[#FDF8F8] rounded-lg appearance-none cursor-pointer accent-[#F05578] border border-[#F2E9E9]"
+                            onChange={(c) => setCrop(c)}
+                            onComplete={(c) => setCompletedCrop(c)}
+                            style={{ maxHeight: '80vh' }}
+                        >
+                            <img
+                                ref={imgRef}
+                                alt="Crop me"
+                                src={imageToCrop}
+                                onLoad={onImageLoad}
+                                style={{ maxHeight: '80vh', objectFit: 'contain' }}
                             />
+                        </ReactCrop>
+                    </div>
+                    <div className="bg-white p-6 pb-12 space-y-6 rounded-t-[40px] shadow-2xl relative z-[1010]">
+                        <div className="text-center space-y-1">
+                            <h3 className="text-lg font-extrabold text-[#2A2340]">Crop Your Report</h3>
+                            <p className="text-xs font-bold text-[#9E8A8C] uppercase tracking-widest">Adjust area to capture medical results</p>
                         </div>
                         <div className="flex gap-4">
                             <button
-                                onClick={() => { setIsCropping(false); setImageToCrop(null); }}
-                                className="flex-1 py-5 rounded-[24px] border border-[#F2E9E9] text-[#2A2340] font-extrabold hover:bg-gray-50 transition-all"
+                                onClick={() => { setShowCropModal(false); setImageToCrop(null); }}
+                                className="flex-1 py-5 rounded-[24px] border border-[#F2E9E9] text-[#2A2340] font-extrabold hover:bg-gray-50 transition-all pointer-events-auto"
                             >
                                 CANCEL
                             </button>
                             <button
                                 onClick={handleCropUpload}
-                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all relative z-[210] pointer-events-auto"
+                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all relative z-[1020] pointer-events-auto"
                             >
                                 CROP & UPLOAD
                             </button>
