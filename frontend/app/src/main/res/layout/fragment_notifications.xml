@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="48dp">
+
+                <!-- 1. Header Summary Card -->
+                <LinearLayout
+                    android:id="@+id/summaryCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_more_item_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_icon_badge">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_huge_notification_24"
+                            app:tint="@color/care_pink" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Care Alerts &amp; Updates"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="15.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/unreadCountBadge"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/care_pink"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="2 unread alerts" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnMarkAllRead"
+                        style="@style/Orbit.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_source_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="Mark all read"
+                        android:textColor="@color/care_text_primary"
+                        android:textSize="11.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 2. Filter Rail (Horizontal Scroll) -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Tab: All -->
+                        <TextView
+                            android:id="@+id/tabFilterAll"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="34dp"
+                            android:background="@drawable/bg_account_tab_active"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="All"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12.5sp" />
+
+                        <!-- Tab: Unread -->
+                        <TextView
+                            android:id="@+id/tabFilterUnread"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="34dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_account_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="Unread"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="12.5sp" />
+
+                        <!-- Tab: Clinical -->
+                        <TextView
+                            android:id="@+id/tabFilterClinical"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="34dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_account_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="Clinical Alerts"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="12.5sp" />
+
+                        <!-- Tab: Reminders -->
+                        <TextView
+                            android:id="@+id/tabFilterReminders"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="34dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_account_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="Reminders"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="12.5sp" />
+
+                        <!-- Tab: System -->
+                        <TextView
+                            android:id="@+id/tabFilterSystem"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="34dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_account_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="System"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="12.5sp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- 3. Notifications List -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notificationsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_notification_card" />
+
+                <!-- 4. Empty State -->
+                <com.matrigluco.core.designsystem.component.OrbitEmptyState
+                    android:id="@+id/emptyStateView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:visibility="gone" />
+
+                <!-- Loading Spinner -->
+                <ProgressBar
+                    android:id="@+id/loadingSpinner"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:indeterminateTint="@color/care_pink"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

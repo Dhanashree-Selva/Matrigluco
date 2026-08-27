@@ -1,0 +1,10 @@
+<resources>
+    <string name="orbit_back">Back</string>
+    <string name="orbit_close">Close</string>
+    <string name="orbit_show_password">Show password</string>
+    <string name="orbit_hide_password">Hide password</string>
+    <string name="orbit_loading">Loading</string>
+    <string name="orbit_required">required</string>
+    <string name="orbit_search_hint">Search...</string>
+    <string name="orbit_notifications">Notifications</string>
+</resources>

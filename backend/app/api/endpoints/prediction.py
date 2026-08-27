@@ -1,57 +1,24 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-import pickle
-import os
-import numpy as np
+from typing import Optional
+from app.ml.inference.predictor import MLInferenceService
+from app.ml.inference.feature_contract import DiabetesRiskFeatures
 
 router = APIRouter()
 
-# Global model variables
-model = None
-scaler = None
-
-
-# Load model only when needed (prevents Render startup blocking)
-def load_model():
-    global model, scaler
-
-    if model is None or scaler is None:
-        model_path = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-            'ml',
-            'diabetes_model.pkl'
-        )
-
-        scaler_path = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-            'ml',
-            'scaler.pkl'
-        )
-
-        try:
-            with open(model_path, 'rb') as f:
-                model = pickle.load(f)
-
-            with open(scaler_path, 'rb') as f:
-                scaler = pickle.load(f)
-
-            print("✅ Model loaded successfully")
-
-        except Exception as e:
-            print(f"❌ Model loading failed: {e}")
-            model = None
-            scaler = None
+# Single shared ML inference service instance
+_ml_service = MLInferenceService()
 
 
 class PredictionRequest(BaseModel):
-    pregnancies: int
+    pregnancies: int = 0
     glucose: float
-    blood_pressure: float
-    skin_thickness: float
-    insulin: float
+    blood_pressure: float = 0.0
+    skin_thickness: float = 0.0
+    insulin: float = 0.0
     bmi: float
-    diabetes_pedigree: float
-    age: int
+    diabetes_pedigree: float = 0.0
+    age: int = 0
 
 
 class PredictionResponse(BaseModel):
@@ -62,45 +29,24 @@ class PredictionResponse(BaseModel):
 
 @router.post("/", response_model=PredictionResponse)
 def predict_diabetes_risk(data: PredictionRequest):
-    # Load model when API is called
-    load_model()
+    """
+    Legacy prediction endpoint routing through canonical MLInferenceService.
+    """
+    features = DiabetesRiskFeatures(
+        pregnancies=float(data.pregnancies),
+        glucose=float(data.glucose),
+        blood_pressure=float(data.blood_pressure),
+        skin_thickness=float(data.skin_thickness),
+        insulin=float(data.insulin),
+        bmi=float(data.bmi),
+        diabetes_pedigree_function=float(data.diabetes_pedigree),
+        age=float(data.age),
+    )
 
-    if model is None or scaler is None:
-        return PredictionResponse(
-            prediction_result="Error",
-            risk_level="Unknown",
-            probability_score=0.0
-        )
-
-    # Prepare input data
-    input_features = np.array([[
-        data.pregnancies,
-        data.glucose,
-        data.blood_pressure,
-        data.skin_thickness,
-        data.insulin,
-        data.bmi,
-        data.diabetes_pedigree,
-        data.age
-    ]])
-
-    # Scale input
-    input_scaled = scaler.transform(input_features)
-
-    # Predict
-    prediction = model.predict(input_scaled)[0]
-    probability = model.predict_proba(input_scaled)[0][1]
-
-    # Risk level logic
-    risk_level = "Low Risk"
-
-    if 0.33 < probability <= 0.66:
-        risk_level = "Moderate Risk"
-    elif probability > 0.66:
-        risk_level = "High Risk"
+    result = _ml_service.predict_diabetes_risk(features)
 
     return PredictionResponse(
-        prediction_result="Diabetic" if prediction == 1 else "Non-Diabetic",
-        risk_level=risk_level,
-        probability_score=round(probability * 100, 2)
+        prediction_result=result["prediction_result"],
+        risk_level=result["risk_level"],
+        probability_score=result["probability_score"],
     )

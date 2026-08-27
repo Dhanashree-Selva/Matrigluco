@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/orbit_soft_surface"
+    android:backgroundTint="@color/care_surface"
+    android:paddingHorizontal="@dimen/orbit_space_20"
+    android:paddingTop="@dimen/orbit_space_16"
+    android:paddingBottom="@dimen/orbit_space_24">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/orbit_soft_surface"
+        android:backgroundTint="@color/care_divider"
+        android:layout_marginBottom="@dimen/orbit_space_16" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/filterSheetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter Health Timeline"
+            android:textAppearance="@style/Orbit.Text.Title"
+            android:textColor="@color/care_ink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnCloseFilter"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_huge_close_24"
+            app:tint="@color/care_text_muted"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/filterSheetTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Metric Options -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_16"
+        android:text="Select Biomarker / Vital"
+        android:textAppearance="@style/Orbit.Text.LabelStrong"
+        android:textColor="@color/care_ink" />
+
+    <RadioGroup
+        android:id="@+id/filterMetricRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/radioMetricGlucose"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Fasting / Plasma Glucose (mg/dL)"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioMetricBp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Blood Pressure (mmHg)"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink" />
+
+        <RadioButton
+            android:id="@+id/radioMetricWeight"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Maternal Weight (kg)"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink" />
+
+        <RadioButton
+            android:id="@+id/radioMetricBmi"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Body Mass Index (kg/m²)"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink" />
+
+        <RadioButton
+            android:id="@+id/radioMetricHba1c"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Glycated Hemoglobin / HbA1c (%)"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink" />
+
+    </RadioGroup>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/orbit_space_20">
+
+        <com.matrigluco.core.designsystem.component.OrbitButton
+            android:id="@+id/btnResetFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            app:orbitText="Reset"
+            app:orbitVariant="secondary" />
+
+        <com.matrigluco.core.designsystem.component.OrbitButton
+            android:id="@+id/btnApplyFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            app:orbitText="Apply"
+            app:orbitVariant="primary" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background"
+    android:fillViewport="true"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="48dp">
+
+        <!-- OrbitAppIdentityCard -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_trust_summary"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_matrigluco_mark"
+                app:tint="@color/care_pink" />
+
+            <TextView
+                style="@style/Orbit.Text.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/app_info_name"
+                android:textColor="@color/care_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/appVersionText"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/care_pink"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="Version 1.0.0 (Build 42)" />
+
+            <TextView
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Care Orbit Architecture · Native Android"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Section: Build Specifications -->
+        <TextView
+            style="@style/Orbit.Text.Eyebrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="SYSTEM SPECIFICATIONS"
+            android:textColor="@color/care_pink" />
+
+        <!-- Spec 1: Environment -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_info_env_label"
+                android:textColor="@color/care_text_primary"
+                android:textSize="13.5sp" />
+
+            <TextView
+                android:id="@+id/specEnvironment"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_license_badge"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="FastAPI Backend"
+                android:textColor="@color/care_pink"
+                android:textSize="11.5sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Spec 2: Database Schema -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_info_db_label"
+                android:textColor="@color/care_text_primary"
+                android:textSize="13.5sp" />
+
+            <TextView
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="13sp"
+                android:text="Room SQLite v1" />
+        </LinearLayout>
+
+        <!-- Spec 3: API Protocol -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_info_api_label"
+                android:textColor="@color/care_text_primary"
+                android:textSize="13.5sp" />
+
+            <TextView
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="13sp"
+                android:text="REST / SSE / TLS" />
+        </LinearLayout>
+
+        <!-- Spec 4: Design System -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_info_design_label"
+                android:textColor="@color/care_text_primary"
+                android:textSize="13.5sp" />
+
+            <TextView
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="13sp"
+                android:text="Care Orbit Native" />
+        </LinearLayout>
+
+        <!-- Spec 5: Iconography -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_info_icons_label"
+                android:textColor="@color/care_text_primary"
+                android:textSize="13.5sp" />
+
+            <TextView
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="13sp"
+                android:text="Hugeicons Free (MIT)" />
+        </LinearLayout>
+
+        <!-- Footer -->
+        <TextView
+            style="@style/Orbit.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_info_footer"
+            android:textColor="@color/care_text_tertiary"
+            android:textSize="11.5sp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

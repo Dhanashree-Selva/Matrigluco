@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/orbit_space_20"
+            android:paddingEnd="@dimen/orbit_space_20"
+            android:paddingTop="@dimen/orbit_space_12"
+            android:paddingBottom="@dimen/orbit_space_32">
+
+            <!-- 1. Health Overview Surface (Maternal Care Overview) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orbit_surface_outline"
+                android:orientation="vertical"
+                android:padding="@dimen/orbit_space_20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="HEALTH OVERVIEW"
+                        android:textColor="@color/care_pink"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:id="@+id/riskBandBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Low Risk Band"
+                        android:textColor="@color/care_success"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/orbit_space_8"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Private Path"
+                        android:textColor="@color/care_text_muted"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/overviewTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_8"
+                    android:text="Week 27 Maternal Care Overview"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:id="@+id/overviewNarrative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_8"
+                    android:text="Latest clinical risk assessment indicates low risk band (Aug 18, 2026). You have 0 measurements recorded in the last 7 days."
+                    android:textAppearance="@style/Orbit.Text.BodyMuted"
+                    android:lineSpacingExtra="3dp"
+                    android:textSize="13sp" />
+
+                <com.matrigluco.core.designsystem.component.OrbitButton
+                    android:id="@+id/addMeasurementButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    app:orbitText="+ Add Health Measurement" />
+            </LinearLayout>
+
+            <!-- 2. Care Orbit (4 Pillars Section) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/orbit_space_20"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Care Orbit"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Four pillars of continuous maternal management"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <!-- 2x2 Pillar Cards Grid (Equal Width & Equal Height) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- Assess Tile -->
+                    <LinearLayout
+                        android:id="@+id/pillarAssess"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="96dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_huge_assessment_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Assess"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:id="@+id/pillarAssessSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Low Risk"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_pink" />
+                    </LinearLayout>
+
+                    <!-- Track Tile -->
+                    <LinearLayout
+                        android:id="@+id/pillarTrack"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="96dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_huge_trend_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Track"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:id="@+id/pillarTrackSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="104 mg/dL"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- Understand Tile -->
+                    <LinearLayout
+                        android:id="@+id/pillarUnderstand"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="96dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_huge_document_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Understand"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Reports &amp; OCR"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <!-- Consult Tile -->
+                    <LinearLayout
+                        android:id="@+id/pillarConsult"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="96dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_huge_message_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Consult &amp; Ask"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="AI Assistant"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 3. Telemetry Metrics (Signal Capsules - Responsive Equal Width & Height) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/orbit_space_24"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Signal Capsules"
+                            android:textAppearance="@style/Orbit.Text.Title"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:id="@+id/metricCountSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Recent metabolic readings and clinical telemetry"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/viewAllMetrics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View all readings →"
+                        android:textColor="@color/care_pink"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 2x2 Metric Surfaces Grid (Equal Width & Equal Height) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- Metric 1: Glucose -->
+                    <com.matrigluco.core.designsystem.component.OrbitMetricSurface
+                        android:id="@+id/metricGlucose"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="104dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <!-- Metric 2: Blood Pressure -->
+                    <com.matrigluco.core.designsystem.component.OrbitMetricSurface
+                        android:id="@+id/metricBp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="104dp"
+                        android:layout_marginStart="6dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- Metric 3: Weight -->
+                    <com.matrigluco.core.designsystem.component.OrbitMetricSurface
+                        android:id="@+id/metricWeight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="104dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <!-- Metric 4: BMI / HbA1c -->
+                    <com.matrigluco.core.designsystem.component.OrbitMetricSurface
+                        android:id="@+id/metricBmi"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:minHeight="104dp"
+                        android:layout_marginStart="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 4. Recent Care Activity (Timeline) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/orbit_space_24"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Care Activity"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Timeline of measurements, assessments, and consultations"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <!-- Activity List Container -->
+                <LinearLayout
+                    android:id="@+id/activityContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:background="@drawable/orbit_surface_outline"
+                    android:orientation="vertical"
+                    android:padding="@dimen/orbit_space_16" />
+            </LinearLayout>
+
+            <!-- 5. Product Care Journey -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/orbit_space_24"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Care Journey"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="How continuous monitoring connects into clinical understanding"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/journeyTrack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1. Track Daily"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Glucose &amp; vitals logging"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/journeyAssess"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. Assess Risk"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_pink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Clinical ML evaluation"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/journeyUnderstand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3. Understand"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Trends &amp; lab OCR reports"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/journeyConsult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orbit_surface_outline"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4. Consult &amp; Ask"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Care team &amp; AI guidance"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 6. Medical Disclaimer -->
+            <TextView
+                android:id="@+id/medicalDisclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/orbit_space_24"
+                android:text="ⓘ This research estimate is educational and is not a diagnosis. Consult your obstetrician for clinical decisions."
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted"
+                android:lineSpacingExtra="2dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.matrigluco.core.designsystem.component.OrbitSkeleton
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_margin="@dimen/orbit_space_20" />
+
+    <com.matrigluco.core.designsystem.component.OrbitEmptyState
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <com.matrigluco.core.designsystem.component.OrbitButton
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_margin="@dimen/orbit_space_24"
+        android:visibility="gone"
+        app:orbitText="@string/dashboard_retry" />
+</FrameLayout>

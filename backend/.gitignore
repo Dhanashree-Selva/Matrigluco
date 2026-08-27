@@ -1,0 +1,51 @@
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Python Virtual Environments
+.venv/
+venv/
+env/
+.env/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Static Tooling & Test Caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Logs
+logs/
+*.log
+
+# Private Storage & Runtime Generated Files
+storage/private/*
+!storage/private/.gitkeep
+storage/generated/*
+!storage/generated/.gitkeep
+storage/ai/models/*
+!storage/ai/models/.gitkeep
+storage/ai/indexes/*
+!storage/ai/indexes/.gitkeep
+uploads/*
+!uploads/.gitkeep
+
+# Large AI Model Files
+*.gguf
+*.bin
+
+# IDE & OS Artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/care_background">
+
+    <LinearLayout
+        android:id="@+id/appBarContentRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/orbit_top_bar_min_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/orbit_space_12"
+        android:paddingEnd="@dimen/orbit_space_12"
+        android:paddingTop="@dimen/orbit_space_4"
+        android:paddingBottom="@dimen/orbit_space_4">
+
+        <!-- Navigation Region (Back Button or Brand Mark) -->
+        <FrameLayout
+            android:id="@+id/appBarNavContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/orbit_space_8">
+
+            <ImageButton
+                android:id="@+id/appBarBack"
+                android:layout_width="@dimen/orbit_touch_target"
+                android:layout_height="@dimen/orbit_touch_target"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Navigate back"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_huge_arrow_left_24"
+                android:visibility="gone"
+                app:tint="@color/care_ink" />
+
+            <ImageView
+                android:id="@+id/appBarBrandMark"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_matrigluco_mark"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Identity / Context & Title Region -->
+        <LinearLayout
+            android:id="@+id/appBarTitleContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingVertical="2dp">
+
+            <LinearLayout
+                android:id="@+id/appBarEyebrowRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/appBarEyebrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_pink"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/appBarBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/orbit_space_6"
+                    android:background="@drawable/orbit_soft_surface"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:textColor="@color/care_pink"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/appBarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:accessibilityHeading="true"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textAppearance="@style/Orbit.Text.Title"
+                android:textColor="@color/care_ink"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/appBarSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Search Mode Container (Visible when in SEARCH mode) -->
+        <LinearLayout
+            android:id="@+id/appBarSearchContainer"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/orbit_touch_target"
+            android:layout_weight="1"
+            android:background="@drawable/orbit_surface_outline"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/orbit_space_12"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_huge_search_24"
+                app:tint="@color/care_text_muted"
+                android:contentDescription="@null" />
+
+            <EditText
+                android:id="@+id/appBarSearchInput"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/orbit_space_8"
+                android:background="@null"
+                android:hint="Search reports and timeline..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/care_ink"
+                android:textColorHint="@color/care_text_muted"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/appBarSearchClear"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Clear search"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_huge_close_24"
+                android:visibility="gone"
+                app:tint="@color/care_text_muted" />
+        </LinearLayout>
+
+        <!-- Actions Region (Up to 2 action icons + overflow or text actions) -->
+        <LinearLayout
+            android:id="@+id/appBarActionsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <!-- Subtle Scroll Accent / Divider -->
+    <View
+        android:id="@+id/appBarDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/care_divider"
+        android:visibility="gone" />
+
+    <!-- Optional 2dp Care Pink Active Scroll Line -->
+    <View
+        android:id="@+id/appBarAccentStrip"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/care_pink"
+        android:visibility="gone" />
+</LinearLayout>

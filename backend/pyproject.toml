@@ -1,0 +1,37 @@
+[project]
+name = "matrigluco-backend"
+version = "1.0.0"
+description = "Production Backend API for MatriGluco — Clinical Maternal Health, Diabetes Risk Prediction & Offline AI Assistant"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "MatriGluco Engineering Team" }
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+filterwarnings = [
+    "ignore::DeprecationWarning:starlette.*",
+    "ignore::DeprecationWarning:pydantic.*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "E402", "F401", "B008"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = false
+warn_unused_configs = true
+ignore_missing_imports = true
+follow_imports = "silent"
+check_untyped_defs = false
+disable_error_code = ["assignment", "arg-type", "call-arg", "attr-defined", "operator", "union-attr", "misc"]

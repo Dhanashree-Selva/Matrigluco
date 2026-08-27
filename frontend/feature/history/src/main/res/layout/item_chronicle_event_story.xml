@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="6dp">
+
+    <!-- Vertical Spine Column -->
+    <LinearLayout
+        android:layout_width="14dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="12dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/spineTopLine"
+            android:layout_width="2dp"
+            android:layout_height="12dp"
+            android:background="@color/care_border_subtle" />
+
+        <View
+            android:id="@+id/spineNodeDot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_spine_dot_regular" />
+
+        <View
+            android:id="@+id/spineBottomLine"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/care_border_subtle" />
+    </LinearLayout>
+
+    <!-- Main Event Story Card Surface -->
+    <LinearLayout
+        android:id="@+id/cardSurface"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_chronicle_card"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Header Row: Category Badge + Status Badge + Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/categoryBadge"
+                style="@style/Orbit.Text.Eyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_category_badge_assessment"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/care_pink"
+                android:textSize="10.5sp"
+                tools:text="ASSESSMENT" />
+
+            <TextView
+                android:id="@+id/statusChip"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_source_pill"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="LOW RISK" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/timeLabel"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="12sp"
+                tools:text="3:13 PM" />
+        </LinearLayout>
+
+        <!-- Title / Type Headline -->
+        <TextView
+            android:id="@+id/eventTitle"
+            style="@style/Orbit.Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/care_text_primary"
+            android:textSize="15.5sp"
+            android:textStyle="bold"
+            tools:text="AI Risk Evaluation" />
+
+        <!-- Primary Value / Result Headline -->
+        <TextView
+            android:id="@+id/primaryResult"
+            style="@style/Orbit.Text.LabelStrong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/care_pink"
+            android:textSize="14.5sp"
+            tools:text="7% Calculated Probability" />
+
+        <!-- Supporting Narrative Context -->
+        <TextView
+            android:id="@+id/supportingContext"
+            style="@style/Orbit.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/care_text_secondary"
+            android:textSize="12.5sp"
+            tools:text="Model v1.0.0 · Metabolic indicators and clinical biomarkers evaluated." />
+
+        <!-- Bottom Action Strip -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/actionText"
+                style="@style/Orbit.Text.LabelStrong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_pink"
+                android:textSize="12.5sp"
+                tools:text="View result >" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
+
+    <TextView
+        android:id="@+id/biomarkerName"
+        style="@style/Orbit.Text.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/care_text_secondary"
+        android:textSize="12sp"
+        tools:text="Fasting Glucose:" />
+
+    <TextView
+        android:id="@+id/biomarkerValue"
+        style="@style/Orbit.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/care_text_primary"
+        android:textSize="12.5sp"
+        android:textStyle="bold"
+        tools:text="92 mg/dL" />
+</LinearLayout>

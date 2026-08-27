@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_report_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Top Row: File Icon + File Name + Status Chip -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- File Type Icon Plate -->
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_file_type_plate">
+
+            <ImageView
+                android:id="@+id/reportTypeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_document_24"
+                app:tint="@color/care_pink" />
+        </FrameLayout>
+
+        <!-- File Metadata -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reportFileName"
+                style="@style/Orbit.Text.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:textColor="@color/care_text_primary"
+                android:textSize="14.5sp"
+                android:textStyle="bold"
+                tools:text="OGTT_Lab_Report.png" />
+
+            <TextView
+                android:id="@+id/reportUploadedMeta"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="11.5sp"
+                tools:text="IMAGE · Uploaded Aug 18, 2026 at 3:12 PM" />
+        </LinearLayout>
+
+        <!-- Status Chip -->
+        <TextView
+            android:id="@+id/reportStatusChip"
+            style="@style/Orbit.Text.Badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_status_chip_reviewed"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textColor="@color/care_success"
+            android:textSize="11sp"
+            tools:text="✓ Review completed" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/care_border" />
+
+    <!-- 4-Stage Processing Journey Ledger -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Stage 1: Uploaded -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/stageDot1"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/bg_journey_step_dot_completed" />
+
+            <TextView
+                android:id="@+id/stageText1"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/reports_stage_uploaded"
+                android:textColor="@color/care_text_primary"
+                android:textSize="10.5sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/stageLine1"
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@color/care_pink" />
+
+        <!-- Stage 2: Processing -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/stageDot2"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/bg_journey_step_dot_completed" />
+
+            <TextView
+                android:id="@+id/stageText2"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/reports_stage_processing"
+                android:textColor="@color/care_text_primary"
+                android:textSize="10.5sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/stageLine2"
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@color/care_pink" />
+
+        <!-- Stage 3: Extracted -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/stageDot3"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/bg_journey_step_dot_completed" />
+
+            <TextView
+                android:id="@+id/stageText3"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/reports_stage_extracted"
+                android:textColor="@color/care_text_primary"
+                android:textSize="10.5sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/stageLine3"
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@color/care_pink" />
+
+        <!-- Stage 4: Reviewed -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/stageDot4"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/bg_journey_step_dot_completed" />
+
+            <TextView
+                android:id="@+id/stageText4"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/reports_stage_reviewed"
+                android:textColor="@color/care_text_primary"
+                android:textSize="10.5sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Extracted Values Preview Section -->
+    <LinearLayout
+        android:id="@+id/extractedValuesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_status_chip_reviewed"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/Orbit.Text.Eyebrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reports_extracted_values_title"
+            android:textColor="@color/care_pink"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:id="@+id/extractedValuesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <!-- Bottom Action Row: View Report Button + PDF Download Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnViewReport"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_source_pill"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="View Report >"
+            android:textColor="@color/care_pink"
+            android:textSize="12.5sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnDownloadPdf"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reports_download_pdf"
+            android:src="@drawable/ic_huge_download_24"
+            app:tint="@color/care_text_secondary" />
+
+        <ImageButton
+            android:id="@+id/btnReportMenu"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reports_title"
+            android:src="@drawable/ic_huge_more_horizontal_24"
+            app:tint="@color/care_text_secondary" />
+    </LinearLayout>
+</LinearLayout>

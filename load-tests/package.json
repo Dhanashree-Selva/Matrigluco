@@ -1,0 +1,24 @@
+{
+  "name": "matrigluco-load-tests",
+  "version": "1.0.0",
+  "description": "Baseline & High-Concurrency Load Testing Engine for Matrigluco Platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test:load": "node index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "load-testing",
+    "baseline",
+    "concurrency",
+    "fastapi",
+    "performance",
+    "matrigluco"
+  ],
+  "author": "Matrigluco Performance & Architecture Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

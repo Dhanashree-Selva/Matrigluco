@@ -1,0 +1,14 @@
+<resources>
+    <declare-styleable name="OrbitButton"><attr name="orbitVariant" format="enum"><enum name="primary" value="0"/><enum name="secondary" value="1"/><enum name="quiet" value="2"/><enum name="destructive" value="3"/></attr><attr name="orbitLoading" format="boolean"/><attr name="orbitText" format="string"/><attr name="orbitLeadingIcon" format="reference"/></declare-styleable>
+    <declare-styleable name="OrbitStatusChip"><attr name="orbitStatusTone" format="enum"><enum name="neutral" value="0"/><enum name="brand" value="1"/><enum name="success" value="2"/><enum name="warning" value="3"/><enum name="danger" value="4"/><enum name="info" value="5"/></attr><attr name="orbitStatusText" format="string"/></declare-styleable>
+    <declare-styleable name="OrbitInputLayout">
+        <attr name="orbitLabel" format="string" />
+        <attr name="orbitHint" format="string" />
+        <attr name="orbitHelperText" format="string" />
+        <attr name="orbitUnit" format="string" />
+        <attr name="orbitRequired" format="boolean" />
+        <attr name="orbitPassword" format="boolean" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+    </declare-styleable>
+</resources>

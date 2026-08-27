@@ -1,0 +1,21 @@
+<resources>
+    <color name="care_background">#0D0B0C</color><color name="care_surface">#131113</color>
+    <color name="care_surface_soft">#191619</color><color name="care_surface_elevated">#191619</color><color name="care_surface_raised">#201C1F</color>
+    <color name="care_ink">#FFF9FB</color><color name="care_text_secondary">#D8D0D5</color><color name="care_text_muted">#B8AEB4</color>
+    <color name="care_pink">#F06F9D</color><color name="care_pink_hover">#FA83AC</color><color name="care_pink_strong">#FF9BBB</color>
+    <color name="care_pink_soft">#2A1820</color><color name="care_pink_soft_strong">#351D27</color><color name="care_pink_border">#5D2D3F</color>
+    <color name="care_border">#3B3539</color><color name="care_divider">#302B2E</color><color name="care_focus">#F06F9D</color>
+    <color name="care_success">#72C5A3</color><color name="care_warning">#E0B86D</color><color name="care_danger">#F1858D</color><color name="care_info">#9BAAE0</color>
+    <color name="care_on_accent">#1A0C11</color><color name="care_disabled_surface">#2A2628</color><color name="care_disabled_text">#ACA2A8</color>
+    <color name="care_text_primary">#FFF9FB</color>
+    <color name="care_text_tertiary">#B8AEB4</color>
+    <color name="care_surface_variant">#191619</color>
+    <color name="care_pink_light">#2A1820</color>
+    <color name="care_pink_glow">#5D2D3F</color>
+    <color name="care_border_subtle">#3B3539</color>
+    <color name="care_chat_assistant_bg">#1D191C</color>
+    <color name="care_chat_assistant_border">#3B3238</color>
+    <color name="care_chat_user_bg">#2D1722</color>
+    <color name="care_chat_user_border">#662940</color>
+    <color name="care_chat_disclaimer_bg">#141113</color>
+</resources>

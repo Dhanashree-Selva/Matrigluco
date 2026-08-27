@@ -1,0 +1,3 @@
+# Mobile Logging Policy
+
+Release logs are structured, minimal and redacted. Allowed: event name, build type/version, duration bucket, HTTP status, backend request ID and non-user resource type. Prohibited: authorization/cookies/tokens, email/phone/name, passwords, assessment inputs/results, readings, report names/content/URLs, Assistant prompts/responses, stack traces containing bodies, and stable user IDs. Debug interceptors use `HEADERS`/`BODY` only against synthetic local fixtures and must be excluded from release. Crash/analytics vendors require a separate privacy decision and scrubber tests.

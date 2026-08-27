@@ -1,0 +1,30 @@
+<resources>
+    <string name="history_title">Health Chronicle</string>
+    <string name="history_subtitle">Your longitudinal care record</string>
+    <string name="history_eyebrow">LONGITUDINAL CARE RECORD</string>
+    <string name="history_total_events">%1$d recorded events</string>
+    <string name="history_source_all">All</string>
+    <string name="history_source_assessments">Assessments</string>
+    <string name="history_source_readings">Readings</string>
+    <string name="history_source_reports">Reports</string>
+    <string name="history_source_consultations">Consultations</string>
+    <string name="history_view_story">Story</string>
+    <string name="history_view_events">Events</string>
+    <string name="history_action_view_result">View result</string>
+    <string name="history_action_view_reading">View reading</string>
+    <string name="history_action_view_report">View report</string>
+    <string name="history_action_view_consultation">View consultation</string>
+    <string name="history_empty_title">Your Health Chronicle is empty</string>
+    <string name="history_empty_body">Assessments, readings, reports and consultations will appear here as you use Matrigluco.</string>
+    <string name="history_empty_filtered_title">No events in this period</string>
+    <string name="history_empty_filtered_body">Try adjusting your source filter or date scope to view other care records.</string>
+    <string name="history_filter_title">Chronicle Filter</string>
+    <string name="history_filter_sources_label">EVENT SOURCES</string>
+    <string name="history_filter_months_label">MONTH SCOPE</string>
+    <string name="history_filter_apply">Apply filter</string>
+    <string name="history_filter_reset">Reset</string>
+    <string name="history_offline_notice">Offline · Showing saved care records</string>
+    <string name="history_badge_today">Today</string>
+    <string name="history_integrity_title">Longitudinal Care Record</string>
+    <string name="history_integrity_desc">All entries are timestamped and linked to your authenticated Matrigluco care profile.</string>
+</resources>

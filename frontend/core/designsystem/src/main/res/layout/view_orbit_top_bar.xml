@@ -1,0 +1,8 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageButton android:id="@+id/orbit_top_bar_back" android:layout_width="@dimen/orbit_touch_target" android:layout_height="@dimen/orbit_touch_target" android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="@string/orbit_back" android:padding="@dimen/orbit_space_12" android:src="@drawable/ic_huge_arrow_left_24" app:tint="@color/orbit_icon_action_tint" />
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+        <TextView android:id="@+id/orbit_top_bar_title" style="@style/Orbit.Text.Title" android:layout_width="match_parent" android:layout_height="wrap_content" android:maxLines="2" />
+        <TextView android:id="@+id/orbit_top_bar_subtitle" style="@style/Orbit.Text.Caption" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" />
+    </LinearLayout>
+    <ImageButton android:id="@+id/orbit_top_bar_action" android:layout_width="@dimen/orbit_touch_target" android:layout_height="@dimen/orbit_touch_target" android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="@null" android:importantForAccessibility="no" android:padding="@dimen/orbit_space_12" android:visibility="gone" />
+</merge>

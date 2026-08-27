@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/orbit_space_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/trendIconPlate"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/orbit_soft_surface"
+                android:backgroundTint="@color/care_surface_elevated"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_huge_chart_24"
+                    app:tint="@color/care_pink"
+                    android:contentDescription="@null" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/orbit_space_12"
+                android:layout_marginEnd="@dimen/orbit_space_8"
+                app:layout_constraintStart_toEndOf="@id/trendIconPlate"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/trendDeltaBadge">
+
+                <TextView
+                    android:id="@+id/trendTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fasting / Plasma Glucose over time"
+                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                    android:textColor="@color/care_ink"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/trendSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="3 readings over the selected period"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/trendDeltaBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/trendDeltaValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="↑ 46 mg/dL"
+                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                    android:textColor="@color/care_pink" />
+
+                <TextView
+                    android:id="@+id/trendDeltaDirection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(higher)"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.matrigluco.feature.tracking.presentation.component.OrbitTrackingChartView
+            android:id="@+id/trackingChartView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/orbit_space_16" />
+
+        <TextView
+            android:id="@+id/trendFooterNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/orbit_space_8"
+            android:text="Longitudinal visualization of metric telemetry. Use the Records tab for complete tabular access."
+            android:textAppearance="@style/Orbit.Text.Caption"
+            android:textColor="@color/care_text_muted"
+            android:textSize="11sp"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+</merge>

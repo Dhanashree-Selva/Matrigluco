@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/orbit_soft_surface"
+    android:backgroundTint="@color/care_surface"
+    android:paddingHorizontal="@dimen/orbit_space_20"
+    android:paddingTop="@dimen/orbit_space_16"
+    android:paddingBottom="@dimen/orbit_space_24">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="48dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/orbit_soft_surface"
+        android:backgroundTint="@color/care_border"
+        android:layout_marginBottom="@dimen/orbit_space_16" />
+
+    <!-- Header Row -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/sheetIconPlate"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/orbit_soft_surface"
+            android:backgroundTint="@color/care_pink_soft"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_pulse_24"
+                app:tint="@color/care_pink"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/orbit_space_12"
+            android:layout_marginEnd="@dimen/orbit_space_8"
+            app:layout_constraintStart_toEndOf="@id/sheetIconPlate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnCloseSheet">
+
+            <TextView
+                android:id="@+id/sheetTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Log Health Reading"
+                android:textAppearance="@style/Orbit.Text.Title"
+                android:textColor="@color/care_ink" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Select metric and enter measured values"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnCloseSheet"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_huge_close_24"
+            app:tint="@color/care_text_muted"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Metric Chips Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_16"
+        android:text="Choose Metric"
+        android:textAppearance="@style/Orbit.Text.LabelStrong"
+        android:textColor="@color/care_ink" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/metricChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:chipSpacingHorizontal="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGlucose"
+                style="@style/Orbit.Chip.Metric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Glucose (mg/dL)"
+                app:chipIcon="@drawable/ic_huge_droplet_24"
+                app:chipIconVisible="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBp"
+                style="@style/Orbit.Chip.Metric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Pressure (mmHg)"
+                app:chipIcon="@drawable/ic_huge_heart_rate_24"
+                app:chipIconVisible="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipWeight"
+                style="@style/Orbit.Chip.Metric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight (kg)"
+                app:chipIcon="@drawable/ic_huge_scale_24"
+                app:chipIconVisible="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBmi"
+                style="@style/Orbit.Chip.Metric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BMI (kg/m²)"
+                app:chipIcon="@drawable/ic_huge_pulse_24"
+                app:chipIconVisible="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHba1c"
+                style="@style/Orbit.Chip.Metric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HbA1c (%)"
+                app:chipIcon="@drawable/ic_huge_chart_24"
+                app:chipIconVisible="true" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Value Input Row -->
+    <LinearLayout
+        android:id="@+id/valueInputsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/orbit_space_16">
+
+        <!-- Primary Value (or Systolic for BP) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/primaryInputLayout"
+            style="@style/Orbit.TextInputLayout.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Value (mg/dL)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/primaryInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textAppearance="@style/Orbit.Text.BodyStrong"
+                android:textColor="@color/care_ink" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Secondary Value (Diastolic for BP only) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secondaryInputLayout"
+            style="@style/Orbit.TextInputLayout.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/orbit_space_12"
+            android:hint="Diastolic (mmHg)"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/secondaryInputEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textAppearance="@style/Orbit.Text.BodyStrong"
+                android:textColor="@color/care_ink" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <!-- Notes (Optional) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notesInputLayout"
+        style="@style/Orbit.TextInputLayout.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_12"
+        android:hint="Notes (optional, e.g. Fasting / 2h Postprandial)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notesInputEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:textAppearance="@style/Orbit.Text.Body"
+            android:textColor="@color/care_ink" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Error Message -->
+    <TextView
+        android:id="@+id/saveErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_8"
+        android:textColor="@color/care_danger"
+        android:textAppearance="@style/Orbit.Text.Caption"
+        android:visibility="gone" />
+
+    <!-- Save Button -->
+    <com.matrigluco.core.designsystem.component.OrbitButton
+        android:id="@+id/btnSaveReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_20"
+        app:orbitText="Save Measurement"
+        app:orbitLeadingIcon="@drawable/ic_huge_add_24" />
+
+</LinearLayout>

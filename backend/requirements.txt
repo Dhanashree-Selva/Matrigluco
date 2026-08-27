@@ -1,36 +1,3 @@
-# MatriGluco Backend — Production Dependencies
-# Python version pinned in runtime.txt (3.11.9)
-# Use flexible ranges for compiled packages — pip picks binary wheels automatically
-
-# ── Core API ───────────────────────────────────────────────────────────────────
-fastapi==0.115.0
-uvicorn[standard]==0.29.0
-pydantic==2.7.4
-pydantic-settings==2.3.4
-python-dotenv==1.0.1
-python-multipart==0.0.9
-supabase==2.4.6
-httpx==0.27.0
-
-# ── ML / Data ─────────────────────────────────────────────────────────────────
-# Do NOT pin numpy/scipy here — they are transitive deps of scikit-learn.
-# Letting pip resolve them picks binary wheels automatically (no compilation needed).
-scikit-learn==1.8.0
-pandas==2.2.3
-numpy==2.3.4
-scipy==1.16.2
-joblib==1.5.2
-# ── OCR / Document parsing ────────────────────────────────────────────────────
-# OCR / Document parsing
-fastapi
-uvicorn
-numpy
-requests
-PyMuPDF
-python-multipart
-scikit-learn
-joblib
-
-# ── Auth / Security ───────────────────────────────────────────────────────────
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
+# MatriGluco — Backward compatibility entrypoint
+# Delegates to canonical layered requirements specification
+-r requirements/base.txt

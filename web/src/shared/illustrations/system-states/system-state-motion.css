@@ -1,0 +1,154 @@
+/* ── Matrigluco Care Continuity System State Motion ── */
+
+.care-state-svg {
+  overflow: visible;
+  user-select: none;
+}
+
+.care-state-svg * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 404: Missing Path — Subtle displaced fragment translate & destination node breathing */
+@keyframes careStateTranslateOrbit {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, 4px);
+  }
+}
+
+@keyframes careStateNodePulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.care-state-displaced-path {
+  animation: careStateTranslateOrbit 3.4s ease-in-out infinite;
+}
+
+.care-state-dest-node {
+  animation: careStateNodePulse 3s ease-in-out infinite;
+}
+
+/* 403: Access Boundary — Outer forms breathe by 1-2%, center cell stays locked */
+@keyframes careStateBreatheOrbit {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
+.care-state-boundary-petal {
+  animation: careStateBreatheOrbit 3.6s ease-in-out infinite;
+}
+
+.care-state-boundary-petal-delay {
+  animation: careStateBreatheOrbit 3.6s ease-in-out 1.8s infinite;
+}
+
+/* 401: Session Boundary — Gentle release and settle */
+@keyframes careStateReleaseSegment {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(3px, -2px);
+  }
+}
+
+.care-state-releasing-segment {
+  animation: careStateReleaseSegment 3.8s ease-in-out infinite;
+}
+
+/* 500: Interrupted Signal — Signal segment attempts to reconnect then settles */
+@keyframes careStateSignalReconnect {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translate(-3px, 1px);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translate(-1px, 0);
+    opacity: 0.8;
+  }
+}
+
+.care-state-interrupted-signal {
+  animation: careStateSignalReconnect 3.2s ease-in-out infinite;
+}
+
+/* 503: Service Pause — Outer layers drift softly, center pulse is suspended */
+@keyframes careStateLayerDrift {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
+.care-state-suspended-layer {
+  animation: careStateLayerDrift 4s ease-in-out infinite;
+}
+
+/* Offline: Disconnected Care Bridge — Connector approaches midpoint, softly fades before connecting */
+@keyframes careStateBridgeSeek {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(3px);
+    opacity: 0.85;
+  }
+}
+
+.care-state-bridge-connector {
+  animation: careStateBridgeSeek 3.5s ease-in-out infinite;
+}
+
+/* Feature Dormant — One segment softly lowered/subdued while rest breathes */
+@keyframes careStateDormantBreathe {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.care-state-active-module {
+  animation: careStateDormantBreathe 3s ease-in-out infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .care-state-displaced-path,
+  .care-state-dest-node,
+  .care-state-boundary-petal,
+  .care-state-boundary-petal-delay,
+  .care-state-releasing-segment,
+  .care-state-interrupted-signal,
+  .care-state-suspended-layer,
+  .care-state-bridge-connector,
+  .care-state-active-module {
+    animation: none !important;
+    transform: none !important;
+  }
+}

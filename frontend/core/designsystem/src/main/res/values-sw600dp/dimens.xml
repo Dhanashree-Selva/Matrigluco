@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="orbit_screen_padding">32dp</dimen>
+    <dimen name="orbit_section_gap">40dp</dimen>
+    <dimen name="orbit_pane_gap">32dp</dimen>
+    <dimen name="orbit_page_max_width">1120dp</dimen>
+</resources>

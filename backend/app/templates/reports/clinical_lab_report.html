@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title | default("Medical Laboratory Diagnostic Report") }}</title>
+  <style>
+    @page {
+      size: a4 portrait;
+      margin: 1.2cm 1.4cm 1.4cm 1.4cm;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+      line-height: 1.4;
+      color: #0f172a;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top Accent Line */
+    .top-accent {
+      height: 4px;
+      background-color: #e11d48; /* MatriGluco Care Pink */
+      margin-bottom: 16px;
+    }
+
+    /* Header */
+    .header-table {
+      width: 100%;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand-title {
+      font-size: 16pt;
+      font-weight: 900;
+      color: #e11d48;
+      letter-spacing: -0.5px;
+      margin: 0 0 2px 0;
+    }
+
+    .brand-subtitle {
+      font-size: 8pt;
+      color: #64748b;
+      margin: 0 0 2px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-accreditation {
+      font-size: 7.5pt;
+      color: #94a3b8;
+      margin: 0;
+    }
+
+    .report-meta {
+      text-align: right;
+      font-size: 8.5pt;
+      color: #475569;
+    }
+
+    .report-ref-badge {
+      display: inline-block;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-family: 'Courier New', monospace;
+      font-size: 8pt;
+      font-weight: bold;
+      padding: 3px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    /* Patient Demographics Box */
+    .patient-box {
+      width: 100%;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      padding: 8px 10px;
+    }
+
+    .patient-box-title {
+      font-size: 7.5pt;
+      font-weight: bold;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+    }
+
+    .patient-table {
+      width: 100%;
+      font-size: 8.5pt;
+    }
+
+    .patient-table td {
+      padding: 2px 4px;
+    }
+
+    .label {
+      color: #64748b;
+      width: 25%;
+    }
+
+    .value {
+      font-weight: bold;
+      color: #0f172a;
+      width: 25%;
+    }
+
+    /* Section Banner */
+    .section-banner {
+      background-color: #f1f5f9;
+      border-left: 4px solid #e11d48;
+      padding: 5px 8px;
+      font-size: 9.5pt;
+      font-weight: bold;
+      color: #0f172a;
+      margin: 12px 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Results Table */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 14px;
+    }
+
+    .results-table th {
+      background-color: #e2e8f0;
+      color: #334155;
+      font-size: 8pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .results-table td {
+      padding: 6px 8px;
+      font-size: 8.5pt;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    .results-table tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    .param-name {
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .param-value {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 9.5pt;
+      color: #e11d48;
+    }
+
+    .param-unit {
+      color: #64748b;
+      font-size: 8pt;
+    }
+
+    .param-ref {
+      color: #64748b;
+      font-size: 8pt;
+    }
+
+    .status-normal {
+      color: #16a34a;
+      font-weight: bold;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+    }
+
+    .status-flagged {
+      color: #e11d48;
+      font-weight: bold;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+    }
+
+    /* Clinical Interpretation */
+    .notes-card {
+      background-color: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-radius: 4px;
+      padding: 8px 10px;
+      margin-bottom: 14px;
+    }
+
+    .notes-title {
+      font-size: 8pt;
+      font-weight: bold;
+      color: #9f1239;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .notes-body {
+      font-size: 8pt;
+      color: #881337;
+      margin: 0;
+    }
+
+    .notes-body li {
+      margin-bottom: 2px;
+    }
+
+    /* Footer / Signatures */
+    .signatures-table {
+      width: 100%;
+      margin-top: 18px;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 10px;
+    }
+
+    .sig-block {
+      width: 60%;
+      font-size: 8pt;
+    }
+
+    .sig-name {
+      font-size: 9pt;
+      font-weight: bold;
+      color: #0f172a;
+      margin-top: 2px;
+    }
+
+    .sig-title {
+      color: #64748b;
+      font-size: 7.5pt;
+    }
+
+    .seal-block {
+      width: 40%;
+      text-align: right;
+    }
+
+    .seal-badge {
+      display: inline-block;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 8pt;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Accent Bar -->
+  <div class="top-accent"></div>
+
+  <!-- Header -->
+  <table class="header-table">
+    <tr>
+      <td style="width: 65%; vertical-align: top;">
+        <div class="brand-title">MATRIGLUCO CLINICAL DIAGNOSTICS</div>
+        <div class="brand-subtitle">Specialized Maternal & Metabolic Health Pathology</div>
+        <div class="brand-accreditation">NABL Accredited • ISO 15189:2022 Certified • CAP Compliant Laboratory</div>
+      </td>
+      <td style="width: 35%; vertical-align: top;" class="report-meta">
+        <div class="report-ref-badge">REF: {{ report_id | default("MG-2026-REP") }}</div>
+        <div><strong>Date:</strong> {{ date | default("18-Aug-2026") }}</div>
+        <div><strong>Time:</strong> {{ time | default("14:00") }}</div>
+        <div><strong>Specimen:</strong> Serum / Whole Blood</div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Patient Demographics -->
+  <div class="patient-box">
+    <div class="patient-box-title">Patient & Clinical Details</div>
+    <table class="patient-table">
+      <tr>
+        <td class="label">Patient Name:</td>
+        <td class="value">{{ patient_name | default("Gestational Patient") }}</td>
+        <td class="label">Referring Physician:</td>
+        <td class="value">{{ doctor_name | default("Dr. Sarah Jenkins, MD (OB/GYN)") }}</td>
+      </tr>
+      <tr>
+        <td class="label">Age / Gender:</td>
+        <td class="value">{{ age | default("28") }} Yrs / Female</td>
+        <td class="label">Clinical Context:</td>
+        <td class="value">{{ clinical_context | default("Antenatal Gestational Screening") }}</td>
+      </tr>
+      <tr>
+        <td class="label">Gestational Age:</td>
+        <td class="value">{{ gestational_age | default("24 Weeks (Trimester 2)") }}</td>
+        <td class="label">Verification State:</td>
+        <td class="value" style="color: #16a34a;">{{ status | default("Patient Verified") }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section Title -->
+  <div class="section-banner">
+    {{ section_title | default("Biochemical Analysis & Laboratory Investigations") }}
+  </div>
+
+  <!-- Biomarkers Table -->
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th style="width: 42%;">Investigation / Parameter</th>
+        <th style="width: 22%;">Observed Result</th>
+        <th style="width: 14%;">Units</th>
+        <th style="width: 22%;">Reference Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td class="param-name">{{ item.label }}</td>
+        <td class="param-value">{{ item.value }}</td>
+        <td class="param-unit">{{ item.unit }}</td>
+        <td class="param-ref">{{ item.ref_range | default("Normal Standard") }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Clinical Interpretation -->
+  <div class="notes-card">
+    <div class="notes-title">Clinical Findings & Pathologist Notes:</div>
+    <ul class="notes-body">
+      <li>All parameters analyzed under strict clinical laboratory quality control protocols.</li>
+      <li>Metabolic glucose and cardiovascular metrics fall within expected physiological targets for gestational week {{ gestational_age | default("24") }}.</li>
+      <li>Automated character recognition data verified against original laboratory accession registers.</li>
+    </ul>
+  </div>
+
+  <!-- Signatures and Digital Seal -->
+  <table class="signatures-table">
+    <tr>
+      <td class="sig-block" style="vertical-align: middle;">
+        <div style="font-size: 7.5pt; color: #64748b; text-transform: uppercase;">Verified by Medical Pathologist:</div>
+        <div class="sig-name">Dr. Ananya Sharma, MD (Pathology)</div>
+        <div class="sig-title">Senior Consultant Clinical Biochemist • Medical Reg #49281</div>
+      </td>
+      <td class="seal-block" style="vertical-align: middle;">
+        <div class="seal-badge">
+          ✓ DIGITAL SEAL VALIDATED<br>
+          <span style="font-size: 7pt; font-weight: normal;">Authenticity Verified & Encrypted</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

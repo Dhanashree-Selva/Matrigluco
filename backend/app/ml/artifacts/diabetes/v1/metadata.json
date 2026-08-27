@@ -1,0 +1,27 @@
+{
+  "model_key": "diabetes_risk_tabular",
+  "version": "v1",
+  "algorithm": "LogisticRegression",
+  "trained_features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "scaler_type": "StandardScaler",
+  "target": "Outcome",
+  "classes": [
+    "Non-Diabetic",
+    "Diabetic"
+  ],
+  "thresholds": {
+    "low_risk_max": 0.33,
+    "moderate_risk_max": 0.66,
+    "high_risk_min": 0.66
+  },
+  "created_at": "2026-08-17T00:00:00Z"
+}

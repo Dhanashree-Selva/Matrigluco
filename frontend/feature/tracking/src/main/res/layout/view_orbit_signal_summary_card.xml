@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/orbit_space_16">
+
+        <LinearLayout
+            android:id="@+id/summaryGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <!-- 1. Average -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="4dp">
+
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/orbit_soft_surface"
+                    android:backgroundTint="@color/care_surface_elevated">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_huge_trend_24"
+                        app:tint="@color/care_pink"
+                        android:contentDescription="@null" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Average"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <TextView
+                    android:id="@+id/summaryAvgValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="113"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:id="@+id/summaryAvgUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mg/dL"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/care_divider"
+                android:layout_marginVertical="4dp" />
+
+            <!-- 2. Lowest -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="4dp">
+
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/orbit_soft_surface"
+                    android:backgroundTint="@color/care_surface_elevated">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_huge_pulse_24"
+                        app:tint="@color/care_pink"
+                        android:contentDescription="@null" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Lowest"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <TextView
+                    android:id="@+id/summaryLowValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="90"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:id="@+id/summaryLowUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mg/dL"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/care_divider"
+                android:layout_marginVertical="4dp" />
+
+            <!-- 3. Highest -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="4dp">
+
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/orbit_soft_surface"
+                    android:backgroundTint="@color/care_surface_elevated">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_huge_trend_24"
+                        app:tint="@color/care_pink"
+                        android:contentDescription="@null" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Highest"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <TextView
+                    android:id="@+id/summaryHighValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="150"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:id="@+id/summaryHighUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mg/dL"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/care_divider"
+                android:layout_marginVertical="4dp" />
+
+            <!-- 4. Delta -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="4dp">
+
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/orbit_soft_surface"
+                    android:backgroundTint="@color/care_surface_elevated">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_huge_delta_24"
+                        app:tint="@color/care_pink"
+                        android:contentDescription="@null" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Delta"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <TextView
+                    android:id="@+id/summaryDeltaValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="46"
+                    android:textAppearance="@style/Orbit.Text.Title"
+                    android:textColor="@color/care_pink" />
+
+                <TextView
+                    android:id="@+id/summaryDeltaLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mg/dL"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted"
+                    android:maxLines="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/care_divider"
+            android:layout_marginVertical="@dimen/orbit_space_12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/summaryCountFooter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3 readings in selected period"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted" />
+
+            <ImageView
+                android:id="@+id/summaryInfoIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_huge_info_24"
+                app:tint="@color/care_text_muted"
+                android:contentDescription="Summary calculation details" />
+        </LinearLayout>
+
+    </LinearLayout>
+</merge>

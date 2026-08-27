@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background"
+    android:fillViewport="true"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="48dp">
+
+        <!-- Library Header Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_disclosure_block"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/libraryDetailName"
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Retrofit" />
+
+                <TextView
+                    android:id="@+id/libraryDetailLicenseBadge"
+                    style="@style/Orbit.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_license_badge"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textColor="@color/care_pink"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="Apache-2.0" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/libraryDetailVersion"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="13sp"
+                tools:text="Version 3.0.0" />
+
+            <TextView
+                android:id="@+id/libraryDetailDesc"
+                style="@style/Orbit.Text.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="13sp"
+                tools:text="A type-safe HTTP client for Android and the JVM by Square." />
+
+            <!-- Website Action Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpenProject"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/licenses_open_project"
+                android:textColor="@color/care_pink"
+                android:textSize="13sp"
+                app:strokeColor="@color/care_pink" />
+        </LinearLayout>
+
+        <!-- License Text Section Header -->
+        <TextView
+            style="@style/Orbit.Text.Eyebrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="LICENSE TERMS &amp; CONDITIONS"
+            android:textColor="@color/care_pink" />
+
+        <!-- License Full Monospace Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_disclosure_block"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/libraryDetailLicenseText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="3dp"
+                android:textIsSelectable="true"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="12sp"
+                tools:text="Apache License\nVersion 2.0, January 2004..." />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

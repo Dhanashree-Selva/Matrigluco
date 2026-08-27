@@ -1,0 +1,43 @@
+<resources>
+    <color name="care_background">#FFFFFF</color>
+    <color name="care_surface">#FCFAFB</color>
+    <color name="care_surface_soft">#F8F6F7</color>
+    <color name="care_surface_elevated">#FFFFFF</color>
+    <color name="care_surface_raised">#F3EFF1</color>
+    <color name="care_ink">#171417</color>
+    <color name="care_text_secondary">#5E565B</color>
+    <color name="care_text_muted">#786F75</color>
+    <color name="care_pink">#D94F7D</color>
+    <color name="care_pink_hover">#C84470</color>
+    <color name="care_pink_strong">#B93665</color>
+    <color name="care_pink_soft">#FCEBF1</color>
+    <color name="care_pink_soft_strong">#F7D6E1</color>
+    <color name="care_pink_border">#F1C6D4</color>
+    <color name="care_border">#E8E2E5</color>
+    <color name="care_divider">#F0ECEE</color>
+    <color name="care_focus">#E16B94</color>
+    <color name="care_success">#2F765C</color>
+    <color name="care_warning">#8A642A</color>
+    <color name="care_danger">#B83D49</color>
+    <color name="care_info">#526399</color>
+    <color name="care_on_accent">#FFFFFF</color>
+    <color name="care_disabled_surface">#EDE8EA</color>
+    <color name="care_disabled_text">#6F676C</color>
+    <color name="risk_low">@color/care_success</color>
+    <color name="risk_moderate">@color/care_warning</color>
+    <color name="risk_high">@color/care_danger</color>
+
+    <!-- Semantic aliases -->
+    <color name="care_text_primary">@color/care_ink</color>
+    <color name="care_text_tertiary">@color/care_text_muted</color>
+    <color name="care_surface_variant">@color/care_surface_soft</color>
+    <color name="care_pink_light">@color/care_pink_soft</color>
+    <color name="care_pink_glow">@color/care_pink_border</color>
+    <color name="care_border_subtle">@color/care_border</color>
+    <color name="care_chat_assistant_bg">#FFFFFF</color>
+    <color name="care_chat_assistant_border">#E8E0E4</color>
+    <color name="care_chat_user_bg">#FCEBF1</color>
+    <color name="care_chat_user_border">#F1C6D4</color>
+    <color name="care_chat_disclaimer_bg">#F9F5F7</color>
+    <color name="care_pink_translucent">#26D94F7D</color>
+</resources>

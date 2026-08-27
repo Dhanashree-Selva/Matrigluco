@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dateHeaderRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="8dp">
+
+    <!-- Timeline Spine Node Indicator -->
+    <View
+        android:id="@+id/spineNode"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_spine_dot_today" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/calendarIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="8dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_huge_calendar_24"
+            app:tint="@color/care_pink" />
+
+        <TextView
+            android:id="@+id/dateLabel"
+            style="@style/Orbit.Text.LabelStrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/care_text_primary"
+            android:textSize="14sp"
+            tools:text="Today · Thursday, Aug 27" />
+
+        <TextView
+            android:id="@+id/eventCountBadge"
+            style="@style/Orbit.Text.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/care_text_secondary"
+            android:textSize="12sp"
+            tools:text="(4)" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/chevronExpand"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_huge_chevron_down_24"
+        app:tint="@color/care_text_tertiary" />
+</LinearLayout>

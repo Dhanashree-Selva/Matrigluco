@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
+
+    <ImageView
+        android:id="@+id/activityIcon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/orbit_soft_surface"
+        android:padding="8dp"
+        android:src="@drawable/ic_huge_activity_24"
+        app:tint="@color/care_pink" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Orbit.Text.LabelStrong"
+            android:textColor="@color/care_ink"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/activityDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/Orbit.Text.BodyMuted"
+            android:textColor="@color/care_text_muted"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activityDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Orbit.Text.Caption"
+        android:textColor="@color/care_text_muted"
+        android:textSize="11sp" />
+</LinearLayout>

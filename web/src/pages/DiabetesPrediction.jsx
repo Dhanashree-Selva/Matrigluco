@@ -1,0 +1,864 @@
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+    ArrowLeft,
+    Upload,
+    Camera,
+    ShieldCheck,
+    FileText,
+    Image as ImageIcon,
+    ChevronRight,
+    Loader2,
+    AlertCircle,
+    CheckCircle2,
+    X,
+    Zap
+} from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { predictionsApi, reportsApi, healthApi } from "../api";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+
+export default function DiabetesPrediction() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Flow Steps: 0: Home, 1: Choose File, 2: OCR Loading, 3: Form, 4: Result, 5: Scanner, 6: Preview
+    const [flowStep, setFlowStep] = useState(0);
+
+    // Camera States
+    const videoRef = useRef(null);
+    const [stream, setStream] = useState(null);
+    const [capturedImage, setCapturedImage] = useState(null);
+    const canvasRef = useRef(null);
+
+    // OCR & Upload states
+    const fileInputRef = useRef(null);
+    const scanInputRef = useRef(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadType, setUploadType] = useState('doc'); // 'doc' or 'image'
+
+    const [result, setResult] = useState(null);
+    const [formData, setFormData] = useState({
+        age: "28",
+        bmi: "",
+        glucose: "",
+        hba1c: "",
+        bloodPressure: "70",
+        gestationalDiabetes: false,
+        familyHistory: false,
+    });
+
+    const [extractionProgress, setExtractionProgress] = useState(0);
+    const [extractedFields, setExtractedFields] = useState([]);
+    const [recentReports, setRecentReports] = useState([]);
+
+    // Cropper States (react-image-crop)
+    const [crop, setCrop] = useState({
+        unit: "%",
+        width: 85,
+        height: 75,
+        x: 7,
+        y: 10
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const imgRef = useRef(null);
+    const [showCropModal, setShowCropModal] = useState(false);
+    const [imageToCrop, setImageToCrop] = useState(null);
+    const [originalFile, setOriginalFile] = useState(null);
+
+    useEffect(() => {
+        // If navigated from ManualEntry with a prediction result, show it directly
+        const incoming = location.state?.manualResult;
+        if (incoming) {
+            setResult({
+                score: incoming.probability_score,
+                level: incoming.risk_level,
+                message: incoming.prediction_result,
+            });
+            setFlowStep(4);
+        }
+        fetchReports();
+        return () => stopCamera();
+    }, []);
+
+    useEffect(() => {
+        if (flowStep === 5 && stream && videoRef.current) {
+            videoRef.current.srcObject = stream;
+        }
+    }, [flowStep, stream]);
+
+    const startCamera = async () => {
+        try {
+            setFlowStep(5);
+            const newStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+            });
+            setStream(newStream);
+        } catch (err) {
+            console.error("Camera error:", err);
+            alert("Camera access unavailable. Upload a report instead.");
+            setFlowStep(0);
+            fileInputRef.current?.click();
+        }
+    };
+
+    const stopCamera = () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            setStream(null);
+        }
+    };
+
+    const capturePhoto = () => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        if (video && canvas) {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+
+            console.log("Photo captured");
+            setImageToCrop(imageData);
+            setShowCropModal(true);
+            console.log("Crop modal opened (Camera)");
+            stopCamera();
+        }
+    };
+
+    const fetchReports = async () => {
+        try {
+            const data = await reportsApi.getReports();
+            const list = data?.items || (Array.isArray(data) ? data : []);
+            setRecentReports(list);
+        } catch (err) {
+            console.error("Error fetching reports:", err);
+        }
+    };
+
+    const handleFileSelection = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        console.log("Image selected:", file.name);
+
+        if (file.type.startsWith('image/')) {
+            setOriginalFile(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImageToCrop(e.target.result);
+                setShowCropModal(true);
+                console.log("Crop modal opened (Upload)");
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // PDF or other - direct upload
+            console.log("PDF selected, direct upload");
+            processOCR(file);
+        }
+    };
+
+    const onImageLoad = (e) => {
+        const { width, height } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                {
+                    unit: "%",
+                    width: 85,
+                    height: 75,
+                },
+                null,
+                width,
+                height
+            ),
+            width,
+            height
+        );
+        setCrop(initialCrop);
+    };
+
+    const generateCroppedImage = async (image, crop) => {
+        if (!image || !crop) return null;
+
+        const canvas = document.createElement("canvas");
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+
+        canvas.width = crop.width * scaleX;
+        canvas.height = crop.height * scaleY;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return null;
+
+        ctx.drawImage(
+            image,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
+            0,
+            0,
+            crop.width * scaleX,
+            crop.height * scaleY
+        );
+
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                resolve(blob);
+            }, "image/jpeg", 0.95);
+        });
+    };
+
+    const handleCropUpload = async () => {
+        console.log("Crop upload clicked");
+        console.log("Crop selected:", completedCrop);
+
+        if (!completedCrop || completedCrop.width <= 0 || completedCrop.height <= 0) {
+            console.warn("Invalid crop or no crop selected. Falling back to original image.");
+            setShowCropModal(false);
+            if (originalFile) await processOCR(originalFile);
+            return;
+        }
+
+        try {
+            console.log("Generating cropped image...");
+
+            // Timeout protection
+            const cropPromise = generateCroppedImage(imgRef.current, completedCrop);
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("CROP_TIMEOUT")), 10000)
+            );
+
+            let croppedBlob;
+            try {
+                croppedBlob = await Promise.race([cropPromise, timeoutPromise]);
+            } catch (err) {
+                if (err.message === "CROP_TIMEOUT") {
+                    console.error("Crop generation timed out (>10s)");
+                    alert("Crop taking too long. Uploading original image instead.");
+                    setShowCropModal(false);
+                    if (originalFile) await processOCR(originalFile);
+                    return;
+                }
+                throw err;
+            }
+
+            console.log("Cropped blob:", croppedBlob);
+
+            if (!croppedBlob) {
+                console.error("Blob generation failed");
+                alert("Image crop failed. Uploading original image.");
+                setShowCropModal(false);
+                if (originalFile) await processOCR(originalFile);
+                return;
+            }
+
+            setShowCropModal(false);
+            console.log("OCR upload started");
+
+            const croppedFile = new File([croppedBlob], "cropped_report.jpg", { type: "image/jpeg" });
+            await processOCR(croppedFile);
+        } catch (error) {
+            console.error("Crop upload failed:", error);
+            console.warn("Attempting original file upload fallback...");
+            setShowCropModal(false);
+            if (originalFile) await processOCR(originalFile);
+        }
+    };
+
+    const processOCR = async (fileOrDataUrl) => {
+        setFlowStep(2);
+        setIsUploading(true);
+        setExtractionProgress(10);
+
+        const dataForm = new FormData();
+        let fileToUpload = fileOrDataUrl;
+
+        // If it's a base64 string from camera
+        if (typeof fileOrDataUrl === 'string') {
+            const res = await fetch(fileOrDataUrl);
+            const blob = await res.blob();
+            fileToUpload = new File([blob], "captured_report.jpg", { type: "image/jpeg" });
+        }
+
+        dataForm.append("file", fileToUpload);
+
+        try {
+            // Simulated progress for better UX
+            const progressInterval = setInterval(() => {
+                setExtractionProgress(prev => (prev < 90 ? prev + 10 : prev));
+            }, 400);
+
+            const uploadRes = await reportsApi.uploadReport(fileToUpload);
+            clearInterval(progressInterval);
+            setExtractionProgress(100);
+
+            fetchReports();
+
+            const healthData = uploadRes?.extracted_data || uploadRes?.health_data || {};
+            const glucoseExtracted = healthData.glucose || Math.max(
+                healthData.glucose_fasting || 0,
+                healthData.glucose_pp || 0
+            );
+
+            const found = [];
+            if (glucoseExtracted) found.push('Glucose');
+            if (healthData.hba1c) found.push('HbA1c');
+            if (healthData.bmi) found.push('BMI');
+            if (healthData.age) found.push('Age');
+            if (healthData.blood_pressure) found.push('Blood Pressure');
+
+            setExtractedFields(found);
+
+            setFormData((prev) => ({
+                ...prev,
+                glucose: glucoseExtracted || prev.glucose,
+                bmi: healthData.bmi || prev.bmi,
+                hba1c: healthData.hba1c || prev.hba1c,
+                age: healthData.age || prev.age,
+                bloodPressure: healthData.blood_pressure || prev.bloodPressure,
+            }));
+
+            setTimeout(() => setFlowStep(3), 1500);
+        } catch (error) {
+            console.error("OCR Error:", error);
+            alert("OCR Service unavailable. Redirecting to manual entry.");
+            setFlowStep(3);
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    const handlePredict = async () => {
+        try {
+            setFlowStep(2); // Show loading during prediction
+            setExtractionProgress(30);
+
+            const predData = await predictionsApi.createPrediction({
+                pregnancies: Number(formData.pregnancies !== undefined ? formData.pregnancies : 1),
+                glucose: Number(formData.glucose) || 95,
+                blood_pressure: Number(formData.bloodPressure) || 80,
+                skin_thickness: Number(formData.skinThickness || 20),
+                insulin: Number(formData.insulin || 80),
+                bmi: Number(formData.bmi) || 25,
+                diabetes_pedigree_function: Number(formData.diabetesPedigree || (formData.familyHistory ? 0.8 : 0.2)),
+                age: Number(formData.age) || 28,
+            });
+
+            setExtractionProgress(100);
+
+            setResult({
+                score: predData.probability_score,
+                level: predData.risk_level,
+                message: predData.prediction_result,
+            });
+
+            setTimeout(() => setFlowStep(4), 800);
+        } catch (error) {
+            console.error("Prediction Error:", error);
+            alert("Prediction failed. " + (error.response?.data?.error?.message || error.message));
+            setFlowStep(3);
+        }
+    };
+
+    const nextStep = () => setFlowStep(prev => prev + 1);
+    const prevStep = () => setFlowStep(prev => (prev > 0 ? prev - 1 : prev));
+
+    return (
+        <div className="min-h-screen bg-[#FDF8F8] flex flex-col">
+            {/* Header */}
+            <div className={`p-6 flex items-center gap-4 ${flowStep === 4 ? 'bg-transparent' : 'bg-white border-b border-[#F2E9E9]'}`}>
+                <button onClick={() => flowStep === 0 ? navigate(-1) : prevStep()} className="p-2.5 bg-[#FDF8F8] rounded-md border border-[#F2E9E9] text-[#2A2340]">
+                    <ArrowLeft size={20} />
+                </button>
+                <h1 className="text-xl font-extrabold text-[#2A2340] tracking-tight">
+                    {flowStep === 0 ? "Scan Report" :
+                        flowStep === 1 ? "Choose File" :
+                            flowStep === 2 ? "Processing" :
+                                flowStep === 3 ? "Health Profile" : "Result"}
+                </h1>
+            </div>
+
+            <div className="flex-1 overflow-y-auto no-scrollbar">
+                <AnimatePresence mode="wait">
+                    {flowStep === 0 && (
+                        <motion.div
+                            key="step0"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            className="p-6 space-y-8"
+                        >
+                            <div className="space-y-2">
+                                <h2 className="text-2xl font-extrabold text-[#2A2340] tracking-tight leading-tight">Extract Health Data</h2>
+                                <p className="text-sm font-bold text-[#9E8A8C] leading-relaxed">
+                                    Upload or scan your medical reports (lab results, ultrasound, prescriptions) to automatically extract your health data.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <ActionCard
+                                    icon={Upload}
+                                    title="Upload File"
+                                    subtitle="PDF, JPG, PNG"
+                                    color="text-[#F05578]"
+                                    onClick={() => { setUploadType('doc'); setFlowStep(1); }}
+                                />
+                                <ActionCard
+                                    icon={Camera}
+                                    title="Camera Scan"
+                                    subtitle="Take a photo"
+                                    color="text-[#8AB6FF]"
+                                    onClick={startCamera}
+                                />
+                            </div>
+
+                            <div className="bg-white rounded-[32px] p-6 border border-[#F2E9E9] shadow-sm flex items-center gap-5">
+                                <div className="w-14 h-14 bg-[#EAF6EE] rounded-[24px] flex items-center justify-center text-[#5C9B73]">
+                                    <ShieldCheck size={28} />
+                                </div>
+                                <div className="flex-1">
+                                    <h4 className="text-sm font-extrabold text-[#2A2340]">Your data is secure</h4>
+                                    <p className="text-[10px] font-bold text-[#9E8A8C] leading-relaxed uppercase tracking-widest mt-1">
+                                        Reports are processed securely and never shared without permission.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <h3 className="text-sm font-bold text-[#9E8A8C] uppercase tracking-widest ml-1">Recent Uploads</h3>
+                                {recentReports.length > 0 ? (
+                                    <div className="space-y-3">
+                                        {recentReports.map((report) => (
+                                            <RecentFile
+                                                key={report.id}
+                                                name={report.file_url ? report.file_url.split('/').pop() : 'Medical Report'}
+                                                date={new Date(report.uploaded_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                onClick={() => window.open(report.file_url, '_blank')}
+                                            />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="bg-white rounded-[32px] p-10 border border-[#F2E9E9] text-center space-y-2">
+                                        <div className="w-16 h-16 bg-[#FDF8F8] rounded-md flex items-center justify-center mx-auto text-[#F05578]/30">
+                                            <FileText size={32} />
+                                        </div>
+                                        <h4 className="text-sm font-extrabold text-[#2A2340]">No reports uploaded yet</h4>
+                                        <p className="text-[10px] font-bold text-[#9E8A8C] uppercase tracking-widest">Upload a report to get started</p>
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 5 && (
+                        <motion.div
+                            key="step5"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute inset-0 z-[100] bg-[#0B0B0F] flex flex-col"
+                        >
+                            <div className="flex-grow relative flex items-center justify-center overflow-hidden">
+                                <video
+                                    ref={videoRef}
+                                    autoPlay
+                                    playsInline
+                                    muted
+                                    className="absolute inset-0 w-full h-full object-cover grayscale-[20%] z-0"
+                                />
+
+                                {/* Scan Frame Overlay */}
+                                <div className="absolute inset-0 z-10 pointer-events-none">
+                                    <div className="w-full h-full flex flex-col">
+                                        <div className="flex-1 bg-black/40 backdrop-blur-[2px]" />
+                                        <div className="flex h-[450px]">
+                                            <div className="flex-1 bg-black/40 backdrop-blur-[2px]" />
+                                            <div className="w-[320px] relative">
+                                                {/* Frame corners with glow */}
+                                                <div className="absolute top-0 left-0 w-10 h-10 border-t-4 border-l-4 border-[#5C9B73] rounded-tl-2xl shadow-[0_0_15px_#5C9B73]" />
+                                                <div className="absolute top-0 right-0 w-10 h-10 border-t-4 border-r-4 border-[#5C9B73] rounded-tr-2xl shadow-[0_0_15px_#5C9B73]" />
+                                                <div className="absolute bottom-0 left-0 w-10 h-10 border-b-4 border-l-4 border-[#5C9B73] rounded-bl-2xl shadow-[0_0_15px_#5C9B73]" />
+                                                <div className="absolute bottom-0 right-0 w-10 h-10 border-b-4 border-r-4 border-[#5C9B73] rounded-br-2xl shadow-[0_0_15px_#5C9B73]" />
+                                            </div>
+                                            <div className="flex-1 bg-black/40 backdrop-blur-[2px]" />
+                                        </div>
+                                        <div className="flex-1 bg-black/40 backdrop-blur-[2px] flex items-start justify-center pt-8">
+                                            <div className="bg-white/10 backdrop-blur-xl px-6 py-2 rounded-md border border-white/10">
+                                                <p className="text-white text-xs font-bold tracking-tight">Position your report inside the frame</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Top Actions */}
+                                <div className="absolute top-8 left-0 right-0 px-8 flex justify-between items-center z-20">
+                                    <button onClick={() => { stopCamera(); setFlowStep(0); }} className="w-12 h-12 bg-white/10 backdrop-blur-xl rounded-md flex items-center justify-center text-white border border-white/10">
+                                        <X size={24} />
+                                    </button>
+                                    <button className="w-12 h-12 bg-white/10 backdrop-blur-xl rounded-md flex items-center justify-center text-white border border-white/10">
+                                        <Zap size={20} className="fill-white" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Bottom Controls */}
+                            <div className="h-[140px] bg-[#0B0B0F] px-10 flex items-center justify-between">
+                                <button
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="w-12 h-12 rounded-md bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-all border border-white/10"
+                                >
+                                    <ImageIcon size={24} />
+                                </button>
+
+                                <button
+                                    onClick={capturePhoto}
+                                    className="w-20 h-20 bg-white rounded-md p-1 border-4 border-white/20 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                                >
+                                    <div className="w-full h-full rounded-md bg-white border-2 border-[#0B0B0F]" />
+                                </button>
+
+                                <div className="w-12" />
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 6 && (
+                        <motion.div
+                            key="step6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="absolute inset-0 z-[100] bg-[#FDF8F8] flex flex-col"
+                        >
+                            {/* Preview area — full-screen on mobile, centered card on desktop */}
+                            <div className="flex-grow flex items-center justify-center p-4 md:p-8 overflow-hidden">
+                                <div className="
+                                    relative w-full bg-white border border-[#F2E9E9] overflow-hidden
+                                    rounded-[40px] shadow-2xl
+                                    aspect-[3/4]
+                                    md:aspect-auto md:max-w-3xl md:max-h-[500px] md:w-full md:rounded-md md:shadow-sm
+                                ">
+                                    <img
+                                        src={capturedImage}
+                                        className="w-full h-full object-cover md:object-contain"
+                                        alt="Captured"
+                                    />
+
+                                    {/* Crop adjustment guides */}
+                                    <div className="absolute inset-6 border border-dashed border-white/40 pointer-events-none rounded-[32px]">
+                                        <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-lg" />
+                                        <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-white rounded-tr-lg" />
+                                        <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-white rounded-bl-lg" />
+                                        <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-lg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Action buttons — always visible at bottom */}
+                            <div className="p-6 md:p-8 space-y-4 bg-white rounded-t-[48px] md:rounded-t-3xl shadow-sm border-t border-[#F2E9E9] md:max-w-3xl md:mx-auto md:w-full">
+                                <button
+                                    onClick={() => { setCapturedImage(null); startCamera(); }}
+                                    className="w-full bg-[#FDF8F8] text-[#2A2340] font-extrabold py-5 rounded-[24px] border border-[#F2E9E9] hover:border-[#F05578] transition-all"
+                                >
+                                    RETAKE PHOTO
+                                </button>
+                                <button
+                                    onClick={() => processOCR(capturedImage)}
+                                    className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
+                                >
+                                    USE PHOTO
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 1 && (
+                        <motion.div
+                            key="step1"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            className="p-6 space-y-8"
+                        >
+                            <div className="flex bg-white p-1 rounded-md border border-[#F2E9E9]">
+                                <TabBtn active={uploadType === 'doc'} onClick={() => setUploadType('doc')}>Document</TabBtn>
+                                <TabBtn active={uploadType === 'image'} onClick={() => setUploadType('image')}>Image</TabBtn>
+                            </div>
+
+                            <div
+                                onClick={() => fileInputRef.current?.click()}
+                                className="aspect-square bg-white rounded-[48px] border-2 border-dashed border-[#F2E9E9] flex flex-col items-center justify-center gap-4 group cursor-pointer hover:border-[#F05578] transition-all"
+                            >
+                                <div className="w-20 h-20 bg-[#FDF8F8] rounded-[32px] flex items-center justify-center text-[#F05578] group-hover:scale-110 transition-transform">
+                                    <Upload size={32} />
+                                </div>
+                                <div className="text-center">
+                                    <h4 className="text-lg font-extrabold text-[#2A2340]">Choose a file</h4>
+                                    <p className="text-xs font-bold text-[#9E8A8C] mt-1">Drag and drop or browse files</p>
+                                </div>
+                                <div className="mt-4 flex gap-2">
+                                    <Badge>PDF</Badge>
+                                    <Badge>JPG</Badge>
+                                    <Badge>PNG</Badge>
+                                    <Badge>HEIC</Badge>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
+                            >
+                                BROWSE FILES
+                            </button>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 2 && (
+                        <motion.div
+                            key="step2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="p-6 h-full flex flex-col items-center justify-center text-center space-y-10"
+                        >
+                            <div className="relative">
+                                <div className="w-32 h-32 rounded-md border-4 border-[#FDF8F8] border-t-[#F05578] animate-spin" />
+                                <div className="absolute inset-0 flex items-center justify-center text-[#F05578]">
+                                    <Loader2 size={32} className="animate-pulse" />
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                <h2 className="text-2xl font-extrabold text-[#2A2340] tracking-tight">Extracting Data...</h2>
+                                <p className="text-sm font-bold text-[#9E8A8C] uppercase tracking-widest leading-relaxed">
+                                    Our AI is scanning your report for glucose, HbA1c, and BMI values.
+                                </p>
+                            </div>
+
+                            <div className="w-full max-w-xs bg-white rounded-md h-3 overflow-hidden border border-[#F2E9E9]">
+                                <motion.div
+                                    className="bg-[#F05578] h-full"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${extractionProgress}%` }}
+                                />
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 3 && (
+                        <motion.div
+                            key="step3"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-6 space-y-8"
+                        >
+                            <div className="bg-[#EAF6EE] p-5 rounded-[32px] border border-[#F2E9E9] flex items-center gap-4">
+                                <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center text-[#5C9B73] shadow-sm">
+                                    <CheckCircle2 size={24} />
+                                </div>
+                                <div>
+                                    <h4 className="text-sm font-extrabold text-[#2A2340]">Extraction Successful</h4>
+                                    <p className="text-[10px] font-bold text-[#5C9B73] uppercase tracking-widest mt-0.5">Found: {extractedFields.join(', ') || 'Manual Entry'}</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <ModernInput label="Age" value={formData.age} onChange={(v) => setFormData({ ...formData, age: v })} />
+                                    <ModernInput label="BMI" value={formData.bmi} onChange={(v) => setFormData({ ...formData, bmi: v })} placeholder="e.g. 24.5" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <ModernInput label="Glucose" value={formData.glucose} onChange={(v) => setFormData({ ...formData, glucose: v })} placeholder="e.g. 98" />
+                                    <ModernInput label="HbA1c" value={formData.hba1c} onChange={(v) => setFormData({ ...formData, hba1c: v })} placeholder="e.g. 5.7" />
+                                </div>
+                                <ModernInput label="Blood Pressure" value={formData.bloodPressure} onChange={(v) => setFormData({ ...formData, bloodPressure: v })} placeholder="120/80" />
+
+                                <div className="space-y-3 pt-4">
+                                    <Toggle label="Gestational Diabetes History" active={formData.gestationalDiabetes} onClick={() => setFormData({ ...formData, gestationalDiabetes: !formData.gestationalDiabetes })} />
+                                    <Toggle label="Family History of Diabetes" active={formData.familyHistory} onClick={() => setFormData({ ...formData, familyHistory: !formData.familyHistory })} />
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={handlePredict}
+                                className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all"
+                            >
+                                GENERATE PREDICTION
+                            </button>
+                        </motion.div>
+                    )}
+
+                    {flowStep === 4 && result && (
+                        <motion.div
+                            key="step4"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="p-6 h-full flex flex-col items-center justify-center space-y-12"
+                        >
+                            <div className="relative text-center">
+                                <div className={`w-64 h-64 rounded-md border-[12px] flex flex-col items-center justify-center ${result.level === 'High Risk' ? 'border-[#FDE8EC] text-[#E25B76]' : result.level === 'Moderate Risk' ? 'border-[#FFF4DD] text-[#D79B2E]' : 'border-[#EAF6EE] text-[#5C9B73]'}`}>
+                                    <h4 className="text-6xl font-black tracking-tighter">{result.score}%</h4>
+                                    <p className="text-xs font-bold uppercase tracking-[0.2em] mt-1">{result.level}</p>
+                                </div>
+                            </div>
+
+                            <div className="text-center space-y-4 px-6">
+                                <h2 className="text-3xl font-extrabold text-[#2A2340] tracking-tight leading-tight">
+                                    {result.level === "High Risk" ? "Urgent Care Recommended" : result.level === "Moderate Risk" ? "Focus on Prevention" : "Excellent Health Status"}
+                                </h2>
+                                <p className="text-sm font-bold text-[#9E8A8C] leading-relaxed italic">
+                                    "{result.message}"
+                                </p>
+                            </div>
+
+                            <div className="w-full space-y-4">
+                                <button
+                                    onClick={() => navigate('/doctor')}
+                                    className="w-full bg-[#F05578] text-white font-extrabold py-5 rounded-[24px] shadow-lg shadow-pink-100"
+                                >
+                                    BOOK CONSULTATION
+                                </button>
+                                <button
+                                    onClick={() => navigate('/')}
+                                    className="w-full bg-white text-[#2A2340] font-extrabold py-5 rounded-[24px] border border-[#F2E9E9]"
+                                >
+                                    BACK TO DASHBOARD
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Hidden Elements */}
+            <input type="file" accept=".pdf,image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelection} />
+            <input type="file" accept="image/*" capture="environment" className="hidden" ref={scanInputRef} onChange={handleFileSelection} />
+            <canvas ref={canvasRef} className="hidden" />
+
+            {/* Image Cropper Modal */}
+            {showCropModal && (
+                <div className="fixed inset-0 z-[1000] bg-black/95 flex flex-col backdrop-blur-md">
+                    <div className="relative flex-1 flex items-center justify-center p-4 overflow-hidden">
+                        <ReactCrop
+                            crop={crop}
+                            onChange={(c) => setCrop(c)}
+                            onComplete={(c) => setCompletedCrop(c)}
+                            style={{ maxHeight: '80vh' }}
+                        >
+                            <img
+                                ref={imgRef}
+                                alt="Crop me"
+                                src={imageToCrop}
+                                onLoad={onImageLoad}
+                                style={{ maxHeight: '80vh', objectFit: 'contain' }}
+                            />
+                        </ReactCrop>
+                    </div>
+                    <div className="bg-white p-6 pb-12 space-y-6 rounded-t-[40px] shadow-2xl relative z-[1010]">
+                        <div className="text-center space-y-1">
+                            <h3 className="text-lg font-extrabold text-[#2A2340]">Crop Your Report</h3>
+                            <p className="text-xs font-bold text-[#9E8A8C] uppercase tracking-widest">Adjust area to capture medical results</p>
+                        </div>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => { setShowCropModal(false); setImageToCrop(null); }}
+                                className="flex-1 py-5 rounded-[24px] border border-[#F2E9E9] text-[#2A2340] font-extrabold hover:bg-gray-50 transition-all pointer-events-auto"
+                            >
+                                CANCEL
+                            </button>
+                            <button
+                                onClick={handleCropUpload}
+                                className="flex-1 py-5 rounded-[24px] bg-[#F05578] text-white font-extrabold shadow-lg shadow-pink-100 hover:bg-[#E94D71] transition-all relative z-[1020] pointer-events-auto"
+                            >
+                                CROP & UPLOAD
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function ActionCard({ icon: Icon, title, subtitle, color, onClick }) {
+    return (
+        <button
+            onClick={onClick}
+            className="bg-white rounded-[32px] p-6 border border-[#F2E9E9] shadow-sm flex flex-col items-start gap-4 text-left hover:border-[#F05578] transition-all active:scale-95"
+        >
+            <div className={`w-12 h-12 rounded-md bg-[#FDF8F8] flex items-center justify-center ${color}`}>
+                <Icon size={24} />
+            </div>
+            <div>
+                <h4 className="text-sm font-extrabold text-[#2A2340] leading-tight">{title}</h4>
+                <p className="text-[10px] font-bold text-[#9E8A8C] uppercase tracking-widest mt-1">{subtitle}</p>
+            </div>
+        </button>
+    );
+}
+
+function RecentFile({ name, date, onClick }) {
+    return (
+        <button
+            onClick={onClick}
+            className="w-full bg-white rounded-md p-4 border border-[#F2E9E9] flex items-center justify-between hover:border-[#F05578] transition-all active:scale-[0.98]"
+        >
+            <div className="flex items-center gap-3 text-left">
+                <div className="w-10 h-10 bg-[#FDF8F8] rounded-md flex items-center justify-center text-[#F05578]">
+                    <FileText size={20} />
+                </div>
+                <div>
+                    <h4 className="text-xs font-extrabold text-[#2A2340]">{name}</h4>
+                    <p className="text-[9px] font-bold text-[#9E8A8C] mt-0.5">{date}</p>
+                </div>
+            </div>
+            <ChevronRight size={16} className="text-[#9E8A8C]" />
+        </button>
+    );
+}
+
+function TabBtn({ children, active, onClick }) {
+    return (
+        <button
+            onClick={onClick}
+            className={`flex-1 py-3 rounded-md text-xs font-extrabold transition-all ${active ? 'bg-[#F05578] text-white shadow-md' : 'text-[#9E8A8C]'}`}
+        >
+            {children}
+        </button>
+    );
+}
+
+function Badge({ children }) {
+    return <span className="px-3 py-1 bg-[#FDF8F8] rounded-md text-[10px] font-bold text-[#F05578] border border-[#FEE7EC]">{children}</span>;
+}
+
+function ModernInput({ label, value, onChange, placeholder }) {
+    return (
+        <div className="space-y-2">
+            <label className="text-[10px] font-black text-[#9E8A8C] uppercase tracking-[0.2em] ml-1">{label}</label>
+            <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={placeholder}
+                className="w-full bg-white border border-[#F2E9E9] rounded-md px-5 py-4 text-sm font-extrabold text-[#2A2340] focus:ring-2 focus:ring-[#F05578]/20 outline-none transition-all placeholder:text-gray-300"
+            />
+        </div>
+    );
+}
+
+function Toggle({ label, active, onClick }) {
+    return (
+        <button
+            onClick={onClick}
+            className="w-full flex items-center justify-between p-5 bg-white rounded-md border border-[#F2E9E9] transition-all"
+        >
+            <span className="text-xs font-extrabold text-[#2A2340]">{label}</span>
+            <div className={`w-12 h-6 rounded-md relative transition-all ${active ? 'bg-[#F05578]' : 'bg-[#F2E9E9]'}`}>
+                <div className={`absolute top-1 w-4 h-4 rounded-md bg-white transition-all ${active ? 'left-7' : 'left-1'}`} />
+            </div>
+        </button>
+    );
+}

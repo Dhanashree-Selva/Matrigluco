@@ -1,0 +1,5 @@
+<resources>
+    <string name="diagnostics_title">Privacy-safe diagnostics</string>
+    <string name="diagnostics_copy">Copy sanitized diagnostics</string>
+    <string name="diagnostics_copy_label">Matrigluco sanitized diagnostics</string>
+</resources>

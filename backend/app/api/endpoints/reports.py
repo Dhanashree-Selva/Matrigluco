@@ -1,334 +1,166 @@
-from fastapi import APIRouter, UploadFile, File
-import fitz
-import tempfile
-import re
+import uuid
 import os
-import requests
-import numpy as np
-import app.api.endpoints.prediction as pred
+import shutil
+import tempfile
+from typing import Optional, List
+from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
+import pymupdf as fitz
+from app.models.schemas import SaveReportRequest
+from app.services.report_service import ReportService
+from app.api.dependencies import get_report_service, get_storage_service
+from app.integrations.storage.service import StorageIntegrationService
+from app.core.security import get_current_user_id
+from app.ml.inference.predictor import MLInferenceService
+from app.ml.inference.feature_contract import DiabetesRiskFeatures
 
 router = APIRouter()
-
-OCR_API_KEY = os.getenv("OCR_API_KEY")
-
-def extract_text_from_image(image_bytes, filename="report.png", content_type="image/png"):
-    try:
-        print(f"\n--- [OCR DEBUG] UPLOADING FILE: {filename} ---")
-        print(f"Content-Type: {content_type}")
-        print(f"Byte Size: {len(image_bytes)}")
-
-        if len(image_bytes) == 0:
-            print("ERROR: Image bytes are empty.")
-            return ""
-
-        files = {
-            "file": (
-                filename,
-                image_bytes,
-                content_type
-            )
-        }
-
-        payload = {
-            "apikey": OCR_API_KEY,
-            "language": "eng",
-            "isOverlayRequired": "false",
-            "OCREngine": 2
-        }
-
-        headers = {
-            "apikey": OCR_API_KEY
-        }
-
-        response = requests.post(
-            "https://api.ocr.space/parse/image",
-            files=files,
-            data=payload,
-            headers=headers,
-            timeout=60
-        )
-
-        print(f"OCR HTTP STATUS: {response.status_code}")
-        # print("OCR RAW RESPONSE:", response.text)
-
-        result = response.json()
-
-        if result.get("IsErroredOnProcessing"):
-            print("OCR API ERROR:", result.get("ErrorMessage") or result)
-            return ""
-
-        if result.get("ParsedResults"):
-            text = ""
-            for res in result["ParsedResults"]:
-                text += res.get("ParsedText", "") + " "
-            return text.strip()
-
-        return ""
-
-    except Exception as e:
-        print(f"OCR Exception: {e}")
-        return ""
+_ml_service = MLInferenceService()
 
 
-def extract_health_values(text):
-    print("\n--- [DEBUG] extract_health_values (ROBUST WINDOW) CALLED ---")
-    
-    extracted = {
-        "glucose_fasting": None,
-        "glucose_pp": None,
-        "glucose": None,
-        "hba1c": None,
-        "bmi": None,
-        "age": None,
-        "blood_pressure": None
+@router.post("/upload-file")
+async def upload_file_local(
+    file: UploadFile = File(...),
+    storage: StorageIntegrationService = Depends(get_storage_service),
+):
+    """Legacy file upload adapter."""
+    ext = file.filename.split(".")[-1] if "." in file.filename else "bin"
+    unique_filename = f"{uuid.uuid4()}.{ext}"
+    content = await file.read()
+    storage.save_file(content, f"reports/{unique_filename}")
+
+    return {
+        "fileName": unique_filename,
+        "publicUrl": f"/uploads/{unique_filename}",
+        "message": "File uploaded successfully",
     }
-
-    # Better Triggers
-    triggers = {
-        "hba1c": [r"hba1c", r"hbaic", r"hba 1c", r"hb1ac", r"a1c", r"glycated\s*hemoglobin", r"glycohemoglobin"],
-        "glucose": [r"estimated\s*average\s*glucose", r"blood\s*glucose", r"plasma\s*glucose", r"fbs", r"f\.b\.s", r"rbs", r"r\.b\.s", r"ppbs", r"p\.p\.b\.s", r"sugar", r"fasting", r"post\s*prandial", r"glucose"],
-        "bmi": [r"bmi", r"body\s*mass\s*index"],
-        "age": [r"age", r"yrs", r"years"],
-        "blood_pressure": [r"bp", r"blood\s*pressure", r"b\.p\."]
-    }
-
-    # Medical Ranges for Validation
-    ranges = {
-        "hba1c": (2.0, 25.0),
-        "glucose": (30.0, 600.0),
-        "age": (1.0, 120.0),
-        "bmi": (10.0, 60.0),
-        "blood_pressure": (30.0, 250.0)
-    }
-
-    # Flatten text for consistent window search
-    clean_text = " ".join(text.splitlines())
-    print(f"Analyzing {len(clean_text)} chars using window search...")
-
-    for key, patterns in triggers.items():
-        trigger_regex = r"\b(?:" + "|".join(patterns) + r")\b"
-        
-        # Find all occurrences of the trigger
-        for trigger_match in re.finditer(trigger_regex, clean_text, re.IGNORECASE):
-            start_pos = trigger_match.end()
-            # Look ahead up to 200 chars for valid numbers
-            lookahead = clean_text[start_pos : start_pos + 200]
-            
-            # Find all numbers in the lookahead
-            numbers = re.finditer(r"\b(\d+\.?\d*)\b", lookahead)
-            
-            for num_match in numbers:
-                val_str = num_match.group(1)
-                try:
-                    val = float(val_str)
-                    
-                    # Validate Range
-                    min_v, max_v = ranges[key]
-                    if min_v <= val <= max_v:
-                        print(f"[MATCH {key.upper()}] Found {val} near context: ...{trigger_match.group(0)}...")
-                        
-                        # Special handling for blood pressure (check for diastolic pair)
-                        if key == "blood_pressure":
-                            pair_match = re.search(r"(\d+)\s*[/]\s*(\d+)", lookahead[max(0, num_match.start()-10) : num_match.end()+10])
-                            if pair_match:
-                                extracted[key] = float(pair_match.group(2))
-                            else:
-                                extracted[key] = val
-                        elif key == "glucose":
-                            context = (trigger_match.group(0) + " " + lookahead).lower()
-                            if any(k in context for k in ["post", "pp", "after", "meal", "p.p."]):
-                                if extracted["glucose_pp"] is None: extracted["glucose_pp"] = val
-                            elif any(k in context for k in ["fasting", "fbs", "f.b.s."]):
-                                if extracted["glucose_fasting"] is None: extracted["glucose_fasting"] = val
-                            else:
-                                if extracted["glucose"] is None: extracted["glucose"] = val
-                        else:
-                            if extracted[key] is None:
-                                extracted[key] = int(val) if key == "age" else val
-                        
-                        break # Found valid number for this trigger instance
-                except:
-                    continue
-            
-            if key != "glucose" and extracted[key] is not None:
-                break # Found valid result for this field
-
-    # Final logic for overall glucose
-    if extracted["glucose_fasting"] is not None:
-        extracted["glucose"] = extracted["glucose_fasting"]
-    elif extracted["glucose_pp"] is not None and extracted["glucose"] is None:
-        extracted["glucose"] = extracted["glucose_pp"]
-
-    print(f"\n--- [DEBUG] EXTRACTION COMPLETED ---")
-    print(f"RESULT: {extracted}")
-    return extracted
 
 
 @router.post("/")
-async def scan_report(
-    file: UploadFile = File(...)
+def save_report(
+    data: SaveReportRequest,
+    current_user_id: Optional[str] = Depends(get_current_user_id),
+    service: ReportService = Depends(get_report_service),
 ):
-    print(f"\n--- [SCAN REPORT] New Upload: {file.filename} ---")
-    print(f"Content Type: {file.content_type}")
-    
+    """Legacy save report endpoint delegating to ReportService."""
+    if current_user_id and not data.user_id:
+        data.user_id = current_user_id
+
+    saved = service.process_and_save_report(data)
+
+    return {
+        "message": "Report saved successfully",
+        "data": {
+            "id": saved.id,
+            "user_id": saved.user_id,
+            "file_url": saved.file_url,
+            "extracted_values": saved.extracted_values,
+            "prediction_result": saved.prediction_result,
+            "risk_level": saved.risk_level,
+            "uploaded_at": saved.uploaded_at.isoformat() if saved.uploaded_at else None,
+        },
+    }
+
+
+@router.get("/")
+def get_reports(
+    user_id: Optional[str] = None,
+    current_user_id: Optional[str] = Depends(get_current_user_id),
+    service: ReportService = Depends(get_report_service),
+):
+    """Legacy get reports endpoint delegating to ReportService."""
+    target_user_id = user_id or current_user_id
+    if not target_user_id:
+        return []
+
+    records = service.get_user_reports(user_id=target_user_id)
+    return [
+        {
+            "id": r.id,
+            "user_id": r.user_id,
+            "file_url": r.file_url,
+            "extracted_values": r.extracted_values,
+            "prediction_result": r.prediction_result,
+            "risk_level": r.risk_level,
+            "uploaded_at": r.uploaded_at.isoformat() if r.uploaded_at else None,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        }
+        for r in records
+    ]
+
+
+@router.post("/extract-and-predict")
+async def extract_and_predict(
+    file: UploadFile = File(...),
+    service: ReportService = Depends(get_report_service),
+):
+    """Legacy extract and predict endpoint delegating OCR and ML to domain services."""
     file_bytes = await file.read()
-    print(f"Total Bytes Read: {len(file_bytes)}")
-    
     if len(file_bytes) == 0:
         return {
             "message": "Empty file uploaded",
             "health_data": {},
             "prediction_result": "Unknown",
             "risk_level": "Unknown",
-            "probability_score": 0
+            "probability_score": 0,
         }
 
-    text = ""
-
-    # PDF Upload
+    raw_text = ""
     if file.filename.lower().endswith(".pdf"):
-        with tempfile.NamedTemporaryFile(
-            suffix=".pdf",
-            delete=False
-        ) as temp_pdf:
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as temp_pdf:
             temp_pdf.write(file_bytes)
             temp_pdf_path = temp_pdf.name
-
-        pdf_document = fitz.open(temp_pdf_path)
-
-        for i, page in enumerate(pdf_document):
-            pix = page.get_pixmap()
-            
-            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
-                pix.save(temp_img.name)
-                with open(temp_img.name, "rb") as f:
-                    page_bytes = f.read()
-                
-                page_text = extract_text_from_image(
-                    page_bytes, 
-                    filename=f"page_{i+1}.png", 
-                    content_type="image/png"
-                )
-                print(f"PAGE {i+1} TEXT EXTRACTED.")
-                if page_text:
-                    text += page_text + " "
-                
-                os.remove(temp_img.name)
-            
-        pdf_document.close()
-        os.remove(temp_pdf_path)
-
-    # Image Upload
+        try:
+            pdf_document = fitz.open(temp_pdf_path)
+            for page in pdf_document:
+                pix = page.get_pixmap()
+                with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_img:
+                    pix.save(temp_img.name)
+                    img_bytes = open(temp_img.name, "rb").read()
+                    raw_text += " " + service.ocr_client.extract_text_from_image(img_bytes)
+                    try:
+                        os.unlink(temp_img.name)
+                    except Exception:
+                        pass
+        finally:
+            try:
+                os.unlink(temp_pdf_path)
+            except Exception:
+                pass
     else:
-        page_text = extract_text_from_image(
-            file_bytes, 
-            filename=file.filename, 
-            content_type=file.content_type or "image/png"
-        )
-        if page_text:
-            text += page_text + " "
+        raw_text = service.ocr_client.extract_text_from_image(file_bytes, filename=file.filename)
 
-    # Extract OCR health values
-    print(f"\n--- [DEBUG] TOTAL OCR TEXT COLLECTED ---\n{text}\n--------------------------------------")
-    extracted_data = extract_health_values(text)
-    print(f"\n[DEBUG] FINAL EXTRACTED JSON: {extracted_data}")
+    extracted = service.extract_biomarkers_from_text(raw_text)
 
-    # Auto prediction using OCR values
-    glucose_fasting = (
-        extracted_data.get("glucose_fasting")
-        or 95
-    )
+    # ML Inference if glucose & BMI present
+    glucose = extracted.get("glucose")
+    bmi = extracted.get("bmi")
+    prediction_result = "Unknown"
+    risk_level = "Unknown"
+    probability_score = 0.0
 
-    glucose_pp = (
-        extracted_data.get("glucose_pp")
-        or 140
-    )
-
-    bmi = (
-        extracted_data.get("bmi")
-        or 25
-    )
-
-    hba1c = (
-        extracted_data.get("hba1c")
-        or 5.5
-    )
-
-    # Use higher glucose value
-    glucose = max(
-        glucose_fasting,
-        glucose_pp
-    )
-
-    blood_pressure = (
-        extracted_data.get("blood_pressure")
-        or 70
-    )
-
-    age = (
-        extracted_data.get("age")
-        or 30
-    )
-
-    input_features = np.array([[
-        0,          # pregnancies
-        glucose,
-        blood_pressure,
-        20,         # skin thickness
-        0,          # insulin
-        bmi,
-        0.2,        # diabetes pedigree
-        age
-    ]])
-
-    # Scale input
-    pred.load_model()
-    if pred.model is None or pred.scaler is None:
-        return {
-            "message": "Model not ready yet",
-            "health_data": extracted_data,
-            "prediction_result": "Unknown",
-            "risk_level": "Unknown",
-            "probability_score": 0
-        }
-
-    input_scaled = pred.scaler.transform(
-        input_features
-    )
-
-    # Prediction
-    prediction = pred.model.predict(
-        input_scaled
-    )[0]
-
-    probability = pred.model.predict_proba(
-        input_scaled
-    )[0][1]
-
-    # Risk level
-    risk_level = "Low Risk"
-
-    if probability > 0.33:
-        risk_level = "Moderate Risk"
-
-    if probability > 0.66:
-        risk_level = "High Risk"
+    if glucose is not None and bmi is not None:
+        try:
+            features = DiabetesRiskFeatures(
+                pregnancies=0.0,
+                glucose=float(glucose),
+                blood_pressure=float(extracted.get("blood_pressure") or 80.0),
+                skin_thickness=20.0,
+                insulin=85.0,
+                bmi=float(bmi),
+                diabetes_pedigree_function=0.45,
+                age=float(extracted.get("age") or 28.0),
+            )
+            ml_res = _ml_service.predict_diabetes_risk(features)
+            prediction_result = ml_res["prediction_result"]
+            risk_level = ml_res["risk_level"]
+            probability_score = ml_res["probability_score"]
+        except Exception:
+            pass
 
     return {
-        "message":
-        "Report scanned successfully",
-
-        "health_data":
-        extracted_data,
-
-        "prediction_result":
-        "Diabetic"
-        if prediction == 1
-        else "Non-Diabetic",
-
-        "risk_level":
-        risk_level,
-
-        "probability_score":
-        round(probability * 100, 2)
+        "message": "Report analyzed successfully",
+        "health_data": extracted,
+        "prediction_result": prediction_result,
+        "risk_level": risk_level,
+        "probability_score": probability_score,
     }

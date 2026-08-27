@@ -1,0 +1,138 @@
+<resources>
+    <style name="Orbit.Text" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Display" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.BodyMuted" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/care_text_secondary</item>
+    </style>
+
+    <style name="Orbit.Text.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/care_text_secondary</item>
+    </style>
+
+    <style name="Orbit.Text.LabelStrong" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Metric" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.MetricUnit" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/care_text_secondary</item>
+    </style>
+
+    <style name="Orbit.Text.Caption" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/care_text_muted</item>
+    </style>
+
+    <style name="Orbit.Text.BodyStrong" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Text.Eyebrow" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">@color/care_pink</item>
+    </style>
+
+    <style name="Orbit.Text.Badge" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/care_pink</item>
+    </style>
+
+    <style name="Orbit.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Orbit.BottomSheet</item>
+    </style>
+
+    <style name="Orbit.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/care_surface</item>
+        <item name="shapeAppearance">@style/Orbit.ShapeAppearance.BottomSheet</item>
+    </style>
+
+    <style name="Orbit.ShapeAppearance.BottomSheet" parent="ShapeAppearance.Material3.Corner.None">
+        <item name="cornerSizeTopLeft">@dimen/orbit_radius_lg</item>
+        <item name="cornerSizeTopRight">@dimen/orbit_radius_lg</item>
+    </style>
+
+    <style name="Orbit.MaterialDatePicker" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/care_pink</item>
+        <item name="colorOnPrimary">@color/care_on_accent</item>
+        <item name="colorSurface">@color/care_surface</item>
+        <item name="colorOnSurface">@color/care_ink</item>
+    </style>
+
+    <style name="Orbit.Chip.Metric" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">14dp</item>
+        <item name="chipMinHeight">44dp</item>
+        <item name="chipBackgroundColor">@color/orbit_chip_background</item>
+        <item name="chipStrokeColor">@color/orbit_chip_stroke_color</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/orbit_chip_text_color</item>
+        <item name="chipIconTint">@color/orbit_chip_icon_tint</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipIconSize">18dp</item>
+        <item name="android:textAppearance">@style/Orbit.Text.LabelStrong</item>
+        <item name="rippleColor">@color/care_pink_soft</item>
+    </style>
+
+    <style name="Orbit.TextInputLayout.Outlined" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="boxStrokeColor">@color/orbit_input_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="hintTextColor">@color/care_pink</item>
+        <item name="android:textColorHint">@color/care_text_muted</item>
+        <item name="boxBackgroundColor">@color/care_surface_raised</item>
+    </style>
+</resources>

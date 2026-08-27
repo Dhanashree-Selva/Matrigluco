@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/orbit_space_16"
+        android:paddingVertical="@dimen/orbit_space_12"
+        android:minHeight="64dp">
+
+        <FrameLayout
+            android:id="@+id/iconPlate"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/orbit_soft_surface"
+            android:backgroundTint="@color/care_surface_elevated"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/metricIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_droplet_24"
+                app:tint="@color/care_pink"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/metricTitleGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/orbit_space_12"
+            android:layout_marginEnd="@dimen/orbit_space_12"
+            app:layout_constraintStart_toEndOf="@id/iconPlate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/readingGroup">
+
+            <TextView
+                android:id="@+id/metricTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fasting / Plasma Glucose"
+                android:textAppearance="@style/Orbit.Text.BodyStrong"
+                android:textColor="@color/care_ink"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/metricUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="mg/dL"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/readingGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last reading"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <TextView
+                    android:id="@+id/lastReadingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="150 mg/dL"
+                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                    android:textColor="@color/care_pink" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/dropdownChevron"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="6dp"
+                android:src="@drawable/ic_huge_chevron_down_24"
+                app:tint="@color/care_text_muted"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

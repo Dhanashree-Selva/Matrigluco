@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shellRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/care_background">
+
+    <!-- Tablet Navigation Rail -->
+    <com.matrigluco.app.navigation.PrimaryNavigationView
+        android:id="@+id/navigationRail"
+        android:layout_width="@dimen/orbit_navigation_rail_width"
+        android:layout_height="match_parent"
+        android:background="@color/care_surface"
+        android:visibility="gone" />
+
+    <!-- Main Content Container -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Canonical Matrigluco App Bar -->
+        <com.matrigluco.core.designsystem.component.appbar.OrbitAppBar
+            android:id="@+id/orbitAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/care_background"
+            android:visibility="gone" />
+
+        <!-- Navigation Fragment Host -->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/care_background"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_root" />
+
+        <!-- Phone Bottom Navigation Bar -->
+        <com.matrigluco.app.navigation.PrimaryNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/orbit_primary_navigation_height"
+            android:background="@color/care_surface"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

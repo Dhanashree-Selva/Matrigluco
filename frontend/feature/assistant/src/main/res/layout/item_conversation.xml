@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_prompt_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_source_pill"
+            android:padding="8dp"
+            android:src="@drawable/ic_huge_message_24"
+            app:tint="@color/care_pink" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/conversationTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Maternal Health Consultation" />
+
+            <TextView
+                android:id="@+id/conversationTime"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="11sp"
+                tools:text="Aug 27, 2026 · 10:30 AM" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnDeleteConversation"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete conversation"
+            android:src="@drawable/ic_huge_delete_24"
+            app:tint="@color/care_text_tertiary" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_huge_chevron_right_24"
+            app:tint="@color/care_text_tertiary" />
+    </LinearLayout>
+</FrameLayout>

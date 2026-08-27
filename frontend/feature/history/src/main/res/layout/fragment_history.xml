@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/historyRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/historyScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="48dp">
+
+                <!-- 1. Chronicle Summary Surface -->
+                <LinearLayout
+                    android:id="@+id/summarySurface"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_chronicle_card"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Orbit.Text.Eyebrow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/history_eyebrow"
+                            android:textColor="@color/care_pink" />
+
+                        <TextView
+                            android:id="@+id/summaryTotalEventsBadge"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_source_pill"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold"
+                            tools:text="21 recorded events" />
+                    </LinearLayout>
+
+                    <!-- Subtitle Description -->
+                    <TextView
+                        style="@style/Orbit.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="A continuous chronological story of your risk assessments, daily readings, medical reports, and consultations."
+                        android:textColor="@color/care_text_secondary"
+                        android:textSize="12.5sp" />
+
+                    <!-- Category Breakdown Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <!-- Assessments Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Orbit.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Assess"
+                                android:textColor="@color/care_text_tertiary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/countAssessments"
+                                style="@style/Orbit.Text.LabelStrong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/care_pink"
+                                android:textSize="16sp"
+                                tools:text="7" />
+                        </LinearLayout>
+
+                        <!-- Readings Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Orbit.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Readings"
+                                android:textColor="@color/care_text_tertiary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/countReadings"
+                                style="@style/Orbit.Text.LabelStrong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/care_text_primary"
+                                android:textSize="16sp"
+                                tools:text="8" />
+                        </LinearLayout>
+
+                        <!-- Reports Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Orbit.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Reports"
+                                android:textColor="@color/care_text_tertiary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/countReports"
+                                style="@style/Orbit.Text.LabelStrong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/care_text_primary"
+                                android:textSize="16sp"
+                                tools:text="5" />
+                        </LinearLayout>
+
+                        <!-- Consultations Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Orbit.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Consults"
+                                android:textColor="@color/care_text_tertiary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/countConsultations"
+                                style="@style/Orbit.Text.LabelStrong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/care_text_primary"
+                                android:textSize="16sp"
+                                tools:text="1" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 2. Source Selector Rail (Horizontal Scroll) -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/sourceSelectorRail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Tab: All -->
+                        <TextView
+                            android:id="@+id/tabAll"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:background="@drawable/bg_chronicle_tab_active"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="@string/history_source_all"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+
+                        <!-- Tab: Assessments -->
+                        <TextView
+                            android:id="@+id/tabAssessments"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_chronicle_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="@string/history_source_assessments"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+
+                        <!-- Tab: Readings -->
+                        <TextView
+                            android:id="@+id/tabReadings"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_chronicle_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="@string/history_source_readings"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+
+                        <!-- Tab: Reports -->
+                        <TextView
+                            android:id="@+id/tabReports"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_chronicle_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="@string/history_source_reports"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+
+                        <!-- Tab: Consultations -->
+                        <TextView
+                            android:id="@+id/tabConsultations"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_chronicle_tab_inactive"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:text="@string/history_source_consultations"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- 3. Controls Bar: Month / Filter + View Mode Toggle -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Filter / Month Button -->
+                    <LinearLayout
+                        android:id="@+id/btnFilterScope"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_source_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_marginEnd="6dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_huge_filter_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            android:id="@+id/activeFilterLabel"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Time"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <!-- Story / Events View Mode Toggle -->
+                    <LinearLayout
+                        android:id="@+id/viewModeToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_source_pill"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="2dp">
+
+                        <TextView
+                            android:id="@+id/btnModeStory"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_chronicle_tab_active"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="@string/history_view_story"
+                            android:textColor="#FFFFFF"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/btnModeEvents"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="@string/history_view_events"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Offline Notice Banner -->
+                <TextView
+                    android:id="@+id/offlineBanner"
+                    style="@style/Orbit.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@color/care_pink_light"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="@string/history_offline_notice"
+                    android:textColor="@color/care_pink"
+                    android:visibility="gone" />
+
+                <!-- 4. Timeline Event RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/timelineRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_chronicle_event_story" />
+
+                <!-- 5. Empty State -->
+                <com.matrigluco.core.designsystem.component.OrbitEmptyState
+                    android:id="@+id/emptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone" />
+
+                <!-- Loading Progress -->
+                <ProgressBar
+                    android:id="@+id/loadingProgress"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:indeterminateTint="@color/care_pink"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+# MatriGluco — Developer & Testing Dependencies
+-r base.txt
+
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=5.0.0
+ruff>=0.4.0
+mypy>=1.10.0
+pre-commit>=3.7.0
+types-requests>=2.31.0
+types-PyMySQL>=1.1.0
+rich>=13.7.0

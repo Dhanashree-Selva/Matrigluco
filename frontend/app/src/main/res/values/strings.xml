@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Matrigluco</string>
+    <string name="home_greeting">Good morning</string>
+    <string name="home_title">Your care, in one orbit</string>
+    <string name="home_intro">Keep reports, consultations, and daily health tasks close at hand.</string>
+    <string name="health_summary">Health summary</string>
+    <string name="health_empty_title">No health data yet</string>
+    <string name="health_empty_body">Your verified readings and reports will appear here after you add them.</string>
+    <string name="add_report">Add a report</string>
+    <string name="design_foundation_status">Offline-ready foundation</string>
+    <string name="design_foundation_metadata">Care Orbit components</string>
+    <string name="measurement_label">Measurement</string>
+    <string name="measurement_helper">Enter the exact value from your source.</string>
+    <string name="unit_mg_dl">mg/dL</string>
+    <string name="nav_home">Home</string><string name="nav_track">Track</string><string name="nav_assess">Assess</string><string name="nav_reports">Reports</string><string name="nav_assistant">Assistant</string><string name="nav_more">More</string><string name="nav_account">Account</string>
+    <string name="nav_selected">Selected</string><string name="nav_not_selected">Not selected</string>
+    <string name="onboarding_title">Set up your care</string><string name="notifications">Notifications</string>
+    <string name="startup_title">Preparing Matrigluco</string><string name="startup_body">Checking your secure session.</string>
+    <string name="login_title">Welcome back</string>
+    <string name="section_unavailable_title">Not connected yet</string>
+    <string name="section_unavailable_body">This area is ready for its native feature and API integration. No sample health data is shown.</string>
+    <string name="more_title">Care Options</string>
+    <string name="history">History</string>
+    <string name="consultations">Consultations</string>
+    <string name="account">Account</string>
+    <string name="onboarding_body">Your onboarding state is incomplete. Setup screens will connect to the account API in their feature phase.</string>
+    <string name="sign_out">Sign out</string>
+    <string name="diagnostics">Diagnostics</string>
+
+    <string name="more_section_care">CARE &amp; CLINICAL TOOLS</string>
+    <string name="more_section_preferences">COMMUNICATION &amp; SECURITY</string>
+    <string name="more_section_system">SYSTEM &amp; DIAGNOSTICS</string>
+    <string name="more_history_title">Health Chronicle</string>
+    <string name="more_history_desc">Longitudinal care record &amp; event timeline</string>
+    <string name="more_reports_title">Medical Reports Vault</string>
+    <string name="more_reports_desc">Lab records, OCR extraction &amp; evidence</string>
+    <string name="more_consultations_title">Doctor Consultations</string>
+    <string name="more_consultations_desc">Appointments, tele-health &amp; specialist reviews</string>
+    <string name="more_assessment_title">Risk Assessment</string>
+    <string name="more_assessment_desc">AI gestational diabetes evaluations</string>
+    <string name="more_notifications_title">Notifications &amp; Alerts</string>
+    <string name="more_notifications_desc">Vitals reminders and appointment updates</string>
+    <string name="more_account_title">Account &amp; Security</string>
+    <string name="more_account_desc">Biometrics, password, and session security</string>
+    <string name="more_diagnostics_title">Diagnostics &amp; Sync Engine</string>
+    <string name="more_diagnostics_desc">View background sync, Room DB, and telemetry state</string>
+    <string name="more_sign_out_confirm_title">Sign Out</string>
+    <string name="more_sign_out_confirm_message">Are you sure you want to sign out of Matrigluco?</string>
+    <string name="more_sign_out_confirm_action">Sign Out</string>
+    <string name="more_cancel">Cancel</string>
+</resources>

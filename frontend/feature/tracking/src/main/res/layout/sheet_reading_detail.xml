@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/orbit_soft_surface"
+    android:backgroundTint="@color/care_surface"
+    android:paddingHorizontal="@dimen/orbit_space_20"
+    android:paddingTop="@dimen/orbit_space_16"
+    android:paddingBottom="@dimen/orbit_space_24">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/orbit_soft_surface"
+        android:backgroundTint="@color/care_divider"
+        android:layout_marginBottom="@dimen/orbit_space_16" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/detailSheetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading Details"
+            android:textAppearance="@style/Orbit.Text.Title"
+            android:textColor="@color/care_ink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnCloseDetail"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_huge_close_24"
+            app:tint="@color/care_text_muted"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/detailSheetTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Highlight Value Box -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_16"
+        android:background="@drawable/orbit_surface_outline"
+        android:orientation="vertical"
+        android:padding="@dimen/orbit_space_16"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/detailMetricName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fasting / Plasma Glucose"
+            android:textAppearance="@style/Orbit.Text.Caption"
+            android:textColor="@color/care_text_muted" />
+
+        <TextView
+            android:id="@+id/detailValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="150 mg/dL"
+            android:textAppearance="@style/Orbit.Text.Title"
+            android:textColor="@color/care_pink"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/detailDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Thursday, August 27, 2026 at 01:17 PM"
+            android:textAppearance="@style/Orbit.Text.Caption"
+            android:textColor="@color/care_text_muted" />
+    </LinearLayout>
+
+    <!-- Source & Notes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/orbit_space_16">
+
+        <TextView
+            android:id="@+id/detailSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Source: Manual Entry"
+            android:textAppearance="@style/Orbit.Text.Caption"
+            android:textColor="@color/care_text_muted" />
+
+        <TextView
+            android:id="@+id/detailNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Notes: None"
+            android:textAppearance="@style/Orbit.Text.Caption"
+            android:textColor="@color/care_ink" />
+    </LinearLayout>
+
+    <!-- Delete CTA Button -->
+    <com.matrigluco.core.designsystem.component.OrbitButton
+        android:id="@+id/btnDeleteReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_24"
+        app:orbitText="Delete Reading"
+        app:orbitVariant="destructive"
+        app:orbitLeadingIcon="@drawable/ic_huge_delete_24" />
+
+</LinearLayout>

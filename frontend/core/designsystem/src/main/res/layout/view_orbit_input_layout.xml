@@ -1,0 +1,42 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/orbit_input_label"
+        style="@style/Orbit.Text.LabelStrong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/care_ink" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/orbit_input_container"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/orbit_space_8"
+        app:boxBackgroundColor="@color/care_surface_elevated"
+        app:boxStrokeColor="@color/orbit_input_stroke_color"
+        app:boxStrokeErrorColor="@color/care_danger"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="1.5dp"
+        app:boxCornerRadiusTopStart="@dimen/orbit_radius_md"
+        app:boxCornerRadiusTopEnd="@dimen/orbit_radius_md"
+        app:boxCornerRadiusBottomStart="@dimen/orbit_radius_md"
+        app:boxCornerRadiusBottomEnd="@dimen/orbit_radius_md"
+        app:hintEnabled="false"
+        app:endIconTint="@color/care_text_secondary"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/care_danger"
+        app:helperTextTextColor="@color/care_text_muted">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/orbit_input_edit_text"
+            style="@style/Orbit.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/orbit_touch_target"
+            android:paddingStart="@dimen/orbit_space_16"
+            android:paddingEnd="@dimen/orbit_space_16"
+            android:paddingTop="@dimen/orbit_space_12"
+            android:paddingBottom="@dimen/orbit_space_12"
+            android:textColor="@color/care_ink"
+            android:textColorHint="@color/care_text_muted" />
+    </com.google.android.material.textfield.TextInputLayout>
+</merge>

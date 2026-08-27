@@ -1,0 +1,21 @@
+<resources>
+    <string name="auth_brand_name">Matrigluco</string>
+    <string name="auth_platform_badge">Care Orbit Platform</string>
+    <string name="auth_invalid_email">Enter a valid email address</string>
+    <string name="auth_password_required">Enter your password</string>
+    <string name="auth_welcome">Welcome back</string><string name="auth_body">Sign in securely to continue to your care.</string>
+    <string name="auth_email">Email</string><string name="auth_password">Password</string><string name="auth_sign_in">Sign in</string>
+    <string name="auth_invalid_credentials">The email or password is incorrect.</string><string name="auth_offline">You’re offline. Connect to sign in.</string><string name="auth_unavailable">Sign-in is temporarily unavailable.</string>
+    <string name="auth_create_account">Create account</string><string name="auth_forgot_password">Forgot password?</string>
+    <string name="auth_register_title">Create your account</string>
+    <string name="auth_register_body">Create your secure account to continue to your care.</string>
+    <string name="auth_full_name">Full name</string>
+    <string name="auth_password_requirement">Use at least 8 characters.</string>
+    <string name="auth_password_short">Password must contain at least 8 characters</string>
+    <string name="auth_already_have_account">Already have an account? Sign in</string>
+    <string name="auth_back_to_sign_in">Back to sign in</string>
+    <string name="auth_recovery_title">Reset your password</string>
+    <string name="auth_recovery_body">We’ll send recovery instructions if an account can use this address.</string>
+    <string name="auth_send_recovery">Send instructions</string>
+    <string name="auth_recovery_sent">If an account can use this address, recovery instructions have been sent.</string>
+</resources>

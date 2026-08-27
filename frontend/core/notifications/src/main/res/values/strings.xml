@@ -1,0 +1,20 @@
+<resources>
+    <string name="notification_channel_health">Health reminders</string>
+    <string name="notification_channel_health_description">Scheduled, privacy-safe Matrigluco reminders</string>
+    <string name="notification_channel_reports">Reports</string>
+    <string name="notification_channel_reports_description">Private report status updates</string>
+    <string name="notification_channel_consultations">Consultations</string>
+    <string name="notification_channel_consultations_description">Upcoming consultation reminders</string>
+    <string name="notification_channel_security">Account &amp; security</string>
+    <string name="notification_channel_security_description">Important account security events</string>
+    <string name="notification_title_health">Matrigluco reminder</string>
+    <string name="notification_body_health">A scheduled reminder is ready to review.</string>
+    <string name="notification_title_report">Report update</string>
+    <string name="notification_body_report">Your report status changed.</string>
+    <string name="notification_title_consultation">Consultation reminder</string>
+    <string name="notification_body_consultation">You have an upcoming consultation.</string>
+    <string name="notification_title_security">Account security</string>
+    <string name="notification_body_security">Your Matrigluco account needs attention.</string>
+    <string name="notification_public_title">Matrigluco notification</string>
+    <string name="notification_public_body">Open the app to view details.</string>
+</resources>

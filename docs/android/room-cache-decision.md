@@ -1,0 +1,3 @@
+# Room Cache Decision
+
+Room is allowed for user-scoped, bounded, server-derived summaries: history pages, measurement summaries, prediction summaries, notification inbox metadata and report/job metadata where offline value is justified. Do not cache passwords, tokens, raw report files, Assistant content, full medical PDFs or arbitrary API bodies by default. Encrypting the database is a Phase 15 security decision, not assumed. Every row must be partitioned by stable user ID. Logout/account switch clears user rows, downloaded private files and pending mutations. Server remains authoritative; no offline assessment inference.

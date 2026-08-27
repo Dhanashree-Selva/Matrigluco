@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/protected_graph" app:startDestination="@id/homeFragment">
+    <fragment android:id="@+id/homeFragment" android:name="com.matrigluco.feature.dashboard.presentation.DashboardFragment" android:label="@string/nav_home" />
+    <fragment android:id="@+id/trackingFragment" android:name="com.matrigluco.feature.tracking.presentation.TrackingFragment" android:label="@string/nav_track" />
+    <fragment android:id="@+id/reportsFragment" android:name="com.matrigluco.feature.reports.presentation.list.ReportsFragment" android:label="@string/nav_reports" />
+    <fragment android:id="@+id/assessmentFragment" android:name="com.matrigluco.feature.assessment.presentation.AssessmentFragment" android:label="@string/nav_reports" />
+    <fragment android:id="@+id/assistantFragment" android:name="com.matrigluco.feature.assistant.presentation.chat.ChatFragment" android:label="@string/nav_assistant" />
+    <fragment android:id="@+id/chatFragment" android:name="com.matrigluco.feature.assistant.presentation.chat.ChatFragment" android:label="@string/nav_assistant">
+        <argument android:name="conversationId" app:argType="string" app:nullable="true" android:defaultValue="@null" />
+    </fragment>
+    <fragment android:id="@+id/conversationListFragment" android:name="com.matrigluco.feature.assistant.presentation.conversations.ConversationListFragment" android:label="@string/nav_assistant" />
+    <fragment android:id="@+id/moreFragment" android:name="com.matrigluco.app.shell.MoreFragment" android:label="@string/nav_more" />
+    <fragment android:id="@+id/accountFragment" android:name="com.matrigluco.app.account.presentation.AccountFragment" android:label="@string/nav_account" />
+    <fragment android:id="@+id/historyFragment" android:name="com.matrigluco.feature.history.presentation.HistoryFragment" android:label="@string/history" />
+    <fragment android:id="@+id/consultationsFragment" android:name="com.matrigluco.app.shell.ShellSectionFragment" android:label="@string/consultations">
+        <argument android:name="section" android:defaultValue="consultations" app:argType="string" />
+    </fragment>
+    <fragment android:id="@+id/notificationsFragment" android:name="com.matrigluco.app.notifications.presentation.NotificationsFragment" android:label="@string/notifications" />
+    <fragment android:id="@+id/trustAndTransparencyFragment" android:name="com.matrigluco.app.legal.presentation.trust.TrustAndTransparencyFragment" android:label="@string/legal_trust_title" />
+    <fragment android:id="@+id/privacyAndDataFragment" android:name="com.matrigluco.app.legal.presentation.privacy.PrivacyAndDataFragment" android:label="@string/privacy_title" />
+    <fragment android:id="@+id/termsOfUseFragment" android:name="com.matrigluco.app.legal.presentation.terms.TermsOfUseFragment" android:label="@string/terms_title" />
+    <fragment android:id="@+id/modelAndAITransparencyFragment" android:name="com.matrigluco.app.legal.presentation.model.ModelAndAITransparencyFragment" android:label="@string/model_title" />
+    <fragment android:id="@+id/reportProcessingTransparencyFragment" android:name="com.matrigluco.app.legal.presentation.reports.ReportProcessingTransparencyFragment" android:label="@string/reports_proc_title" />
+    <fragment android:id="@+id/openSourceLicensesFragment" android:name="com.matrigluco.app.legal.presentation.licenses.OpenSourceLicensesFragment" android:label="@string/licenses_title" />
+    <fragment android:id="@+id/openSourceLicenseDetailFragment" android:name="com.matrigluco.app.legal.presentation.licenses.OpenSourceLicenseDetailFragment" android:label="@string/licenses_title">
+        <argument android:name="libraryName" app:argType="string" />
+    </fragment>
+    <fragment android:id="@+id/permissionsAndDeviceAccessFragment" android:name="com.matrigluco.app.legal.presentation.permissions.PermissionsAndDeviceAccessFragment" android:label="@string/perms_title" />
+    <fragment android:id="@+id/dataControlsFragment" android:name="com.matrigluco.app.legal.presentation.data.DataControlsFragment" android:label="@string/controls_title" />
+    <fragment android:id="@+id/appInformationFragment" android:name="com.matrigluco.app.legal.presentation.appinfo.AppInformationFragment" android:label="@string/app_info_title" />
+</navigation>

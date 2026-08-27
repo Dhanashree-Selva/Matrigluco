@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accountScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background"
+    android:fillViewport="true"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="64dp">
+
+        <!-- 1. Top Category Switcher (Profile / Preferences / Security) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Tab 1: Profile -->
+                <LinearLayout
+                    android:id="@+id/tabProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chronicle_tab_active"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/tabProfileIcon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="6dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_huge_user_24"
+                        app:tint="#FFFFFF" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tabProfileTitle"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Profile"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tabProfileSubtitle"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Identity &amp; care context"
+                            android:textColor="#F0F0F0"
+                            android:textSize="10.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tab 2: Preferences -->
+                <LinearLayout
+                    android:id="@+id/tabPreferences"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chronicle_tab_inactive"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/tabPreferencesIcon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="6dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_huge_filter_24"
+                        app:tint="@color/care_text_secondary" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tabPreferencesTitle"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Preferences"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tabPreferencesSubtitle"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notifications &amp; AI permissions"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="10.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tab 3: Security -->
+                <LinearLayout
+                    android:id="@+id/tabSecurity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chronicle_tab_inactive"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/tabSecurityIcon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="6dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_huge_lock_24"
+                        app:tint="@color/care_text_secondary" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tabSecurityTitle"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Security &amp; Privacy"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tabSecuritySubtitle"
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Password, sessions &amp; data"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="10.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- ============================================== -->
+        <!-- CONTAINER 1: PROFILE / IDENTITY STUDIO CONTENT -->
+        <!-- ============================================== -->
+        <LinearLayout
+            android:id="@+id/containerProfileTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Card 1: Identity Studio & Avatar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_more_item_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Header -->
+                <TextView
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Identity Studio"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Orbit.Text.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Manage your patient profile, communication credentials, and care identifiers."
+                    android:textColor="@color/care_text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Account Avatar Box -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_profile_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <!-- Avatar Box -->
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/bg_avatar_large">
+
+                        <TextView
+                            android:id="@+id/avatarInitialsLarge"
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/care_pink"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="EC" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.Eyebrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ACCOUNT AVATAR"
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Generated automatically from your name initials."
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="ⓘ Avatars remain private to your authenticated account."
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/care_border_subtle" />
+
+                <!-- Section: Personal Information -->
+                <TextView
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Personal Information"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Orbit.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Basic patient identity information used across clinical communications and consultations."
+                    android:textColor="@color/care_text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Field 1: Full Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Full Name"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="*"
+                            android:textColor="@color/care_pink"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/inputFullName"
+                        style="@style/Orbit.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_profile_input_field"
+                        android:hint="e.g. Eswar Chinthakayala"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName|textCapWords"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textColor="@color/care_text_primary"
+                        android:textColorHint="@color/care_text_tertiary"
+                        android:textSize="13.5sp" />
+                </LinearLayout>
+
+                <!-- Field 2: Phone Number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Orbit.Text.LabelStrong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone Number"
+                        android:textColor="@color/care_text_primary"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/inputPhone"
+                        style="@style/Orbit.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_profile_input_field"
+                        android:hint="e.g. +91 98765 43210"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textColor="@color/care_text_primary"
+                        android:textColorHint="@color/care_text_tertiary"
+                        android:textSize="13.5sp" />
+
+                    <TextView
+                        style="@style/Orbit.Text.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Used for appointment SMS updates and consultation coordination."
+                        android:textColor="@color/care_text_tertiary"
+                        android:textSize="11.5sp" />
+                </LinearLayout>
+
+                <!-- Field 3: Emergency Contact Information -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Orbit.Text.LabelStrong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Emergency Contact Information"
+                        android:textColor="@color/care_text_primary"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/inputEmergencyContact"
+                        style="@style/Orbit.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_profile_input_field"
+                        android:hint="e.g. Spouse / Family Contact (+91 91234 56789)"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textColor="@color/care_text_primary"
+                        android:textColorHint="@color/care_text_tertiary"
+                        android:textSize="13.5sp" />
+
+                    <TextView
+                        style="@style/Orbit.Text.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Designated emergency contact for urgent clinical care notifications."
+                        android:textColor="@color/care_text_tertiary"
+                        android:textSize="11.5sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card 2: Maternal Care Context -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_more_item_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Header -->
+                <TextView
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Maternal Care Context"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Orbit.Text.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Persisted gestational timeline and metabolic parameters used to tailor your care timeline."
+                    android:textColor="@color/care_text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Explanatory Banner -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_info_banner"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="6dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_huge_info_24"
+                            app:tint="@color/care_pink" />
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How Maternal Context is Used"
+                            android:textColor="@color/care_pink"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Orbit.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="Your gestational age and due date help organize relevant tracking timelines and trimester-specific glycemic targets. They remain strictly under your control."
+                        android:textColor="@color/care_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Grid Row 1: Gestational Week & Due Date -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <!-- Gestational Week -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gestational Week"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/inputPregnancyWeek"
+                            style="@style/Orbit.Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/bg_profile_input_field"
+                            android:hint="e.g. 24"
+                            android:inputType="number"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:textColor="@color/care_text_primary"
+                            android:textColorHint="@color/care_text_tertiary"
+                            android:textSize="13.5sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Weeks (0–45)"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+
+                    <!-- Due Date -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Expected Due Date"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:id="@+id/btnPickDueDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/bg_profile_input_field"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginEnd="6dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_huge_calendar_24"
+                                app:tint="@color/care_pink" />
+
+                            <TextView
+                                android:id="@+id/textDueDate"
+                                style="@style/Orbit.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Select date"
+                                android:textColor="@color/care_text_primary"
+                                android:textSize="12.5sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Estimated (EDD)"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Grid Row 2: Blood Group & Previous Pregnancies -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <!-- Blood Group -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Blood Group"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:id="@+id/btnPickBloodGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/bg_profile_input_field"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp">
+
+                            <TextView
+                                android:id="@+id/textBloodGroup"
+                                style="@style/Orbit.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Select group"
+                                android:textColor="@color/care_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_huge_chevron_down_24"
+                                app:tint="@color/care_text_tertiary" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="ABO &amp; Rh group"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+
+                    <!-- Previous Pregnancies -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Prior Pregnancies"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/inputPreviousPregnancies"
+                            style="@style/Orbit.Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/bg_profile_input_field"
+                            android:hint="e.g. 0"
+                            android:inputType="number"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:textColor="@color/care_text_primary"
+                            android:textColorHint="@color/care_text_tertiary"
+                            android:textSize="13.5sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Prior deliveries"
+                            android:textColor="@color/care_text_tertiary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Save Action Button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <com.matrigluco.core.designsystem.component.OrbitButton
+                    android:id="@+id/btnSaveProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:orbitText="Save Profile Changes" />
+
+                <!-- Success / Error Feedback message -->
+                <TextView
+                    android:id="@+id/textFeedback"
+                    style="@style/Orbit.Text.LabelStrong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:textColor="@color/care_pink"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============================================== -->
+        <!-- CONTAINER 2: PREFERENCES CONTENT -->
+        <!-- ============================================== -->
+        <LinearLayout
+            android:id="@+id/containerPreferencesTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_more_item_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Care Notifications"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Orbit.Text.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Configure maternal health reminders, reading schedules, and clinician updates."
+                    android:textColor="@color/care_text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Switch 1: Health Alerts -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Daily Glycemic Reminders"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13.5sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Fasting and post-prandial blood sugar reminder notifications."
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchNotifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/care_border_subtle" />
+
+                <!-- Switch 2: AI Context Permissions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AI Clinical Context Permissions"
+                            android:textColor="@color/care_text_primary"
+                            android:textSize="13.5sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Allow Matri Assistant to access maternal history for tailored advice."
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchAiContext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============================================== -->
+        <!-- CONTAINER 3: SECURITY & PRIVACY CONTENT -->
+        <!-- ============================================== -->
+        <LinearLayout
+            android:id="@+id/containerSecurityTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_more_item_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/Orbit.Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Security &amp; Keystore Encryption"
+                    android:textColor="@color/care_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Orbit.Text.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Your medical profile, OCR records, and tokens are protected with Android Keystore hardware-backed encryption."
+                    android:textColor="@color/care_text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Security Badge -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_info_banner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_huge_shield_24"
+                        app:tint="@color/care_pink" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Orbit.Text.LabelStrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hardware-Backed Token Storage"
+                            android:textColor="@color/care_pink"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            style="@style/Orbit.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="AES-256-GCM encrypted tokens in MasterKey Keystore."
+                            android:textColor="@color/care_text_secondary"
+                            android:textSize="11.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

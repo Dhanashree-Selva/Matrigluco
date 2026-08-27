@@ -1,0 +1,5 @@
+<resources>
+    <!-- Cross-module navigation contract IDs; the app graph owns their destinations. -->
+    <item name="registerFragment" type="id" />
+    <item name="forgotPasswordFragment" type="id" />
+</resources>

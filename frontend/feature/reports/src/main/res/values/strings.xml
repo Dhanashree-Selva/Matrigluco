@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reports_title">Medical Reports</string>
+    <string name="reports_eyebrow">PRIVATE EVIDENCE VAULT</string>
+    <string name="reports_subtitle">Private documents</string>
+    <string name="reports_vault_summary_title">Private report library</string>
+    <string name="reports_vault_summary_desc">Report files are accessed through authenticated Matrigluco services.</string>
+    <string name="reports_filter_all">All</string>
+    <string name="reports_filter_needs_review">Needs review</string>
+    <string name="reports_filter_reviewed">Reviewed</string>
+    <string name="reports_upload_action">+ Upload report</string>
+    <string name="reports_empty_title">No reports yet</string>
+    <string name="reports_empty_desc">Upload a medical report when you want to keep its processing status and reviewed extracted values in Matrigluco.</string>
+    <string name="reports_empty_needs_review_title">Nothing needs review</string>
+    <string name="reports_empty_needs_review_desc">Reviewed and processing reports will appear in their respective views.</string>
+    <string name="reports_empty_reviewed_title">No reviewed reports yet</string>
+    <string name="reports_empty_reviewed_desc">Completed and verified reports will appear here.</string>
+    <string name="reports_view_report">View report</string>
+    <string name="reports_status_reviewed">Review completed</string>
+    <string name="reports_status_needs_review">Needs review</string>
+    <string name="reports_status_processing">Processing</string>
+    <string name="reports_status_queued">Queued</string>
+    <string name="reports_status_failed">Processing failed</string>
+    <string name="reports_stage_uploaded">Uploaded</string>
+    <string name="reports_stage_processing">Processing</string>
+    <string name="reports_stage_extracted">Extracted</string>
+    <string name="reports_stage_reviewed">Reviewed</string>
+    <string name="reports_extracted_values_title">Extracted values</string>
+    <string name="reports_more_values">+%d more</string>
+    <string name="reports_upload_sheet_title">Upload Medical Report</string>
+    <string name="reports_upload_sheet_subtitle">Select a PDF or lab test image to securely extract maternal biomarkers.</string>
+    <string name="reports_choose_document">Choose Document (PDF)</string>
+    <string name="reports_choose_image">Choose Image (PNG/JPG)</string>
+    <string name="reports_selected_file">Selected file</string>
+    <string name="reports_disclosure_title">How this report is processed</string>
+    <string name="reports_disclosure_desc">Matrigluco extracts supported health values through private authenticated services. Review extracted information before relying on it.</string>
+    <string name="reports_confirm_upload">Confirm and Upload</string>
+    <string name="reports_uploading">Uploading document…</string>
+    <string name="reports_delete_confirm_title">Delete this report?</string>
+    <string name="reports_delete_confirm_desc">This removes the report according to Matrigluco\'s report retention policy.</string>
+    <string name="reports_delete">Delete</string>
+    <string name="reports_download_pdf">Download clinical PDF</string>
+    <string name="reports_view_original">View original file</string>
+    <string name="reports_review_action">Review extracted values</string>
+    <string name="reports_save_changes">Save and Confirm</string>
+    <string name="reports_offline_notice">Offline · Showing saved report information</string>
+</resources>

@@ -1,0 +1,3 @@
+# Network Error Contract
+
+Normalize transport and API failures into: `Offline`, `Timeout`, `TlsOrNetwork`, `Unauthorized`, `Forbidden`, `NotFound`, `Conflict`, `RateLimited(retryAfter?)`, `Validation(fieldErrors)`, `Server(requestId?)`, `Maintenance`, `Serialization`, and `Unknown`. Preserve HTTP status, safe backend code, safe message and request ID internally. UI receives localized, non-sensitive domain errors. Never log tokens, passwords, medical payloads, file contents, Assistant messages or raw response bodies. A serialization error is an unavailable/incompatible state, never an empty success.

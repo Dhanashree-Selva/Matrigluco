@@ -1,0 +1,26 @@
+{
+  "name": "matrigluco-appium-tests",
+  "version": "1.0.0",
+  "description": "Appium E2E Automation Testing Suite for Matrigluco Native Android Application",
+  "main": "tests/app-e2e-tests.js",
+  "type": "module",
+  "scripts": {
+    "test:android": "node tests/app-e2e-tests.js",
+    "test": "node tests/app-e2e-tests.js"
+  },
+  "keywords": [
+    "appium",
+    "webdriverio",
+    "android",
+    "e2e",
+    "testing",
+    "matrigluco",
+    "kotlin"
+  ],
+  "author": "Matrigluco QA & Platform Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "webdriverio": "^8.32.0",
+    "xlsx": "^0.18.5"
+  }
+}

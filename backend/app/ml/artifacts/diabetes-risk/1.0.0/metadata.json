@@ -1,0 +1,62 @@
+{
+  "model_key": "diabetes-risk",
+  "version": "1.0.0",
+  "framework": "scikit-learn",
+  "algorithm": "LogisticRegression",
+  "model_class": "sklearn.linear_model.LogisticRegression",
+  "preprocessor_class": "sklearn.preprocessing.StandardScaler",
+  "feature_contract_version": "1.0",
+  "feature_order": [
+    "pregnancies",
+    "glucose",
+    "blood_pressure",
+    "skin_thickness",
+    "insulin",
+    "bmi",
+    "diabetes_pedigree_function",
+    "age"
+  ],
+  "feature_schema": [
+    {"name": "pregnancies", "order": 0, "dtype": "float", "unit": "count"},
+    {"name": "glucose", "order": 1, "dtype": "float", "unit": "mg/dL"},
+    {"name": "blood_pressure", "order": 2, "dtype": "float", "unit": "mmHg"},
+    {"name": "skin_thickness", "order": 3, "dtype": "float", "unit": "mm"},
+    {"name": "insulin", "order": 4, "dtype": "float", "unit": "µU/mL"},
+    {"name": "bmi", "order": 5, "dtype": "float", "unit": "kg/m²"},
+    {"name": "diabetes_pedigree_function", "order": 6, "dtype": "float", "unit": "score"},
+    {"name": "age", "order": 7, "dtype": "float", "unit": "years"}
+  ],
+  "feature_schema_sha256": "84dbef92a5671f501b18a060688cd9d2e7c89cae8496ee1aa1f156b63459bcfa",
+  "positive_class": 1,
+  "risk_thresholds": {
+    "low_max": 0.33,
+    "moderate_max": 0.66
+  },
+  "model_sha256": "2afeec25473009af6ed529bee9466fffa3abe0b24d70f0e311c474ed21f1aafe",
+  "preprocessor_sha256": "68b3082714f0220e1c58a00a3d41b7ef68bb291711263533107871f2f3aef1c2",
+  "metrics": {
+    "accuracy": 0.7532,
+    "precision": 0.6491,
+    "recall": 0.6727,
+    "f1": 0.6607,
+    "roc_auc": 0.8147
+  },
+  "evaluation_dataset": {
+    "name": "Pima Indians Diabetes Dataset",
+    "total_samples": 768,
+    "train_samples": 614,
+    "test_samples": 154,
+    "split_strategy": "80/20 train/test split (random_state=42)"
+  },
+  "imputation_policy": {
+    "enabled": false,
+    "policy_version": null
+  },
+  "clinical_positioning": {
+    "purpose": "educational_risk_estimation",
+    "clinical_validation": "not_established",
+    "is_diagnostic_device": false
+  },
+  "trained_at": null,
+  "created_at": "2026-08-17T00:00:00Z"
+}

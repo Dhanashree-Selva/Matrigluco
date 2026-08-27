@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Trust & Transparency Root -->
+    <string name="legal_trust_title">Trust &amp; Transparency</string>
+    <string name="legal_trust_subtitle">Privacy, terms, model &amp; software transparency</string>
+    <string name="legal_trust_summary_title">Built around clear boundaries</string>
+    <string name="legal_trust_summary_body">Matrigluco separates account data, health tracking, model-based assessment, report processing, and AI assistance into distinct workflows with explicit permissions and limitations.</string>
+    <string name="legal_trust_point_1">Authenticated account access &amp; tenant isolation</string>
+    <string name="legal_trust_point_2">Explicit health-context controls &amp; consent boundaries</string>
+    <string name="legal_trust_point_3">Educational, non-diagnostic AI &amp; risk evaluation</string>
+
+    <!-- Navigation Rows -->
+    <string name="legal_row_privacy_title">Privacy &amp; Data</string>
+    <string name="legal_row_privacy_desc">What is stored locally and what reaches Matrigluco services</string>
+    <string name="legal_row_terms_title">Terms of Use</string>
+    <string name="legal_row_terms_desc">Conditions of use and educational healthcare limits</string>
+    <string name="legal_row_model_title">AI &amp; Model Transparency</string>
+    <string name="legal_row_model_desc">Assessment model, Assistant inference runtime &amp; limitations</string>
+    <string name="legal_row_reports_title">Report Processing &amp; OCR</string>
+    <string name="legal_row_reports_desc">Private storage, document extraction &amp; clinical verification</string>
+    <string name="legal_row_licenses_title">Open-Source Licenses</string>
+    <string name="legal_row_licenses_desc">Third-party libraries, license terms &amp; acknowledgements</string>
+    <string name="legal_row_permissions_title">Permissions &amp; Device Access</string>
+    <string name="legal_row_permissions_desc">System file picker, notifications &amp; camera boundaries</string>
+    <string name="legal_row_data_controls_title">Data Controls</string>
+    <string name="legal_row_data_controls_desc">Manage AI context, clear local cache &amp; retention policies</string>
+    <string name="legal_row_app_info_title">App &amp; Build Information</string>
+    <string name="legal_row_app_info_desc">Version, build environment, database schema &amp; status</string>
+
+    <!-- Medical & Educational Disclaimers -->
+    <string name="legal_medical_disclaimer_title">Educational &amp; Research Notice</string>
+    <string name="legal_medical_disclaimer_body">Matrigluco does not diagnose medical conditions. Assessment results, health tracking telemetry, and AI Assistant explanations are educational tools designed to support clinical awareness. They must never replace professional evaluation, diagnosis, or treatment by a qualified obstetrician or healthcare professional.</string>
+    <string name="legal_ai_disclaimer_title">Maternal AI Assistant Boundary</string>
+    <string name="legal_ai_disclaimer_body">The AI Assistant provides conversational maternal health information based on curated guidelines. It does not prescribe medication, make clinical determinations, or possess medical licensing. In an emergency, contact your hospital immediately.</string>
+
+    <!-- Privacy & Data -->
+    <string name="privacy_title">Privacy &amp; Data Boundaries</string>
+    <string name="privacy_subtitle">Complete overview of data storage and transmission</string>
+    <string name="privacy_sec_device_title">1. What stays on this device</string>
+    <string name="privacy_sec_device_body">UI theme preferences, onboarding completion markers, selected measurement units (e.g. mg/dL), offline Room database cache, and encrypted session tokens stored in the Android KeyStore stay on this device.</string>
+    <string name="privacy_sec_backend_title">2. What reaches the FastAPI backend</string>
+    <string name="privacy_sec_backend_body">When you are online, authenticated actions send profile parameters, glucose and vitals measurements, risk assessment inputs, medical report uploads, and chat messages to your secure Matrigluco server deployment.</string>
+    <string name="privacy_sec_tracking_title">3. Health Measurements &amp; Vitals</string>
+    <string name="privacy_sec_tracking_body">Blood glucose logs, blood pressure, fetal kick counts, weight, and meal context are stored in your authenticated patient record to render your longitudinal Care Chronicle.</string>
+    <string name="privacy_sec_assess_title">4. Risk Assessments</string>
+    <string name="privacy_sec_assess_body">Assessment submissions (age, pregnancies, glucose, blood pressure, skin thickness, insulin, BMI, and pedigree function) are evaluated on the backend by the risk model to compute probability bands.</string>
+    <string name="privacy_sec_reports_title">5. Private Medical Reports</string>
+    <string name="privacy_sec_reports_body">Uploaded laboratory PDFs and images are stored in a private authenticated evidence vault. Access is restricted to your authenticated user account via Bearer token verification. No public URLs are generated.</string>
+    <string name="privacy_sec_ai_title">6. AI Assistant Context</string>
+    <string name="privacy_sec_ai_body">Chat messages are processed by the backend AI runtime. Health context is only included when you explicitly enable the AI Context preference. Your conversational data is never used to train third-party public models.</string>
+    <string name="privacy_sec_notifications_title">7. Notifications &amp; Alerts</string>
+    <string name="privacy_sec_notifications_body">Care reminders and appointment alerts are delivered locally or via authenticated push. Sensitive clinical values are omitted from standard lock-screen notifications.</string>
+    <string name="privacy_sec_cache_title">8. Local Cache &amp; Offline Storage</string>
+    <string name="privacy_sec_cache_body">Matrigluco maintains a local Room SQLite cache so you can review recent logs offline. Local cached data is cleared upon sign-out or through Data Controls.</string>
+    <string name="privacy_sec_retention_title">9. Data Deletion &amp; Retention</string>
+    <string name="privacy_sec_retention_body">Data retention is governed by the configured backend deployment policy. Deleting individual readings or reports in the app sends an authenticated DELETE request to remove them from your active record.</string>
+
+    <!-- Terms of Use -->
+    <string name="terms_title">Terms of Use</string>
+    <string name="terms_subtitle">Conditions governing the use of the Matrigluco workspace</string>
+    <string name="terms_version">Version 1.0.0 · Updated 27 Aug 2026</string>
+    <string name="terms_sec_purpose_title">1. Purpose of Matrigluco</string>
+    <string name="terms_sec_purpose_body">Matrigluco is an educational and research-driven maternal health companion designed to assist expectant mothers with gestational health tracking, risk awareness, and document organization.</string>
+    <string name="terms_sec_eligibility_title">2. Intended Use &amp; Eligibility</string>
+    <string name="terms_sec_eligibility_body">This workspace is intended for expectant mothers and authorized caregivers seeking organized health telemetry. You must be at least 18 years of age or possess legal guardian consent to maintain an account.</string>
+    <string name="terms_sec_security_title">3. Account Security &amp; Credentials</string>
+    <string name="terms_sec_security_body">You are responsible for safeguarding your login credentials. If you suspect unauthorized access, update your password immediately in Account Settings.</string>
+    <string name="terms_sec_reports_title">4. User-Provided Reports &amp; Content</string>
+    <string name="terms_sec_reports_body">You retain ownership of any medical documents and records you upload. You agree not to upload harmful, corrupted, or unlawful material.</string>
+    <string name="terms_sec_availability_title">5. Service Availability</string>
+    <string name="terms_sec_availability_body">Matrigluco features depend on network connectivity and backend service availability. Offline caching is provided as a convenience, but live risk calculation and AI discussions require online access.</string>
+
+    <!-- AI & Model Transparency -->
+    <string name="model_title">AI &amp; Model Transparency</string>
+    <string name="model_subtitle">Architecture, inference runtimes, and algorithmic boundaries</string>
+    <string name="model_assess_card_title">Clinical Risk Assessment Model</string>
+    <string name="model_assess_version">Model Version: v1.0.0 (Research Prototype)</string>
+    <string name="model_assess_desc">Evaluates 8 clinical variables (Age, Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Pedigree Function) to produce gestational diabetes probability estimates.</string>
+    <string name="model_assistant_card_title">Maternal Assistant Runtime</string>
+    <string name="model_assistant_runtime">Inference Location: Configured Matrigluco Backend</string>
+    <string name="model_assistant_desc">Runs via the backend AI engine utilizing curated maternal health guidance. The Android client communicates via authenticated REST endpoints and does not execute heavy neural network weights on device.</string>
+
+    <!-- Report Processing -->
+    <string name="reports_proc_title">Report Processing &amp; OCR</string>
+    <string name="reports_proc_subtitle">How your laboratory documents are protected and parsed</string>
+    <string name="reports_step_1_title">1. Document Selection</string>
+    <string name="reports_step_1_desc">You choose a file using the Android System Document Picker. The app never scans your private storage.</string>
+    <string name="reports_step_2_title">2. Authenticated Upload</string>
+    <string name="reports_step_2_desc">The file is transferred directly over TLS with your Bearer token to private backend storage.</string>
+    <string name="reports_step_3_title">3. OCR &amp; Value Extraction</string>
+    <string name="reports_step_3_desc">Backend optical recognition extracts glucose curves, HbA1c, and lab parameters respecting patient tenant isolation.</string>
+    <string name="reports_step_4_title">4. Patient Verification</string>
+    <string name="reports_step_4_desc">Extracted parameters are flagged for your review before becoming part of your official tracking timeline.</string>
+
+    <!-- Open Source Licenses -->
+    <string name="licenses_title">Open-Source Licenses</string>
+    <string name="licenses_subtitle">Third-party software libraries and components</string>
+    <string name="licenses_search_hint">Search libraries or licenses…</string>
+    <string name="licenses_filter_all">All</string>
+    <string name="licenses_filter_apache">Apache-2.0</string>
+    <string name="licenses_filter_mit">MIT</string>
+    <string name="licenses_filter_bsd">BSD</string>
+    <string name="licenses_count_format">%d open-source components</string>
+    <string name="licenses_open_project">Open project website</string>
+    <string name="licenses_empty">No matching libraries found</string>
+
+    <!-- Permissions -->
+    <string name="perms_title">Permissions &amp; Device Access</string>
+    <string name="perms_subtitle">Review hardware and system access permissions</string>
+    <string name="perms_notifications_title">Notifications</string>
+    <string name="perms_notifications_desc">Used to deliver scheduled vitals reminders and clinical alerts.</string>
+    <string name="perms_documents_title">Files &amp; Documents</string>
+    <string name="perms_documents_desc">Uses the native Android Storage Access Framework (SAF) system picker. Matrigluco does not request broad storage access.</string>
+    <string name="perms_camera_title">Camera (Optional)</string>
+    <string name="perms_camera_desc">Used only when you take a live photo of a physical lab report.</string>
+    <string name="perms_network_title">Network Access</string>
+    <string name="perms_network_desc">Required to communicate with your authenticated Matrigluco backend service.</string>
+    <string name="perms_open_settings">Open Notification Settings</string>
+
+    <!-- Data Controls -->
+    <string name="controls_title">Data Controls</string>
+    <string name="controls_subtitle">Manage local cache, health context, and account privacy</string>
+    <string name="controls_ai_context_title">AI Health Context Preference</string>
+    <string name="controls_ai_context_desc">Allows the Maternal Assistant to reference your recent glucose logs for context-aware answers.</string>
+    <string name="controls_ai_context_status_on">Status: Permitted</string>
+    <string name="controls_ai_context_manage">Manage in Account Settings</string>
+    <string name="controls_clear_cache_title">Clear Cached Data</string>
+    <string name="controls_clear_cache_desc">Removes locally saved offline copies of dashboard readings and reports. Your server-stored account data remains intact.</string>
+    <string name="controls_clear_cache_btn">Clear Local Cache</string>
+    <string name="controls_clear_cache_confirm_title">Clear Local Cache?</string>
+    <string name="controls_clear_cache_confirm_msg">This will remove locally cached health data from this phone. Data stored on your Matrigluco server will be re-fetched when you are online.</string>
+    <string name="controls_clear_cache_success">Local cache cleared successfully.</string>
+    <string name="controls_delete_policy_title">Account Deletion Policy</string>
+    <string name="controls_delete_policy_desc">Account deletion is initiated through your account administrator or profile settings, executing permanent deletion across backend databases.</string>
+
+    <!-- App Information -->
+    <string name="app_info_title">App &amp; Build Information</string>
+    <string name="app_info_subtitle">Build environment and system specifications</string>
+    <string name="app_info_name">Matrigluco Android</string>
+    <string name="app_info_version_label">Application Version</string>
+    <string name="app_info_build_label">Build Number</string>
+    <string name="app_info_env_label">Build Environment</string>
+    <string name="app_info_db_label">Database Schema</string>
+    <string name="app_info_api_label">API Protocol</string>
+    <string name="app_info_design_label">Design System</string>
+    <string name="app_info_icons_label">Iconography</string>
+    <string name="app_info_footer">Matrigluco · Educational Maternal Health Workspace</string>
+
+    <!-- More Screen Row -->
+    <string name="more_section_trust">LEGAL &amp; TRANSPARENCY</string>
+    <string name="more_trust_title">Trust &amp; Transparency</string>
+    <string name="more_trust_desc">Privacy boundaries, terms, model specs &amp; licenses</string>
+</resources>

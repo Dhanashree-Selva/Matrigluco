@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/periodButtonsContainer"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="@drawable/orbit_surface_outline"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/btnPeriod7D"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="7D"
+            android:textAppearance="@style/Orbit.Text.LabelStrong"
+            android:textColor="@color/care_ink"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/btnPeriod30D"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="30D"
+            android:textAppearance="@style/Orbit.Text.LabelStrong"
+            android:textColor="@color/care_ink"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/btnPeriod90D"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="90D"
+            android:textAppearance="@style/Orbit.Text.LabelStrong"
+            android:textColor="@color/care_ink"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <LinearLayout
+            android:id="@+id/btnPeriodCustom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.6"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/customCalendarIcon"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_huge_calendar_24"
+                app:tint="@color/care_ink"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/customDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Custom"
+                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                android:textColor="@color/care_ink"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewModeContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginStart="@dimen/orbit_space_8"
+        android:background="@drawable/orbit_surface_outline"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <FrameLayout
+            android:id="@+id/btnModeChart"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Chart view mode">
+
+            <ImageView
+                android:id="@+id/chartIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_chart_24"
+                app:tint="@color/care_pink"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnModeRecords"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/orbit_soft_surface"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Records list view mode">
+
+            <ImageView
+                android:id="@+id/recordsIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_list_24"
+                app:tint="@color/care_text_muted"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

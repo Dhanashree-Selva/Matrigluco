@@ -1,0 +1,1 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"><item android:color="@color/care_disabled_surface" android:state_enabled="false"/><item android:color="@color/care_pink_hover" android:state_pressed="true"/><item android:color="@color/care_pink"/></selector>

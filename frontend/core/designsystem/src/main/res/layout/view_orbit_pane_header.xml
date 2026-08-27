@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/orbit_space_16"
+    android:paddingEnd="@dimen/orbit_space_16"
+    android:paddingTop="@dimen/orbit_space_8"
+    android:paddingBottom="@dimen/orbit_space_8"
+    android:background="@drawable/orbit_surface_outline">
+
+    <TextView
+        android:id="@+id/paneHeaderTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/Orbit.Text.LabelStrong"
+        android:textColor="@color/care_ink"
+        android:textSize="14sp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/paneHeaderSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/orbit_space_8"
+        android:textAppearance="@style/Orbit.Text.Caption"
+        android:textColor="@color/care_text_muted"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/paneHeaderAction"
+        android:layout_width="@dimen/orbit_touch_target"
+        android:layout_height="@dimen/orbit_touch_target"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:tint="@color/care_ink" />
+</LinearLayout>

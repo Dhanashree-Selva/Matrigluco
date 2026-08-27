@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/orbit_space_16"
+    android:background="@drawable/orbit_soft_surface"
+    android:orientation="vertical"
+    android:padding="@dimen/orbit_space_16">
+
+    <TextView android:id="@+id/role" android:layout_width="match_parent" android:layout_height="wrap_content" android:textAppearance="@style/Orbit.Text.LabelStrong" />
+    <TextView android:id="@+id/message" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_8" android:textAppearance="@style/Orbit.Text.Body" />
+    <TextView android:id="@+id/sources" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/orbit_touch_target" android:gravity="center_vertical" android:focusable="true" android:textAppearance="@style/Orbit.Text.Caption" />
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+        <Button android:id="@+id/copy" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/orbit_touch_target" android:text="@string/assistant_copy" />
+        <Button android:id="@+id/helpful" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/orbit_touch_target" android:text="@string/assistant_helpful" android:visibility="gone" />
+        <Button android:id="@+id/not_helpful" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/orbit_touch_target" android:text="@string/assistant_not_helpful" android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

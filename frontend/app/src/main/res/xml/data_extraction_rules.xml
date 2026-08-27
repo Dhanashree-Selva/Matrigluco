@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Data extraction rules are intentionally explicit for Matrigluco application data.
+   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   for details.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="database" path="matrigluco_cache.db" />
+        <exclude domain="root" path="auth/" />
+        <exclude domain="file" path="datastore/app_preferences.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="database" path="matrigluco_cache.db" />
+        <exclude domain="root" path="auth/" />
+        <exclude domain="file" path="datastore/app_preferences.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

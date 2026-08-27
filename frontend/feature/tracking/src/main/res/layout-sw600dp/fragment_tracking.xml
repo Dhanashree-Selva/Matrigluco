@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/care_background">
+
+    <LinearLayout
+        android:id="@+id/tabletContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/orbit_space_16"
+        android:baselineAligned="false">
+
+        <!-- Left Pane: Signal Spine Timeline (40% width) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/signalSpineCard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:layout_marginEnd="@dimen/orbit_space_8"
+            app:cardCornerRadius="@dimen/orbit_radius_lg"
+            app:cardElevation="0dp"
+            app:strokeWidth="@dimen/orbit_divider"
+            app:strokeColor="@color/care_border"
+            app:cardBackgroundColor="@color/care_surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/orbit_space_16">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/spineIconPlate"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_surface_elevated"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_huge_clock_24"
+                            app:tint="@color/care_pink"
+                            android:contentDescription="@null" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/orbit_space_12"
+                        android:layout_marginEnd="@dimen/orbit_space_8"
+                        app:layout_constraintStart_toEndOf="@id/spineIconPlate"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btnAddReadingSpine">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Signal Spine"
+                            android:textAppearance="@style/Orbit.Text.BodyStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Chronological telemetry stream"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnAddReadingSpine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:text="+ Add Reading"
+                        android:textAppearance="@style/Orbit.Text.LabelStrong"
+                        android:textColor="@color/care_pink"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:paddingHorizontal="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/timelineRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/orbit_space_12" />
+
+                <LinearLayout
+                    android:id="@+id/timelineEmptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No readings in this period"
+                        android:textAppearance="@style/Orbit.Text.BodyStrong"
+                        android:textColor="@color/care_ink" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Tap + Add Reading to log your measurement."
+                        android:textAppearance="@style/Orbit.Text.Caption"
+                        android:textColor="@color/care_text_muted" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Right Pane: Metric Context + Summary + Trend (60% width) -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/trackingScroll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginStart="@dimen/orbit_space_8"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 1. Metric Selector Card -->
+                <com.matrigluco.feature.tracking.presentation.component.OrbitMetricSelectorCard
+                    android:id="@+id/metricSelectorCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- 2. Period & View Mode Controls -->
+                <com.matrigluco.feature.tracking.presentation.component.OrbitPeriodSelector
+                    android:id="@+id/periodSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12" />
+
+                <!-- 3. Signal Summary Card -->
+                <com.matrigluco.feature.tracking.presentation.component.OrbitSignalSummaryCard
+                    android:id="@+id/signalSummaryCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12" />
+
+                <!-- 4. Trend Card (Chart Mode) -->
+                <com.matrigluco.feature.tracking.presentation.component.OrbitTrendCard
+                    android:id="@+id/trendCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12" />
+
+                <!-- 5. Records Mode Container -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/recordsCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/orbit_radius_lg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="@dimen/orbit_divider"
+                    app:strokeColor="@color/care_border"
+                    app:cardBackgroundColor="@color/care_surface">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Exact Recorded Values"
+                            android:textAppearance="@style/Orbit.Text.BodyStrong"
+                            android:textColor="@color/care_ink" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recordsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/orbit_space_12"
+                            android:nestedScrollingEnabled="false" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Disclaimer -->
+                <LinearLayout
+                    android:id="@+id/disclaimerCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    android:background="@drawable/orbit_surface_outline"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/orbit_space_16"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_huge_shield_24"
+                        app:tint="@color/care_pink"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/orbit_space_12"
+                        android:text="This timeline is for tracking purposes only. Not intended for diagnosis or treatment decisions."
+                        android:textAppearance="@style/Orbit.Text.Caption"
+                        android:textColor="@color/care_text_muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/care_pink"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

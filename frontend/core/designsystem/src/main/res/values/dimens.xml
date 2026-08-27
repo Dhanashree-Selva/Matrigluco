@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="orbit_space_0">0dp</dimen><dimen name="orbit_space_2">2dp</dimen><dimen name="orbit_space_4">4dp</dimen><dimen name="orbit_space_6">6dp</dimen><dimen name="orbit_space_8">8dp</dimen>
+    <dimen name="orbit_space_12">12dp</dimen><dimen name="orbit_space_16">16dp</dimen><dimen name="orbit_space_20">20dp</dimen><dimen name="orbit_space_24">24dp</dimen>
+    <dimen name="orbit_space_32">32dp</dimen><dimen name="orbit_space_40">40dp</dimen><dimen name="orbit_space_48">48dp</dimen><dimen name="orbit_space_64">64dp</dimen>
+    <dimen name="orbit_screen_padding">20dp</dimen><dimen name="orbit_screen_padding_phone">20dp</dimen><dimen name="orbit_screen_padding_tablet">32dp</dimen>
+    <dimen name="orbit_content_max_width">760dp</dimen><dimen name="orbit_form_max_width">560dp</dimen><dimen name="orbit_chat_max_width">720dp</dimen><dimen name="orbit_detail_max_width">760dp</dimen><dimen name="orbit_pane_gap">24dp</dimen>
+    <dimen name="orbit_content_gap">12dp</dimen><dimen name="orbit_section_gap">32dp</dimen><dimen name="orbit_control_gap">8dp</dimen>
+    <dimen name="orbit_radius_sm">12dp</dimen><dimen name="orbit_radius_md">16dp</dimen><dimen name="orbit_radius_lg">20dp</dimen><dimen name="orbit_radius_xl">24dp</dimen><dimen name="orbit_radius_pill">999dp</dimen>
+    <dimen name="orbit_elevation_flat">0dp</dimen><dimen name="orbit_elevation_lifted">2dp</dimen><dimen name="orbit_elevation_overlay">8dp</dimen>
+    <dimen name="orbit_touch_target">48dp</dimen><dimen name="orbit_icon_size">24dp</dimen><dimen name="orbit_button_min_height">52dp</dimen><dimen name="orbit_top_bar_min_height">64dp</dimen>
+    <dimen name="orbit_divider">1dp</dimen><dimen name="orbit_rail_width">2dp</dimen><dimen name="orbit_chip_min_height">32dp</dimen>
+    <dimen name="orbit_navigation_rail_width">88dp</dimen><dimen name="orbit_primary_navigation_height">72dp</dimen><dimen name="orbit_page_max_width">760dp</dimen>
+</resources>

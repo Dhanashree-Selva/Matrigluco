@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/bg_prompt_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="150dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/promptIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="6dp"
+                app:tint="@color/care_pink"
+                tools:src="@drawable/ic_huge_sparkles_24" />
+
+            <TextView
+                android:id="@+id/promptCategory"
+                style="@style/Orbit.Text.Eyebrow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/care_pink"
+                tools:text="RISK ASSESSMENT" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/promptQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/care_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="2dp"
+            tools:text="How do I understand my gestational diabetes risk estimate?" />
+
+        <TextView
+            android:id="@+id/promptSupporting"
+            style="@style/Orbit.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/care_text_secondary"
+            android:textSize="12sp"
+            tools:text="Learn how maternal factors, glucose, and metabolic markers are evaluated." />
+    </LinearLayout>
+</FrameLayout>

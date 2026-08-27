@@ -1,0 +1,5 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <ProgressBar android:id="@+id/orbit_button_progress" android:layout_width="@dimen/orbit_icon_size" android:layout_height="@dimen/orbit_icon_size" android:visibility="gone" android:importantForAccessibility="no" />
+    <ImageView android:id="@+id/orbit_button_leading" android:layout_width="@dimen/orbit_icon_size" android:layout_height="@dimen/orbit_icon_size" android:visibility="gone" android:importantForAccessibility="no" />
+    <TextView android:id="@+id/orbit_button_label" style="@style/Orbit.Text.LabelStrong" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="2" android:gravity="center" />
+</merge>

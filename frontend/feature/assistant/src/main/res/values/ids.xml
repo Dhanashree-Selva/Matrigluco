@@ -1,0 +1,4 @@
+<resources>
+    <item name="chatFragment" type="id" />
+    <item name="conversationListFragment" type="id" />
+</resources>

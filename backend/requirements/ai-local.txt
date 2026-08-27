@@ -1,0 +1,5 @@
+# MatriGluco — Local Offline AI Chatbot & RAG Runtime Dependencies
+# (Zero cloud API keys / Zero Ollama daemons)
+-r base.txt
+
+llama-cpp-python>=0.2.75

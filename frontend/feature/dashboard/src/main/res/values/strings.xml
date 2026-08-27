@@ -1,0 +1,13 @@
+<resources>
+    <string name="dashboard_heading">Your care today</string>
+    <string name="dashboard_snapshot_heading">Health snapshot</string>
+    <string name="dashboard_risk_band">Latest assessment: %1$s risk</string>
+    <string name="dashboard_model_probability">Model probability: %1$.1f%%</string>
+    <string name="dashboard_no_assessment">No assessment yet</string>
+    <string name="dashboard_assessment_invitation">Complete an assessment when you’re ready.</string>
+    <string name="dashboard_not_diagnosis">This research estimate is educational and is not a diagnosis.</string>
+    <plurals name="dashboard_measurement_count"><item quantity="one">%d recent measurement type</item><item quantity="other">%d recent measurement types</item></plurals>
+    <string name="dashboard_empty_title">Your health story starts here</string><string name="dashboard_empty_body">Verified readings, reports and assessments will appear after you add them.</string>
+    <string name="dashboard_offline_title">You’re offline</string><string name="dashboard_offline_body">There is no cached dashboard available on this device yet.</string>
+    <string name="dashboard_error_title">Dashboard couldn’t be loaded</string><string name="dashboard_error_body">Try again in a moment.</string><string name="dashboard_retry">Try again</string>
+</resources>

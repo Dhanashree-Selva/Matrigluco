@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="64dp">
+
+    <!-- Vertical Spine Rail -->
+    <View
+        android:id="@+id/spineLineTop"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/care_pink"
+        android:alpha="0.4"
+        app:layout_constraintStart_toStartOf="@+id/spineDot"
+        app:layout_constraintEnd_toEndOf="@+id/spineDot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/spineDot" />
+
+    <View
+        android:id="@+id/spineDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/orbit_soft_surface"
+        android:backgroundTint="@color/care_pink"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardContainer"
+        app:layout_constraintBottom_toBottomOf="@+id/cardContainer" />
+
+    <View
+        android:id="@+id/spineLineBottom"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/care_pink"
+        android:alpha="0.4"
+        app:layout_constraintStart_toStartOf="@+id/spineDot"
+        app:layout_constraintEnd_toEndOf="@+id/spineDot"
+        app:layout_constraintTop_toBottomOf="@+id/spineDot"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Reading Card Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/orbit_space_12"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/orbit_surface_outline"
+        android:paddingHorizontal="@dimen/orbit_space_16"
+        android:paddingVertical="@dimen/orbit_space_12"
+        android:minHeight="56dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toEndOf="@+id/spineDot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <FrameLayout
+            android:id="@+id/readingIconPlate"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/orbit_soft_surface"
+            android:backgroundTint="@color/care_surface_elevated"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/readingIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_huge_droplet_24"
+                app:tint="@color/care_pink"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/readingContentGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/orbit_space_12"
+            android:layout_marginEnd="@dimen/orbit_space_8"
+            app:layout_constraintStart_toEndOf="@+id/readingIconPlate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/readingTimeGroup">
+
+            <TextView
+                android:id="@+id/readingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Glucose"
+                android:textAppearance="@style/Orbit.Text.BodyStrong"
+                android:textColor="@color/care_ink" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/readingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150"
+                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                    android:textColor="@color/care_ink" />
+
+                <TextView
+                    android:id="@+id/readingUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="mg/dL"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/readingSyncStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Saved on this device · Sync pending"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_warning"
+                android:textSize="11sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/readingTimeGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/readingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01:17 PM"
+                android:textAppearance="@style/Orbit.Text.Caption"
+                android:textColor="@color/care_text_muted" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="6dp"
+                android:src="@drawable/ic_huge_chevron_right_24"
+                app:tint="@color/care_text_muted"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

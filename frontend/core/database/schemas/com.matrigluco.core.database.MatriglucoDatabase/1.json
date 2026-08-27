@@ -1,0 +1,213 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "74ab4a835a0ba91be1eabccd7a08346a",
+    "entities": [
+      {
+        "tableName": "health_measurements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ownerUserId` TEXT NOT NULL, `serverId` TEXT NOT NULL, `metricType` TEXT NOT NULL, `numericValueDecimal` TEXT, `systolic` INTEGER, `diastolic` INTEGER, `unit` TEXT NOT NULL, `measuredAtEpochMillis` INTEGER NOT NULL, `cachedAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`ownerUserId`, `serverId`))",
+        "fields": [
+          {
+            "fieldPath": "ownerUserId",
+            "columnName": "ownerUserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "metricType",
+            "columnName": "metricType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numericValueDecimal",
+            "columnName": "numericValueDecimal",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "systolic",
+            "columnName": "systolic",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "diastolic",
+            "columnName": "diastolic",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "unit",
+            "columnName": "unit",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "measuredAtEpochMillis",
+            "columnName": "measuredAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cachedAtEpochMillis",
+            "columnName": "cachedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ownerUserId",
+            "serverId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_health_measurements_ownerUserId_measuredAtEpochMillis",
+            "unique": false,
+            "columnNames": [
+              "ownerUserId",
+              "measuredAtEpochMillis"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_health_measurements_ownerUserId_measuredAtEpochMillis` ON `${TABLE_NAME}` (`ownerUserId`, `measuredAtEpochMillis`)"
+          }
+        ]
+      },
+      {
+        "tableName": "prediction_summaries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ownerUserId` TEXT NOT NULL, `serverId` TEXT NOT NULL, `riskLevel` TEXT NOT NULL, `probabilityDecimal` TEXT, `createdAtEpochMillis` INTEGER NOT NULL, `cachedAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`ownerUserId`, `serverId`))",
+        "fields": [
+          {
+            "fieldPath": "ownerUserId",
+            "columnName": "ownerUserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "riskLevel",
+            "columnName": "riskLevel",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "probabilityDecimal",
+            "columnName": "probabilityDecimal",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cachedAtEpochMillis",
+            "columnName": "cachedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ownerUserId",
+            "serverId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_prediction_summaries_ownerUserId_createdAtEpochMillis",
+            "unique": false,
+            "columnNames": [
+              "ownerUserId",
+              "createdAtEpochMillis"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_prediction_summaries_ownerUserId_createdAtEpochMillis` ON `${TABLE_NAME}` (`ownerUserId`, `createdAtEpochMillis`)"
+          }
+        ]
+      },
+      {
+        "tableName": "report_summaries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ownerUserId` TEXT NOT NULL, `serverId` TEXT NOT NULL, `title` TEXT, `status` TEXT NOT NULL, `riskLevel` TEXT, `uploadedAtEpochMillis` INTEGER, `cachedAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`ownerUserId`, `serverId`))",
+        "fields": [
+          {
+            "fieldPath": "ownerUserId",
+            "columnName": "ownerUserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "riskLevel",
+            "columnName": "riskLevel",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "uploadedAtEpochMillis",
+            "columnName": "uploadedAtEpochMillis",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cachedAtEpochMillis",
+            "columnName": "cachedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ownerUserId",
+            "serverId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_report_summaries_ownerUserId_uploadedAtEpochMillis",
+            "unique": false,
+            "columnNames": [
+              "ownerUserId",
+              "uploadedAtEpochMillis"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_report_summaries_ownerUserId_uploadedAtEpochMillis` ON `${TABLE_NAME}` (`ownerUserId`, `uploadedAtEpochMillis`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '74ab4a835a0ba91be1eabccd7a08346a')"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:accessibilityHeading="true" android:text="@string/diagnostics_title" android:textAppearance="@style/Orbit.Text.Headline" />
+        <TextView android:id="@+id/diagnosticsContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:textAppearance="@style/Orbit.Text.Body" android:textIsSelectable="true" />
+        <com.matrigluco.core.designsystem.component.OrbitButton android:id="@+id/copyDiagnostics" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" />
+    </LinearLayout>
+</ScrollView>

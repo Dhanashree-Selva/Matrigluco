@@ -1,0 +1,132 @@
+name: Security Review & DevSecOps Compliance
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  security-assessment:
+    name: Universal Backend Security Assessment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # -----------------------------------------------------------------------
+      # Step 1: Automatic Backend Framework & Language Detection
+      # -----------------------------------------------------------------------
+      - name: Auto-Detect Backend Technology Stack
+        id: detect-stack
+        run: |
+          echo "=== AUTOMATIC BACKEND TECHNOLOGY STACK DISCOVERY ==="
+          if [ -f "backend/requirements.txt" ] || [ -f "requirements.txt" ] || [ -f "backend/pyproject.toml" ]; then
+            echo "STACK=python" >> $GITHUB_OUTPUT
+            echo "FRAMEWORK=fastapi" >> $GITHUB_OUTPUT
+            echo "Detected Python / FastAPI backend platform."
+          elif [ -f "backend/package.json" ] || [ -f "package.json" ]; then
+            echo "STACK=node" >> $GITHUB_OUTPUT
+            echo "FRAMEWORK=express-nest" >> $GITHUB_OUTPUT
+            echo "Detected Node.js / Express / NestJS backend platform."
+          elif [ -f "pom.xml" ] || [ -f "build.gradle" ]; then
+            echo "STACK=java" >> $GITHUB_OUTPUT
+            echo "FRAMEWORK=spring-boot" >> $GITHUB_OUTPUT
+            echo "Detected Java Spring Boot platform."
+          else
+            echo "STACK=generic" >> $GITHUB_OUTPUT
+            echo "FRAMEWORK=generic-rest" >> $GITHUB_OUTPUT
+            echo "Detected Generic REST API platform."
+          fi
+
+      # -----------------------------------------------------------------------
+      # Step 2: Runtime Environment Setup
+      # -----------------------------------------------------------------------
+      - name: Set up Python Runtime
+        if: steps.detect-stack.outputs.STACK == 'python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements/base.txt
+
+      - name: Set up Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            selenium-tests/package.json
+            appium-tests/package.json
+            load-tests/package.json
+
+      # -----------------------------------------------------------------------
+      # Step 3: SAST — Static Application Security Testing
+      # -----------------------------------------------------------------------
+      - name: Install Security Scanners & Linters
+        run: |
+          python -m pip install --upgrade pip
+          pip install semgrep bandit ruff pip-audit openpyxl
+
+      - name: Run SAST Analysis (Bandit & Semgrep)
+        continue-on-error: true
+        run: |
+          echo "Running Bandit SAST Scanner on backend source..."
+          bandit -r backend/app -ll -ii || true
+          echo "Running Semgrep Security Rules..."
+          semgrep scan --config "p/security-audit" --config "p/owasp-top-ten" backend/app || true
+
+      # -----------------------------------------------------------------------
+      # Step 4: Software Composition Analysis (SCA) & Dependency Review
+      # -----------------------------------------------------------------------
+      - name: Run Dependency Audit (pip-audit / CVE Scan)
+        continue-on-error: true
+        run: |
+          echo "Running pip-audit for known CVEs in backend dependencies..."
+          pip-audit -r backend/requirements.txt || true
+
+      # -----------------------------------------------------------------------
+      # Step 5: Report Generation (300+ Security Test Cases & Excel Artifacts)
+      # -----------------------------------------------------------------------
+      - name: Generate Security Reports & 300-Test-Case Excel Ledgers
+        run: |
+          python scripts/security_assessment.py
+
+      # -----------------------------------------------------------------------
+      # Step 6: Upload Reports as Artifacts
+      # -----------------------------------------------------------------------
+      - name: Upload Security Reports Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Matrigluco-Security-Assessment-Reports
+          path: |
+            Vulnerability Test Results/security-review.md
+            Vulnerability Test Results/executive-summary.md
+            Vulnerability Test Results/dependency-report.md
+            Vulnerability Test Results/endpoint-inventory.xlsx
+            Vulnerability Test Results/findings.xlsx
+
+      # -----------------------------------------------------------------------
+      # Step 7: Publish GitHub Action Summary
+      # -----------------------------------------------------------------------
+      - name: Publish Security Assessment Summary
+        run: |
+          cat "Vulnerability Test Results/executive-summary.md" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📑 Generated Deliverables" >> $GITHUB_STEP_SUMMARY
+          echo "- **Security Review**: \`Vulnerability Test Results/security-review.md\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Executive Summary**: \`Vulnerability Test Results/executive-summary.md\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dependency Report**: \`Vulnerability Test Results/dependency-report.md\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Endpoint Inventory**: \`Vulnerability Test Results/endpoint-inventory.xlsx\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Findings (300 Cases)**: \`Vulnerability Test Results/findings.xlsx\`" >> $GITHUB_STEP_SUMMARY

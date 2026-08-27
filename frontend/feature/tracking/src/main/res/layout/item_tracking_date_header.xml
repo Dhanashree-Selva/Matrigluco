@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/orbit_space_12"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/dateHeaderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/orbit_soft_surface"
+        android:backgroundTint="@color/care_pink"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="3dp"
+        android:text="TODAY"
+        android:textAppearance="@style/Orbit.Text.LabelStrong"
+        android:textColor="@color/care_on_accent"
+        android:textSize="11sp" />
+
+</LinearLayout>

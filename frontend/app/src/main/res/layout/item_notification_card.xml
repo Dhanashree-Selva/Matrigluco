@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notificationCardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_more_item_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:padding="14dp">
+
+    <!-- Icon Badge -->
+    <FrameLayout
+        android:id="@+id/iconBadgeContainer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_icon_badge">
+
+        <ImageView
+            android:id="@+id/notificationIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_huge_notification_24"
+            app:tint="@color/care_pink" />
+    </FrameLayout>
+
+    <!-- Main Body -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Top Meta Row: Category Tag + Unread Dot + Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/categoryTag"
+                style="@style/Orbit.Text.Eyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_source_pill"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/care_pink"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="CLINICAL ALERT" />
+
+            <!-- Glowing Unread Indicator Dot -->
+            <View
+                android:id="@+id/unreadDot"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_spine_dot_today" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/timeAgoLabel"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="11.5sp"
+                tools:text="10m ago" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/notificationTitle"
+            style="@style/Orbit.Text.LabelStrong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/care_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Fasting Blood Sugar Reminder" />
+
+        <!-- Message Body -->
+        <TextView
+            android:id="@+id/notificationMessage"
+            style="@style/Orbit.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:lineSpacingExtra="2dp"
+            android:textColor="@color/care_text_secondary"
+            android:textSize="12.5sp"
+            tools:text="Time to record your fasting glucose reading for today's maternal health timeline." />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_huge_chevron_right_24"
+        app:tint="@color/care_text_tertiary" />
+</LinearLayout>

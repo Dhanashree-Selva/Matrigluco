@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/care_background" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="@dimen/orbit_screen_padding_phone" android:paddingEnd="@dimen/orbit_screen_padding_phone" android:paddingBottom="@dimen/orbit_space_32">
+        <com.matrigluco.core.designsystem.component.OrbitTopBar android:id="@+id/topBar" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView style="@style/Orbit.Text.Headline" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_24" android:text="@string/home_title" />
+        <TextView style="@style/Orbit.Text.BodyMuted" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_8" android:text="@string/home_intro" />
+        <com.matrigluco.core.designsystem.component.OrbitSectionHeader android:id="@+id/sectionHeader" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_32" />
+        <com.matrigluco.core.designsystem.component.OrbitStatusChip android:id="@+id/statusChip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_12" app:orbitStatusText="@string/design_foundation_status" app:orbitStatusTone="brand" />
+        <com.matrigluco.core.designsystem.component.OrbitEmptyState android:id="@+id/emptyState" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_16" />
+        <com.matrigluco.core.designsystem.component.OrbitInputLayout android:id="@+id/input" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_24" app:orbitLabel="@string/measurement_label" app:orbitHelperText="@string/measurement_helper" app:orbitUnit="@string/unit_mg_dl" />
+        <com.matrigluco.core.designsystem.component.OrbitButton android:id="@+id/addReportButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/orbit_space_16" app:orbitLeadingIcon="@drawable/ic_huge_add_24" app:orbitText="@string/add_report" app:orbitVariant="primary" />
+    </LinearLayout>
+</ScrollView>

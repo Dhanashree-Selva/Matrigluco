@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/care_background">
+
+    <ScrollView
+        android:id="@+id/assessmentScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/orbit_space_16"
+            android:paddingTop="@dimen/orbit_space_12"
+            android:paddingBottom="@dimen/orbit_space_32">
+
+            <!-- ========================================================================= -->
+            <!-- 1. INTRO / OVERVIEW VIEW                                                  -->
+            <!-- ========================================================================= -->
+            <LinearLayout
+                android:id="@+id/introContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- Header Eyebrow Badges -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CLINICAL RISK EVALUATION"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_pink"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_pink_soft"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Model v1.0.0"
+                        android:textAppearance="@style/Orbit.Text.Caption"
+                        android:textColor="@color/care_text_muted" />
+                </LinearLayout>
+
+                <!-- Hero Heading -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_12"
+                    android:text="Gestational Diabetes Risk Evaluation"
+                    android:textAppearance="@style/Orbit.Text.Display"
+                    android:textColor="@color/care_ink" />
+
+                <!-- Hero Subtitle -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Follow a guided, 5-stage Assessment Path covering 8 evidence-based maternal biometric indicators. You will have a complete review ledger to verify all inputs before running the model."
+                    android:textAppearance="@style/Orbit.Text.Body"
+                    android:textColor="@color/care_text_muted" />
+
+                <!-- 5-Stage Overview Horizontal Scroll -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_20"
+                    android:scrollbars="none"
+                    android:clipToPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Stage 1 Card -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12"
+                            android:layout_marginEnd="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="01"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_pink" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_huge_user_24"
+                                    app:tint="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Personal Baseline"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Age and pregnancy history"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+
+                        <!-- Stage 2 Card -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12"
+                            android:layout_marginEnd="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="02"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_pink" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_huge_trend_24"
+                                    app:tint="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Clinical Signals"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Glucose and blood pressure"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+
+                        <!-- Stage 3 Card -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12"
+                            android:layout_marginEnd="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="03"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_pink" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_huge_heart_rate_24"
+                                    app:tint="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Body &amp; Metabolic"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Skin thickness, insulin, BMI"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+
+                        <!-- Stage 4 Card -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12"
+                            android:layout_marginEnd="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="04"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_pink" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_huge_pulse_24"
+                                    app:tint="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="History Context"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Diabetes pedigree score"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+
+                        <!-- Stage 5 Card -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="05"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_pink" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_huge_assessment_24"
+                                    app:tint="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Review Ledger"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Confirm 8 canonical inputs"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Model Feature Topology Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_20"
+                    app:cardBackgroundColor="@color/care_surface"
+                    app:cardCornerRadius="@dimen/orbit_radius_md"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/care_border"
+                    app:strokeWidth="@dimen/orbit_divider">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16">
+
+                        <!-- Topology Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_huge_assessment_24"
+                                app:tint="@color/care_pink" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:text="MODEL FEATURE TOPOLOGY"
+                                android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                android:textColor="@color/care_pink" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8 Canonical Inputs"
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+
+                        <!-- Topology 8 Grid Items (4 Rows x 2 Columns) -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/orbit_space_12">
+
+                            <!-- Age -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginEnd="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● Age"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="years"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <!-- Pregnancies -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginStart="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● Pregnancies"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="count"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 2: Glucose & BloodPressure -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginEnd="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● Glucose"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="mg/dL"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginStart="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● BloodPressure"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="mmHg"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 3: SkinThickness & Insulin -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginEnd="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● SkinThickness"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="mm"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginStart="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● Insulin"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="µU/mL"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 4: BMI & DiabetesPedigreeFunction -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginEnd="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● BMI"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="kg/m²"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:layout_marginStart="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="● DiabetesPedigree"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_pink" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="score"
+                                    android:textAppearance="@style/Orbit.Text.Caption"
+                                    android:textColor="@color/care_text_muted" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Topology Footer -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/orbit_space_12"
+                            android:text="All 8 inputs have equal structural weight in the assessment contract."
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Educational Notice Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    android:background="@drawable/orbit_surface_outline"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/orbit_space_16"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_huge_shield_24"
+                        app:tint="@color/care_text_muted"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/orbit_space_12"
+                        android:text="Educational Notice: This clinical risk evaluation estimates probability bands for educational awareness and care timeline planning. It does not provide an automated diagnosis or substitute for your obstetrician's medical advice."
+                        android:textAppearance="@style/Orbit.Text.Caption"
+                        android:textColor="@color/care_text_muted" />
+                </LinearLayout>
+
+                <!-- Begin Assessment CTA -->
+                <com.matrigluco.core.designsystem.component.OrbitButton
+                    android:id="@+id/btnBeginAssessment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_24"
+                    app:orbitText="Begin Assessment Path"
+                    app:orbitLeadingIcon="@drawable/ic_huge_assessment_24" />
+
+            </LinearLayout>
+
+            <!-- ========================================================================= -->
+            <!-- 2. GUIDED 5-STAGE FORM VIEW                                               -->
+            <!-- ========================================================================= -->
+            <LinearLayout
+                android:id="@+id/guidedStepsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Progress Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ASSESSMENT PATH"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_pink" />
+
+                    <TextView
+                        android:id="@+id/stepProgressPercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0%"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_pink" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/stageCounter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Stage 1 of 5"
+                    android:textAppearance="@style/Orbit.Text.Caption"
+                    android:textColor="@color/care_text_muted" />
+
+                <!-- Stage Indicator Pills Row -->
+                <LinearLayout
+                    android:id="@+id/stagePillsRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/orbit_space_12">
+
+                    <TextView
+                        android:id="@+id/pillStage1"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="01"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_on_accent"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_pink"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/pillStage2"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="02"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_text_muted"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_surface_raised"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/pillStage3"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="03"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_text_muted"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_surface_raised"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/pillStage4"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="04"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_text_muted"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_surface_raised"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/pillStage5"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="05"
+                        android:textAppearance="@style/Orbit.Text.Eyebrow"
+                        android:textColor="@color/care_text_muted"
+                        android:background="@drawable/orbit_soft_surface"
+                        android:backgroundTint="@color/care_surface_raised" />
+                </LinearLayout>
+
+                <!-- Current Stage Form Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    app:cardBackgroundColor="@color/care_surface"
+                    app:cardCornerRadius="@dimen/orbit_radius_md"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/care_border"
+                    app:strokeWidth="@dimen/orbit_divider">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16">
+
+                        <TextView
+                            android:id="@+id/stageEyebrow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="STAGE 01 / PERSONAL CONTEXT"
+                            android:textAppearance="@style/Orbit.Text.Eyebrow"
+                            android:textColor="@color/care_pink" />
+
+                        <TextView
+                            android:id="@+id/stageTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Maternal Demographic Baseline"
+                            android:textAppearance="@style/Orbit.Text.Title"
+                            android:textColor="@color/care_ink" />
+
+                        <TextView
+                            android:id="@+id/stageDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Enter your current age and total number of pregnancies to establish baseline physiological calibration."
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+
+                        <!-- Stage 1 Inputs Container -->
+                        <LinearLayout
+                            android:id="@+id/containerStage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/orbit_space_16"
+                            android:visibility="visible">
+
+                            <!-- Age Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutAge"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Maternal Age (years)"
+                                app:suffixText="years"
+                                app:helperText="Accepted model range: 15–110 years.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputAge"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!-- Pregnancies Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutPregnancies"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/orbit_space_12"
+                                android:hint="Total Prior / Current Pregnancies (count)"
+                                app:suffixText="count"
+                                app:helperText="Accepted model range: 0–25.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputPregnancies"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Stage 2 Inputs Container -->
+                        <LinearLayout
+                            android:id="@+id/containerStage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/orbit_space_16"
+                            android:visibility="gone">
+
+                            <!-- Glucose Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutGlucose"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Fasting / Plasma Glucose (mg/dL)"
+                                app:suffixText="mg/dL"
+                                app:helperText="Accepted model range: 40–500 mg/dL.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputGlucose"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!-- Blood Pressure Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutBloodPressure"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/orbit_space_12"
+                                android:hint="Diastolic Blood Pressure (mmHg)"
+                                app:suffixText="mmHg"
+                                app:helperText="Accepted model range: 40–250 mmHg.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputBloodPressure"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Stage 3 Inputs Container -->
+                        <LinearLayout
+                            android:id="@+id/containerStage3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/orbit_space_16"
+                            android:visibility="gone">
+
+                            <!-- Skin Thickness Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutSkinThickness"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Triceps Skinfold Thickness (mm)"
+                                app:suffixText="mm"
+                                app:helperText="Accepted model range: 5–120 mm.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputSkinThickness"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!-- Insulin Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutInsulin"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/orbit_space_12"
+                                android:hint="2-Hour Serum Insulin (µU/mL)"
+                                app:suffixText="µU/mL"
+                                app:helperText="Accepted model range: 1–1000 µU/mL.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputInsulin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!-- BMI Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutBmi"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/orbit_space_12"
+                                android:hint="Body Mass Index (kg/m²)"
+                                app:suffixText="kg/m²"
+                                app:helperText="Accepted model range: 10.0–80.0 kg/m².">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputBmi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Stage 4 Inputs Container -->
+                        <LinearLayout
+                            android:id="@+id/containerStage4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/orbit_space_16"
+                            android:visibility="gone">
+
+                            <!-- Diabetes Pedigree Function Field -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutDpf"
+                                style="@style/Orbit.TextInputLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Diabetes Pedigree Function (score)"
+                                app:suffixText="score"
+                                app:helperText="Accepted model range: 0.05–3.00.">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/inputDpf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:textAppearance="@style/Orbit.Text.BodyStrong"
+                                    android:textColor="@color/care_ink" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Stage 5 Review Ledger Container -->
+                        <LinearLayout
+                            android:id="@+id/containerStage5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="@dimen/orbit_space_16"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Confirm 8 Canonical Biometric Indicators"
+                                android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                android:textColor="@color/care_ink" />
+
+                            <TextView
+                                android:id="@+id/reviewSummaryText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/orbit_surface_outline"
+                                android:padding="@dimen/orbit_space_12"
+                                android:textAppearance="@style/Orbit.Text.Body"
+                                android:textColor="@color/care_ink"
+                                android:lineSpacingExtra="4dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Input Context / Educational Card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/inputContextCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    app:cardBackgroundColor="@color/care_surface"
+                    app:cardCornerRadius="@dimen/orbit_radius_md"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/care_border"
+                    app:strokeWidth="@dimen/orbit_divider">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16">
+
+                        <!-- Context Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_huge_assessment_24"
+                                app:tint="@color/care_pink" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:text="INPUT CONTEXT"
+                                android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                android:textColor="@color/care_pink" />
+
+                            <TextView
+                                android:id="@+id/contextFieldBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Age"
+                                android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                android:textColor="@color/care_pink"
+                                android:background="@drawable/orbit_soft_surface"
+                                android:backgroundTint="@color/care_pink_soft"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="2dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/contextTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Maternal Age"
+                            android:textAppearance="@style/Orbit.Text.Title"
+                            android:textColor="@color/care_ink" />
+
+                        <!-- Metric Specs Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/orbit_surface_outline"
+                            android:padding="@dimen/orbit_space_12">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="UNIT"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_text_muted" />
+
+                                <TextView
+                                    android:id="@+id/contextUnit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="years"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_ink" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ACCEPTED RANGE"
+                                    android:textAppearance="@style/Orbit.Text.Eyebrow"
+                                    android:textColor="@color/care_text_muted" />
+
+                                <TextView
+                                    android:id="@+id/contextAcceptedRange"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="15–110"
+                                    android:textAppearance="@style/Orbit.Text.LabelStrong"
+                                    android:textColor="@color/care_ink" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Why this is asked -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Why this is asked"
+                            android:textAppearance="@style/Orbit.Text.LabelStrong"
+                            android:textColor="@color/care_pink" />
+
+                        <TextView
+                            android:id="@+id/contextExplanation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Maternal age is an essential epidemiological factor in gestational diabetes risk profiling. The calibrated model accepts age values between 15 and 110 years."
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+
+                        <!-- Model Isolation -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_huge_shield_24"
+                                app:tint="@color/care_text_muted" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:text="Model Isolation: Sent directly to the versioned ML engine upon review. Never shared with third parties."
+                                android:textAppearance="@style/Orbit.Text.Caption"
+                                android:textColor="@color/care_text_muted" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Navigation Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/orbit_space_24">
+
+                    <com.matrigluco.core.designsystem.component.OrbitButton
+                        android:id="@+id/btnPreviousStep"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        app:orbitVariant="secondary"
+                        app:orbitText="&lt; Previous" />
+
+                    <com.matrigluco.core.designsystem.component.OrbitButton
+                        android:id="@+id/btnNextStep"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        app:orbitText="Continue &gt;" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ========================================================================= -->
+            <!-- 3. RESULT VIEW                                                            -->
+            <!-- ========================================================================= -->
+            <LinearLayout
+                android:id="@+id/resultContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Result Hero Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/care_surface"
+                    app:cardCornerRadius="@dimen/orbit_radius_lg"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/care_border"
+                    app:strokeWidth="@dimen/orbit_divider">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_20"
+                        android:gravity="center_horizontal">
+
+                        <!-- Icon Plate -->
+                        <FrameLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/orbit_soft_surface"
+                            android:backgroundTint="@color/care_pink_soft">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_huge_assessment_24"
+                                app:tint="@color/care_pink" />
+                        </FrameLayout>
+
+                        <!-- Risk Band Badge -->
+                        <TextView
+                            android:id="@+id/resultRiskBandBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/orbit_space_12"
+                            android:text="LOW RISK BAND"
+                            android:textAppearance="@style/Orbit.Text.Eyebrow"
+                            android:textColor="@color/care_on_accent"
+                            android:background="@drawable/orbit_soft_surface"
+                            android:backgroundTint="@color/care_pink"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="6dp" />
+
+                        <!-- Probability Value -->
+                        <TextView
+                            android:id="@+id/resultProbabilityScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="14.2% Estimated Probability"
+                            android:textAppearance="@style/Orbit.Text.Display"
+                            android:textColor="@color/care_pink" />
+
+                        <!-- Prediction Title -->
+                        <TextView
+                            android:id="@+id/resultPredictionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Non-Diabetic Calibration Profile"
+                            android:textAppearance="@style/Orbit.Text.Title"
+                            android:textColor="@color/care_ink" />
+
+                        <!-- Model Info -->
+                        <TextView
+                            android:id="@+id/resultModelInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Evaluated by LogisticRegression v1.0.0 (scikit-learn)"
+                            android:textAppearance="@style/Orbit.Text.Caption"
+                            android:textColor="@color/care_text_muted" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 8 Feature Snapshot Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_16"
+                    app:cardBackgroundColor="@color/care_surface"
+                    app:cardCornerRadius="@dimen/orbit_radius_md"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/care_border"
+                    app:strokeWidth="@dimen/orbit_divider">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/orbit_space_16">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="EVALUATION FEATURE SNAPSHOT"
+                            android:textAppearance="@style/Orbit.Text.Eyebrow"
+                            android:textColor="@color/care_pink" />
+
+                        <TextView
+                            android:id="@+id/resultFeatureSnapshotText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textAppearance="@style/Orbit.Text.Body"
+                            android:textColor="@color/care_ink"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Actions Row -->
+                <com.matrigluco.core.designsystem.component.OrbitButton
+                    android:id="@+id/btnRestartAssessment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orbit_space_20"
+                    app:orbitText="Start New Assessment"
+                    app:orbitLeadingIcon="@drawable/ic_huge_assessment_24" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

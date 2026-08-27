@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/orbit_metric_label"
+        style="@style/Orbit.Text.LabelStrong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="13sp"
+        android:textColor="@color/care_ink" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:id="@+id/orbit_metric_value"
+            style="@style/Orbit.Text.Metric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/care_ink" />
+
+        <TextView
+            android:id="@+id/orbit_metric_unit"
+            style="@style/Orbit.Text.MetricUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/orbit_space_8"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:textColor="@color/care_text_muted" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/orbit_metric_timestamp"
+        style="@style/Orbit.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="11sp"
+        android:textColor="@color/care_text_muted" />
+
+    <TextView
+        android:id="@+id/orbit_metric_status"
+        style="@style/Orbit.Text.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</merge>

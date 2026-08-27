@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="28dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_assistant_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Assistant Header Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_source_pill">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_matrigluco_mark"
+                    app:tint="@color/care_pink" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/Orbit.Text.Eyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Matrigluco AI"
+                android:textColor="@color/care_pink"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/assistantMessageTime"
+                style="@style/Orbit.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/care_text_tertiary"
+                android:textSize="10.5sp"
+                tools:text="10:31 AM" />
+        </LinearLayout>
+
+        <!-- Message Body -->
+        <TextView
+            android:id="@+id/assistantMessageBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/care_text_primary"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4.5dp"
+            tools:text="Maternal glucose levels are influenced by multiple physiologic factors including carbohydrate distribution, postprandial physical activity, and gestational insulin resistance." />
+
+        <!-- Formatted Medical Disclaimer Footnote Box -->
+        <LinearLayout
+            android:id="@+id/assistantDisclaimerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_disclaimer_box"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_huge_shield_24"
+                app:tint="@color/care_pink" />
+
+            <TextView
+                android:id="@+id/assistantDisclaimerText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/care_text_secondary"
+                android:textSize="11.5sp"
+                tools:text="MatriGluco AI Assistant provides maternal health education and guideline-based information only. It is not a substitute for clinical diagnosis or direct medical advice." />
+        </LinearLayout>
+
+        <!-- Action Row (Sources, Copy, Feedback) -->
+        <LinearLayout
+            android:id="@+id/assistantActionsRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/assistantSourcesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:background="@drawable/bg_source_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/care_pink"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="Sources · 2"
+                tools:visibility="visible" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/assistantCopyBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/assistant_copy"
+                android:src="@drawable/ic_huge_copy_24"
+                app:tint="@color/care_text_tertiary" />
+
+            <ImageButton
+                android:id="@+id/assistantHelpfulBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/assistant_helpful"
+                android:src="@drawable/ic_huge_thumbs_up_24"
+                app:tint="@color/care_text_tertiary" />
+
+            <ImageButton
+                android:id="@+id/assistantUnhelpfulBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/assistant_unhelpful"
+                android:src="@drawable/ic_huge_thumbs_down_24"
+                app:tint="@color/care_text_tertiary" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

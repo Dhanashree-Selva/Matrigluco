@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/denseRowRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <!-- Time -->
+    <TextView
+        android:id="@+id/denseTime"
+        style="@style/Orbit.Text.Caption"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/care_text_tertiary"
+        android:textSize="12sp"
+        tools:text="3:13 PM" />
+
+    <!-- Category Pill -->
+    <TextView
+        android:id="@+id/denseCategory"
+        style="@style/Orbit.Text.Eyebrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_category_badge_assessment"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/care_pink"
+        android:textSize="10sp"
+        tools:text="ASSESS" />
+
+    <!-- Title & Value -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/denseTitle"
+            style="@style/Orbit.Text.LabelStrong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/care_text_primary"
+            android:textSize="13.5sp"
+            tools:text="AI Risk Evaluation" />
+
+        <TextView
+            android:id="@+id/denseValue"
+            style="@style/Orbit.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/care_pink"
+            android:textSize="12sp"
+            tools:text="7% Calculated Probability" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_huge_chevron_right_24"
+        app:tint="@color/care_text_tertiary" />
+</LinearLayout>

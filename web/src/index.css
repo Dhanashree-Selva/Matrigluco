@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --radius: 0.375rem;
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.375rem;
+  --radius-3xl: 0.375rem;
+  --radius-4xl: 0.375rem;
+  --radius-full: 0.375rem;
+}
+
+:root {
+  /* Care Orbit Light Theme */
+  --background: #FFFFFF;
+  --foreground: #171417;
+
+  --surface-secondary: #FCFAFB;
+  --surface-elevated: #FFFFFF;
+  --surface-soft: #F8F6F7;
+
+  --card: #FFFFFF;
+  --card-foreground: #171417;
+  --popover: #FFFFFF;
+  --popover-foreground: #171417;
+
+  --primary: #D94F7D;
+  --primary-hover: #C84470;
+  --primary-strong: #B93665;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F8F6F7;
+  --secondary-foreground: #171417;
+
+  --accent-soft: #FCEBF1;
+  --accent-soft-strong: #F7D6E1;
+  --accent: #D94F7D;
+  --accent-foreground: #FFFFFF;
+
+  --muted: #F8F6F7;
+  --muted-foreground: #8E858B;
+  --text-secondary: #5E565B;
+
+  --border: #E8E2E5;
+  --border-pink: #F1C6D4;
+  --border-subtle: #F0ECEE;
+  --input: #E8E2E5;
+  --ring: #E16B94;
+
+  --success: #3D8B6D;
+  --success-foreground: #FFFFFF;
+  --color-success: #3D8B6D;
+  --color-success-soft: #EDF7F2;
+
+  --warning: #B9863B;
+  --warning-foreground: #FFFFFF;
+  --color-warning: #B9863B;
+  --color-warning-soft: #FDF6EC;
+
+  --destructive: #C94E59;
+  --destructive-foreground: #FFFFFF;
+  --color-danger: #C94E59;
+  --color-danger-soft: #FDECEE;
+
+  --info: #5E6FA8;
+  --info-foreground: #FFFFFF;
+
+  --radius: 0.375rem;
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.375rem;
+
+  --sidebar: #FCFAFB;
+  --sidebar-foreground: #171417;
+  --sidebar-primary: #D94F7D;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #FCEBF1;
+  --sidebar-accent-foreground: #B93665;
+  --sidebar-border: #E8E2E5;
+  --sidebar-ring: #E16B94;
+
+  --chart-1: #D94F7D;
+  --chart-2: #3D8B6D;
+  --chart-3: #B9863B;
+  --chart-4: #5E6FA8;
+  --chart-5: #C89BFF;
+}
+
+.dark {
+  /* Care Orbit Dark Theme (Neutral Charcoal/Black) */
+  --background: #0D0B0C;
+  --foreground: #FFF9FB;
+
+  --surface-secondary: #131113;
+  --surface-elevated: #191619;
+  --surface-soft: #201C1F;
+
+  --card: #191619;
+  --card-foreground: #FFF9FB;
+  --popover: #191619;
+  --popover-foreground: #FFF9FB;
+
+  --primary: #F06F9D;
+  --primary-hover: #FA83AC;
+  --primary-strong: #FF9BBB;
+  --primary-foreground: #0D0B0C;
+
+  --secondary: #201C1F;
+  --secondary-foreground: #FFF9FB;
+
+  --accent-soft: #2A1820;
+  --accent-soft-strong: #351D27;
+  --accent: #F06F9D;
+  --accent-foreground: #0D0B0C;
+
+  --muted: #201C1F;
+  --muted-foreground: #A69DA3;
+  --text-secondary: #D8D0D5;
+
+  --border: #352D32;
+  --border-pink: #6D3147;
+  --border-subtle: #241E22;
+  --input: #352D32;
+  --ring: #F06F9D;
+
+  --success: #6CC39C;
+  --success-foreground: #0D0B0C;
+  --color-success: #6CC39C;
+  --color-success-soft: #142A20;
+
+  --warning: #D7AA63;
+  --warning-foreground: #0D0B0C;
+  --color-warning: #D7AA63;
+  --color-warning-soft: #2B1E12;
+
+  --destructive: #EE747D;
+  --destructive-foreground: #0D0B0C;
+  --color-danger: #EE747D;
+  --color-danger-soft: #2D1418;
+
+  --info: #8FA3DB;
+  --info-foreground: #0D0B0C;
+
+  --radius: 0.375rem;
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.375rem;
+
+  --sidebar: #131113;
+  --sidebar-foreground: #FFF9FB;
+  --sidebar-primary: #F06F9D;
+  --sidebar-primary-foreground: #0D0B0C;
+  --sidebar-accent: #2A1820;
+  --sidebar-accent-foreground: #FF9BBB;
+  --sidebar-border: #2D292C;
+  --sidebar-ring: #F06F9D;
+
+  --chart-1: #F06F9D;
+  --chart-2: #6CC39C;
+  --chart-3: #D7AA63;
+  --chart-4: #8FA3DB;
+  --chart-5: #C89BFF;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  * {
+    border-color: var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter Variable', 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    @apply antialiased tracking-tight;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Browser Autofill Theme Harmonization */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-soft) inset !important;
+    -webkit-text-fill-color: var(--foreground) !important;
+    caret-color: var(--foreground) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* WebKit Scrollbar Styling matching Care Orbit Theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Recharts Focus Outline Removal */
+  .recharts-wrapper,
+  .recharts-surface,
+  .recharts-responsive-container,
+  .recharts-wrapper:focus,
+  .recharts-surface:focus,
+  .recharts-responsive-container:focus,
+  svg.recharts-surface {
+    outline: none !important;
+  }
+}
