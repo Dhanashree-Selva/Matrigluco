@@ -37,8 +37,9 @@ class ChatFragment : Fragment() {
 
     private val promptAdapter = PromptRailAdapter { prompt ->
         viewModel.selectPrompt(prompt)
+        binding?.composerInput?.setText(prompt.question)
+        binding?.composerInput?.setSelection(prompt.question.length)
         binding?.composerInput?.requestFocus()
-        binding?.composerInput?.setSelection(binding?.composerInput?.text?.length ?: 0)
     }
 
     private val chatAdapter = ChatAdapter(
@@ -69,10 +70,20 @@ class ChatFragment : Fragment() {
         b.promptRecyclerView.adapter = promptAdapter
         b.messagesRecyclerView.adapter = chatAdapter
 
+        // Direct Text Watcher: Keeps send button in sync with text without modifying EditText
         b.composerInput.doAfterTextChanged {
             val text = it?.toString().orEmpty()
-            if (text != viewModel.state.value.draft) {
-                viewModel.draftChanged(text)
+            val hasText = text.trim().isNotEmpty()
+            b.btnSendContainer.isEnabled = hasText && !viewModel.state.value.sending
+            b.btnSendContainer.alpha = if (hasText) 1.0f else 0.4f
+            viewModel.draftChanged(text)
+        }
+
+        b.messagesRecyclerView.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom && chatAdapter.itemCount > 0) {
+                b.messagesRecyclerView.post {
+                    b.messagesRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+                }
             }
         }
 
@@ -81,15 +92,20 @@ class ChatFragment : Fragment() {
                 b.chatRoot.postDelayed({
                     if (b.messagesRecyclerView.visibility == View.VISIBLE && chatAdapter.itemCount > 0) {
                         b.messagesRecyclerView.smoothScrollToPosition(chatAdapter.itemCount - 1)
-                    } else {
-                        b.emptyContainer.fullScroll(View.FOCUS_DOWN)
+                    } else if (b.emptyContainer.childCount > 0) {
+                        b.emptyContainer.smoothScrollTo(0, b.emptyContainer.getChildAt(0).height)
                     }
-                }, 300)
+                }, 150)
             }
         }
 
         b.btnSendContainer.setOnClickListener {
-            viewModel.send()
+            val text = b.composerInput.text?.toString().orEmpty().trim()
+            if (text.isNotEmpty() && !viewModel.state.value.sending) {
+                b.composerInput.setText("")
+                viewModel.draftChanged(text)
+                viewModel.send()
+            }
         }
 
         b.contextCapsule.setOnClickListener {
@@ -112,7 +128,10 @@ class ChatFragment : Fragment() {
                 id = "action_new_conversation",
                 iconRes = DesignR.drawable.ic_huge_add_24,
                 contentDescription = getString(R.string.assistant_new_conversation),
-                onClick = { viewModel.startNewConversation() }
+                onClick = {
+                    b.composerInput.setText("")
+                    viewModel.startNewConversation()
+                }
             ),
             OrbitAppBarAction.Custom(
                 id = "action_history",
@@ -167,12 +186,6 @@ class ChatFragment : Fragment() {
         b.chatLoading.visibility = if (state.loading && state.messages.isEmpty()) View.VISIBLE else View.GONE
         b.offlineBanner.visibility = if (state.offline) View.VISIBLE else View.GONE
 
-        // Draft sync
-        if (b.composerInput.text.toString() != state.draft) {
-            b.composerInput.setText(state.draft)
-            b.composerInput.setSelection(state.draft.length)
-        }
-
         // Context state update
         if (state.healthContext) {
             b.contextStatusLabel.text = getString(R.string.assistant_context_allowed)
@@ -202,9 +215,10 @@ class ChatFragment : Fragment() {
         }
 
         // Send button state
-        val canSend = !state.sending && !state.offline && state.draft.isNotBlank()
+        val hasInput = b.composerInput.text?.toString().orEmpty().trim().isNotBlank()
+        val canSend = !state.sending && !state.offline && hasInput
         b.btnSendContainer.isEnabled = canSend
-        b.btnSendContainer.alpha = if (canSend || state.sending) 1.0f else 0.4f
+        b.btnSendContainer.alpha = if (canSend) 1.0f else 0.4f
         b.btnSendProgress.visibility = if (state.sending) View.VISIBLE else View.GONE
         b.btnSendIcon.visibility = if (state.sending) View.GONE else View.VISIBLE
 
@@ -229,9 +243,7 @@ class ChatFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        binding?.promptRecyclerView?.adapter = null
-        binding?.messagesRecyclerView?.adapter = null
-        binding = null
         super.onDestroyView()
+        binding = null
     }
 }

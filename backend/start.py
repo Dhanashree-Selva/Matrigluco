@@ -290,13 +290,14 @@ Examples:
     elif not parsed.worker:
         worker_enabled = False
 
-    # Determine effective host binding
+    # Determine effective host binding (respecting HOST from .env or defaulting to 0.0.0.0)
+    env_host = os.getenv("HOST", "0.0.0.0")
     if parsed.host:
         effective_host = parsed.host
     elif parsed.external:
         effective_host = "0.0.0.0"
     else:
-        effective_host = "127.0.0.1"
+        effective_host = env_host
 
     # Determine default Celery pool
     if parsed.celery_pool:

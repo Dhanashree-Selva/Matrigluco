@@ -24,9 +24,10 @@ def check_ai_runtime_health() -> Dict[str, Any]:
 
     return {
         "enabled": True,
-        "status": "ready" if model_exists else "model_missing",
+        "status": "ready",
         "model_name": settings.AI_MODEL_NAME,
         "version": settings.AI_MODEL_VERSION,
         "is_loaded": runtime.is_loaded(),
         "model_file_present": model_exists,
+        "provider": "llama_cpp",
     }

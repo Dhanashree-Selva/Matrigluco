@@ -23,7 +23,7 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             buildConfigField("String", "APP_ENV", "\"debug\"")
-            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl("MATRIGLUCO_DEBUG_API_BASE_URL", "http://10.0.2.2:8000/")}\"")
+            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl("MATRIGLUCO_DEBUG_API_BASE_URL", "http://192.168.1.4:8000/")}\"")
         }
         create("staging") {
             initWith(getByName("release"))

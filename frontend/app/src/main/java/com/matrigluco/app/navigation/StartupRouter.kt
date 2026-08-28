@@ -7,7 +7,7 @@ object StartupRouter {
     fun route(state: SessionState): RootRoute = when (state) {
         SessionState.Restoring -> RootRoute.STARTUP
         SessionState.Public, is SessionState.Expired -> RootRoute.AUTH
-        is SessionState.Authenticated -> if (state.onboardingComplete) RootRoute.PROTECTED else RootRoute.ONBOARDING
-        is SessionState.OfflineRestored -> if (state.onboardingComplete) RootRoute.PROTECTED else RootRoute.ONBOARDING
+        is SessionState.Authenticated -> RootRoute.PROTECTED
+        is SessionState.OfflineRestored -> RootRoute.PROTECTED
     }
 }

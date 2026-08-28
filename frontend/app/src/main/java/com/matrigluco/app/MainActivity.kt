@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity(), OrbitAppBarHost {
                 }
             }
 
-            // When keyboard (IME) is visible, adjustResize resizes the window automatically,
-            // so we set bottom padding to 0 to prevent double-lifting the composer.
-            val bottomInset = if (isImeVisible) 0 else sysBars.bottom
+            // When keyboard (IME) is visible, lift the container by the keyboard height
+            // When hidden, pad by system navigation bar height.
+            val bottomInset = if (isImeVisible) ime.bottom else sysBars.bottom
             view.setPadding(sysBars.left, sysBars.top, sysBars.right, bottomInset)
             insets
         }
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), OrbitAppBarHost {
         val graphId = when (route) {
             RootRoute.STARTUP -> return
             RootRoute.AUTH -> R.id.auth_graph
-            RootRoute.ONBOARDING -> R.id.onboarding_graph
+            RootRoute.ONBOARDING -> R.id.protected_graph
             RootRoute.PROTECTED -> R.id.protected_graph
         }
         if (navController.currentDestination?.parent?.id == graphId) return
