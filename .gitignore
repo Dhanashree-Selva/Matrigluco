@@ -36,6 +36,14 @@ build/
 # ── Editor / OS ────────────────────────────────────────────────────────────────
 .vscode/
 .idea/
+.kotlin/
 *.DS_Store
 Thumbs.db
+
+# ── AI Model Binaries & Storage ────────────────────────────────────────────────
+*.gguf
+storage/ai/models/*.gguf
+backend/storage/ai/models/*.gguf
+backend/storage/temp/
+backend/storage/generated/
 
