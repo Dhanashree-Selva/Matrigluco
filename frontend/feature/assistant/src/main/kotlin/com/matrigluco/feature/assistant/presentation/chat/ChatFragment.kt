@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +37,7 @@ class ChatFragment : Fragment() {
     private var binding: FragmentChatBinding? = null
     private var wasSending = false
     private var lastAssistantMessageId: String? = null
+    private var isDraftRestored = false
 
     private val promptAdapter = PromptRailAdapter { prompt ->
         viewModel.selectPrompt(prompt)
@@ -70,15 +74,7 @@ class ChatFragment : Fragment() {
         b.promptRecyclerView.adapter = promptAdapter
         b.messagesRecyclerView.adapter = chatAdapter
 
-        // Direct Text Watcher: Keeps send button in sync with text without modifying EditText
-        b.composerInput.doAfterTextChanged {
-            val text = it?.toString().orEmpty()
-            val hasText = text.trim().isNotEmpty()
-            b.btnSendContainer.isEnabled = hasText && !viewModel.state.value.sending
-            b.btnSendContainer.alpha = if (hasText) 1.0f else 0.4f
-            viewModel.draftChanged(text)
-        }
-
+        // Scroll messages list to bottom when IME appears or messages layout changes
         b.messagesRecyclerView.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
             if (bottom < oldBottom && chatAdapter.itemCount > 0) {
                 b.messagesRecyclerView.post {
@@ -87,13 +83,20 @@ class ChatFragment : Fragment() {
             }
         }
 
+        // Direct Text Watcher: Keeps send button in sync with text in real time without touching EditText
+        b.composerInput.doAfterTextChanged {
+            val text = it?.toString().orEmpty()
+            val hasText = text.trim().isNotEmpty()
+            b.btnSendContainer.isEnabled = hasText && !viewModel.state.value.sending
+            b.btnSendContainer.alpha = if (hasText) 1.0f else 0.4f
+            viewModel.draftChanged(text)
+        }
+
         b.composerInput.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 b.chatRoot.postDelayed({
                     if (b.messagesRecyclerView.visibility == View.VISIBLE && chatAdapter.itemCount > 0) {
                         b.messagesRecyclerView.smoothScrollToPosition(chatAdapter.itemCount - 1)
-                    } else if (b.emptyContainer.childCount > 0) {
-                        b.emptyContainer.smoothScrollTo(0, b.emptyContainer.getChildAt(0).height)
                     }
                 }, 150)
             }
@@ -103,8 +106,7 @@ class ChatFragment : Fragment() {
             val text = b.composerInput.text?.toString().orEmpty().trim()
             if (text.isNotEmpty() && !viewModel.state.value.sending) {
                 b.composerInput.setText("")
-                viewModel.draftChanged(text)
-                viewModel.send()
+                viewModel.send(text)
             }
         }
 
@@ -186,6 +188,15 @@ class ChatFragment : Fragment() {
         b.chatLoading.visibility = if (state.loading && state.messages.isEmpty()) View.VISIBLE else View.GONE
         b.offlineBanner.visibility = if (state.offline) View.VISIBLE else View.GONE
 
+        // Initial draft restore ONLY ONCE on initial launch when composer is empty
+        if (!isDraftRestored && state.draft.isNotEmpty() && !state.sending) {
+            isDraftRestored = true
+            if (b.composerInput.text.isNullOrEmpty()) {
+                b.composerInput.setText(state.draft)
+                b.composerInput.setSelection(state.draft.length)
+            }
+        }
+
         // Context state update
         if (state.healthContext) {
             b.contextStatusLabel.text = getString(R.string.assistant_context_allowed)
@@ -203,7 +214,9 @@ class ChatFragment : Fragment() {
         if (state.messages.isEmpty() && !state.loading) {
             b.emptyContainer.visibility = View.VISIBLE
             b.messagesRecyclerView.visibility = View.GONE
-            promptAdapter.submitList(state.suggestions)
+            if (promptAdapter.currentList != state.suggestions) {
+                promptAdapter.submitList(state.suggestions)
+            }
         } else {
             b.emptyContainer.visibility = View.GONE
             b.messagesRecyclerView.visibility = View.VISIBLE

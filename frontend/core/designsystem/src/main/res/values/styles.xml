@@ -90,6 +90,12 @@
 
     <style name="Orbit.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Orbit.BottomSheet</item>
+        <item name="colorSurface">@color/care_surface</item>
+        <item name="colorOnSurface">@color/care_ink</item>
+        <item name="android:textColor">@color/care_ink</item>
+        <item name="android:textColorPrimary">@color/care_ink</item>
+        <item name="android:editTextColor">@color/care_ink</item>
+        <item name="editTextColor">@color/care_ink</item>
     </style>
 
     <style name="Orbit.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
@@ -134,5 +140,8 @@
         <item name="hintTextColor">@color/care_pink</item>
         <item name="android:textColorHint">@color/care_text_muted</item>
         <item name="boxBackgroundColor">@color/care_surface_raised</item>
+        <item name="android:textColor">@color/care_ink</item>
+        <item name="android:editTextColor">@color/care_ink</item>
+        <item name="editTextColor">@color/care_ink</item>
     </style>
 </resources>

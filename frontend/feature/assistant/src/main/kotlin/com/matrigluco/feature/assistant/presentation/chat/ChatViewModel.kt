@@ -42,6 +42,7 @@ class ChatViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var activeConversationId: String? = saved.get<String>("conversationId")
+    private var isExplicitNew: Boolean = false
     private val mutable = MutableStateFlow(ChatUiState(conversationId = activeConversationId))
     val state = mutable.asStateFlow()
 
@@ -81,7 +82,7 @@ class ChatViewModel @Inject constructor(
                         )
                     }
                 }
-            } else {
+            } else if (!isExplicitNew) {
                 // If no specific conversation was requested, check if user has existing conversations
                 when (val listResult = repository.conversations()) {
                     is ApiResult.Success -> {
@@ -111,17 +112,27 @@ class ChatViewModel @Inject constructor(
                     messages = emptyList(),
                     draft = draft
                 )
+            } else {
+                val draft = owner?.let { drafts.read(it, "new_draft") }.orEmpty()
+                mutable.value = mutable.value.copy(
+                    loading = false,
+                    conversationId = null,
+                    messages = emptyList(),
+                    draft = draft
+                )
             }
         }
     }
 
     fun setConversationId(id: String?) {
         activeConversationId = id
+        isExplicitNew = false
         load()
     }
 
     fun startNewConversation() {
         activeConversationId = null
+        isExplicitNew = true
         mutable.value = mutable.value.copy(
             conversationId = null,
             messages = emptyList(),
@@ -154,26 +165,57 @@ class ChatViewModel @Inject constructor(
         mutable.value = mutable.value.copy(healthContext = enabled)
     }
 
-    fun send() {
+    fun send(explicitText: String? = null) {
         val current = mutable.value
-        val text = current.draft.trim()
+        val text = (explicitText ?: current.draft).trim()
         if (current.sending || text.isBlank() || current.offline) return
 
-        viewModelScope.launch {
-            mutable.value = current.copy(sending = true, error = null)
+        val tempConvId = activeConversationId ?: UUID.randomUUID().toString()
+        val optimisticUserMsg = ChatMessage(
+            id = UUID.randomUUID().toString(),
+            conversationId = tempConvId,
+            role = ChatRole.USER,
+            content = text,
+            createdAt = java.time.Instant.now().toString()
+        )
+        val pendingMsg = ChatMessage(
+            id = "pending_${UUID.randomUUID()}",
+            conversationId = tempConvId,
+            role = ChatRole.ASSISTANT,
+            content = "",
+            isPending = true
+        )
 
-            // Step 1: Ensure conversation exists
+        // Instant Optimistic UI Update: Flips from empty to message list immediately
+        mutable.value = current.copy(
+            sending = true,
+            error = null,
+            messages = current.messages + optimisticUserMsg + pendingMsg,
+            draft = ""
+        )
+
+        viewModelScope.launch {
+            owner()?.let {
+                drafts.clear(it, tempConvId)
+                drafts.clear(it, "new_draft")
+            }
+
+            // Step 1: Ensure conversation exists on backend
             var targetConversationId = activeConversationId
             if (targetConversationId == null) {
                 when (val convResult = repository.createConversation("Maternal Health Consultation")) {
                     is ApiResult.Success -> {
                         targetConversationId = convResult.value.id
                         activeConversationId = targetConversationId
+                        isExplicitNew = false
                         mutable.value = mutable.value.copy(conversationId = targetConversationId)
                     }
                     is ApiResult.Failure -> {
+                        val updated = mutable.value.messages.filterNot { it.isPending }
                         mutable.value = mutable.value.copy(
+                            messages = updated,
                             sending = false,
+                            draft = text,
                             offline = convResult.error == ApiError.Offline,
                             error = convResult.error
                         )
@@ -182,39 +224,12 @@ class ChatViewModel @Inject constructor(
                 }
             }
 
-            // Step 2: Optimistically add user message + pending message to local UI
-            val optimisticUserMsg = ChatMessage(
-                id = UUID.randomUUID().toString(),
-                conversationId = targetConversationId,
-                role = ChatRole.USER,
-                content = text,
-                createdAt = java.time.Instant.now().toString()
-            )
-            val pendingMsg = ChatMessage(
-                id = "pending_${UUID.randomUUID()}",
-                conversationId = targetConversationId,
-                role = ChatRole.ASSISTANT,
-                content = "",
-                isPending = true
-            )
-
-            mutable.value = mutable.value.copy(
-                messages = current.messages + optimisticUserMsg + pendingMsg,
-                draft = ""
-            )
-
-            owner()?.let {
-                drafts.clear(it, targetConversationId)
-                drafts.clear(it, "new_draft")
-            }
-
-            // Step 3: Send to backend
+            // Step 2: Send message to backend
             when (val sendResult = repository.send(
                 targetConversationId,
                 SendMessage(text, current.healthContext)
             )) {
                 is ApiResult.Success -> {
-                    // Replace pending message with real assistant message
                     val updated = mutable.value.messages.filterNot { it.isPending } + sendResult.value
                     mutable.value = mutable.value.copy(
                         messages = updated,
@@ -227,7 +242,7 @@ class ChatViewModel @Inject constructor(
                     mutable.value = mutable.value.copy(
                         messages = updated,
                         sending = false,
-                        draft = text, // restore draft for retry
+                        draft = text,
                         offline = sendResult.error == ApiError.Offline,
                         error = sendResult.error
                     )

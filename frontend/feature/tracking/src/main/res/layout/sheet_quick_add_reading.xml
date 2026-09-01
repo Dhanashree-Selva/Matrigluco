@@ -181,7 +181,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textAppearance="@style/Orbit.Text.BodyStrong"
-                android:textColor="@color/care_ink" />
+                android:textColor="@color/care_ink"
+                android:textColorHint="@color/care_text_muted"
+                android:textColorHighlight="@color/care_pink_soft_strong"
+                android:textCursorDrawable="@drawable/cursor_care_pink" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Secondary Value (Diastolic for BP only) -->
@@ -201,7 +204,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textAppearance="@style/Orbit.Text.BodyStrong"
-                android:textColor="@color/care_ink" />
+                android:textColor="@color/care_ink"
+                android:textColorHint="@color/care_text_muted"
+                android:textColorHighlight="@color/care_pink_soft_strong"
+                android:textCursorDrawable="@drawable/cursor_care_pink" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -221,7 +227,10 @@
             android:layout_height="wrap_content"
             android:inputType="textCapSentences"
             android:textAppearance="@style/Orbit.Text.Body"
-            android:textColor="@color/care_ink" />
+            android:textColor="@color/care_ink"
+            android:textColorHint="@color/care_text_muted"
+            android:textColorHighlight="@color/care_pink_soft_strong"
+            android:textCursorDrawable="@drawable/cursor_care_pink" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Error Message -->
